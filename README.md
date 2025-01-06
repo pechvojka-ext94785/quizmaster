@@ -40,6 +40,11 @@ the rest (Gradle, pnpm, Node.js and Playwright) gets downloaded automatically.
     - Requires local admin / sudo to install JDK 21 and PostgreSQL 16.
     - You have to figure out all the quirks on your own. The local dev environment is as self-contained as possible, but your local configuration can still diverge in multitude of ways.
 
+# Setup your IDE
+
+- Setup [IntelliJ IDEA](docs/setup-intellij.md)
+- Setup VS Code (TODO)
+
 # How to develop Quizmaster
 
 [How to develop Quizmaster](docs/how-to-develop.md)
