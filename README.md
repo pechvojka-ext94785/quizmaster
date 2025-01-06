@@ -17,34 +17,19 @@ Prior to the class ge yourself familiar with the tech stack:
 - [Cucumber.js](https://cucumber.io/docs/guides/)
 - [Playwright](https://playwright.dev/)
 
-# 🖥️ Development Environment
-You have multiple options to prepare your development environment:
+# Getting started
 
-1. [GitHub Codespaces](docs/github-codespaces.md) (recommended)\
-Prepared and self-contained dev environment in a GitHub Codespaces instance.
+1. **Create your development environment**. You have three options:
 
-    - The most convenient, works out-of-box. All you need is a browser or VS Code.
-    - To connect from Cursor or IntelliJ IDEA requires setting up SSH access.
+    - [GitHub Codespaces](docs/dev-env-codespaces.md) ⭐ recommended
+    - [Local Docker/Podman container](https://github.com/scrumdojo/quizmaster-devcontainer)
+    - [Local Environment](docs/dev-env-local.md)
 
-2. [Docker/Podman container](https://github.com/scrumdojo/quizmaster-devcontainer) \
-Prepared and self-contained dev environment in a local Docker/Podman container.
+    See more for [comparison](docs/dev-env-comparison.md).
 
-    - Requires local Docker/Podman installation (plus WSL2 on Windows).
-    - Requires auth to GitHub from within the container.
-    - People with macOS reported issues when working in IntelliJ.
+2. **Setup your IDE**
 
-3. [Local environment](docs/dev-environment.md) \
-Run everything locally, like in the good ol' days. You need only Java 21 JDK and PostgreSQL 16,
-the rest (Gradle, pnpm, Node.js and Playwright) gets downloaded automatically.
+    - Setup [IntelliJ IDEA](docs/setup-intellij.md)
+    - Setup VS Code (TODO)
 
-    - Requires local admin / sudo to install JDK 21 and PostgreSQL 16.
-    - You have to figure out all the quirks on your own. The local dev environment is as self-contained as possible, but your local configuration can still diverge in multitude of ways.
-
-# Setup your IDE
-
-- Setup [IntelliJ IDEA](docs/setup-intellij.md)
-- Setup VS Code (TODO)
-
-# How to develop Quizmaster
-
-[How to develop Quizmaster](docs/how-to-develop.md)
+3. [How to run & develop Quizmaster](docs/how-to-develop.md)
