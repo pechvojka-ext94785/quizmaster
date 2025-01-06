@@ -18,15 +18,27 @@ Prior to the class ge yourself familiar with the tech stack:
 - [Playwright](https://playwright.dev/)
 
 # 🖥️ Development Environment
-You have two options to prepare your development environment:
+You have multiple options to prepare your development environment:
 
-1. **Docker/Podman container** \
-Run a prepared self-contained development environment it in a Docker/Podman container. Go to
-[scrumdojo/quizmaster-devcontainer](https://github.com/scrumdojo/quizmaster-devcontainer) and follow the instructions.
+1. [GitHub Codespaces](docs/github-codespaces.md) (recommended)\
+Prepared and self-contained dev environment in a GitHub Codespaces instance.
 
-2. **Local environment** \
-Install it on your [local machine](docs/dev-environment.md). You need only Java 21 JDK and PostgreSQL 16,
+    - The most convenient, works out-of-box. All you need is a browser or VS Code.
+    - To connect from Cursor or IntelliJ IDEA requires setting up SSH access.
+
+2. [Docker/Podman container](https://github.com/scrumdojo/quizmaster-devcontainer) \
+Prepared and self-contained dev environment in a local Docker/Podman container.
+
+    - Requires local Docker/Podman installation (plus WSL2 on Windows).
+    - Requires auth to GitHub from within the container.
+    - People with macOS reported issues when working in IntelliJ.
+
+3. [Local environment](docs/dev-environment.md) \
+Run everything locally, like in the good ol' days. You need only Java 21 JDK and PostgreSQL 16,
 the rest (Gradle, pnpm, Node.js and Playwright) gets downloaded automatically.
+
+    - Requires local admin / sudo to install JDK 21 and PostgreSQL 16.
+    - You have to figure out all the quirks on your own. The local dev environment is as self-contained as possible, but your local configuration can still diverge in multitude of ways.
 
 # 🚀 Running the Application
 
