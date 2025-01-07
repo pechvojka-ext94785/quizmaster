@@ -21,15 +21,15 @@ Prior to the class ge yourself familiar with the tech stack:
 
 1. **Create your development environment**. You have three options:
 
-    - [GitHub Codespaces](docs/dev-env-codespaces.md) ⭐ recommended
+    - [GitHub Codespaces](docs/dev-environment/dev-env-codespaces.md) ⭐ recommended
     - [Local Docker/Podman container](https://github.com/scrumdojo/quizmaster-devcontainer)
-    - [Local Environment](docs/dev-env-local.md)
+    - [Local Environment](docs/dev-environment/dev-env-local.md)
 
-    See more for [comparison](docs/dev-env-comparison.md).
+    See more for [comparison](docs/dev-environment/dev-env-comparison.md).
 
 2. **Setup your IDE**
 
-    - Setup [IntelliJ IDEA](docs/setup-intellij.md)
-    - Setup [VS Code](docs/setup-vscode.md)
+    - Setup [IntelliJ IDEA](docs/dev-environment/setup-intellij.md)
+    - Setup [VS Code](docs/dev-environment/setup-vscode.md)
 
-3. [How to run & develop Quizmaster](docs/how-to-develop.md)
+3. [How to run & develop Quizmaster](docs/dev-environment/how-to-develop.md)
