@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "EditorConfig.EditorConfig",
+
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+
+        "vscode.vscode-java-pack",
+        "alexkrechik.cucumberautocomplete"
+    ]
+}
