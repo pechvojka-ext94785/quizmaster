@@ -30,6 +30,6 @@ Prior to the class ge yourself familiar with the tech stack:
 2. **Setup your IDE**
 
     - Setup [IntelliJ IDEA](docs/setup-intellij.md)
-    - Setup VS Code (TODO)
+    - Setup [VS Code](docs/setup-vscode.md)
 
 3. [How to run & develop Quizmaster](docs/how-to-develop.md)
