@@ -49,9 +49,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                     )}
                 </For>
             </ul>
-            <div class="btn-row">
-                <input type="submit" class="submit-btn" value={'Submit'} />
-            </div>
+            <input type="submit" value="Submit" />
             <Show when={state.submitted()}>
                 <QuestionCorrectness isCorrect={isQuestionCorrect()} />
             </Show>

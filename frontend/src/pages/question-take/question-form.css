@@ -24,15 +24,10 @@ ul {
     align-items: center;
 }
 
-.submit-btn {
-    padding: 10px;
+input[type="submit"] {
+    padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1.1em;
+    font-size: 1.05em;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: lightgrey; /* Change to your desired hover color */
-    transform: scale(1.05);
 }
