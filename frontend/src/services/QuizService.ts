@@ -1,21 +1,11 @@
 import type { Quiz, SingleQuiz } from '../model/quiz-question.ts'
-import { fetchJson } from './helpers.ts'
+import { fetchJson, postJson } from './helpers.ts'
 
-export const createQuiz = async (quizObj: Quiz) =>
-    await fetchJson<number>('/api/quiz', {
-        body: JSON.stringify(quizObj),
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
+export const createQuiz = async (quiz: Quiz) => await postJson<Quiz, number>('/api/quiz', quiz)
+
 export const getQuizMaster = async (quizId: string | number) => await fetchJson<SingleQuiz>(`/api/quiz/${quizId}`)
 
-export const createQuizRun = async (quizId: string) =>
-    await fetchJson<void>(`/api/quizRun/${quizId}`, {
-        body: quizId.toString(),
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
+export const createQuizRun = async (quizId: string) => await postJson<string, void>(`/api/quizRun/${quizId}`, quizId)
+
+export const setAnswer = async (runId: string, questionId: string | number, answers: number[]) =>
+    await postJson(`/api/quizRun/${runId}/question/${questionId}/answer`, { answerIds: answers })

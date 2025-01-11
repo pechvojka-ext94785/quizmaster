@@ -1,6 +1,6 @@
 import { type Accessor, type Component, createMemo, createSignal, For, Show } from 'solid-js'
 import { preventDefault } from '../../helpers.ts'
-import * as QuestionService from '../../services/QuizQuestionService.ts'
+import * as QuizService from '../../services/QuizService.ts'
 import { transformObjectToArray } from '../../utils/transformObjectToArray.ts'
 import { AnswerFeedback } from './components/answer-feedback.tsx'
 import './question-form.css'
@@ -22,7 +22,7 @@ export const QuestionFormV2 = (props: QuizQuestionProps) => {
         const selectedAnswerIdx = selectedAnswer()
         if (selectedAnswerIdx === null) return
 
-        QuestionService.setAnswer(props.quizRunId, props.id, [selectedAnswerIdx])
+        QuizService.setAnswer(props.quizRunId, props.id, [selectedAnswerIdx])
             .then(() => {
                 setSubmitted(true)
             })
@@ -35,7 +35,7 @@ export const QuestionFormV2 = (props: QuizQuestionProps) => {
 
         const payload = transformObjectToArray(selectedAnswers())
 
-        QuestionService.setAnswer(props.quizId, props.id, payload)
+        QuizService.setAnswer(props.quizId, props.id, payload)
             .then(() => {
                 setSubmitted(true)
             })
