@@ -2,6 +2,7 @@ package cz.scrumdojo.quizmaster.quiz;
 
 import cz.scrumdojo.quizmaster.model.QuizQuestionResult;
 import cz.scrumdojo.quizmaster.model.QuizRunResult;
+import cz.scrumdojo.quizmaster.question.QuizQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;

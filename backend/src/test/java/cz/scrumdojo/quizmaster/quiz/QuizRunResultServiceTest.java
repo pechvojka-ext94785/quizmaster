@@ -1,5 +1,8 @@
 package cz.scrumdojo.quizmaster.quiz;
 
+import cz.scrumdojo.quizmaster.question.MultipleAnswersResult;
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

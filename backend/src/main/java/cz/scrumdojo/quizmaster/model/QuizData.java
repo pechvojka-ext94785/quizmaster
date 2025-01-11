@@ -1,6 +1,6 @@
 package cz.scrumdojo.quizmaster.model;
 
-import cz.scrumdojo.quizmaster.quiz.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
 import lombok.*;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class QuizData {
 
     private Integer id;
-    
+
     private String name;
 
     private List<QuizQuestion> questions;

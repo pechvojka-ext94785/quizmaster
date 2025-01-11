@@ -2,6 +2,8 @@ package cz.scrumdojo.quizmaster.quiz;
 
 import cz.scrumdojo.quizmaster.model.*;
 
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

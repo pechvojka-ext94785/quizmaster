@@ -1,4 +1,4 @@
-package cz.scrumdojo.quizmaster.quiz;
+package cz.scrumdojo.quizmaster.question;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

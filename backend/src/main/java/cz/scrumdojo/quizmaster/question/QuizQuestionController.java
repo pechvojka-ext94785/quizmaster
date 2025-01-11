@@ -1,5 +1,6 @@
-package cz.scrumdojo.quizmaster.quiz;
+package cz.scrumdojo.quizmaster.question;
 
+import cz.scrumdojo.quizmaster.quiz.QuizAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

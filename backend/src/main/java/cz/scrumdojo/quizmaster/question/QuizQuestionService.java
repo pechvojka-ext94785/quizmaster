@@ -1,4 +1,4 @@
-package cz.scrumdojo.quizmaster.quiz;
+package cz.scrumdojo.quizmaster.question;
 
 import cz.scrumdojo.quizmaster.quiz.validation.InvalidQuestionException;
 import cz.scrumdojo.quizmaster.quiz.validation.QuizQuestionValidator;

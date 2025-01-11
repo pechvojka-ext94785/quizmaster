@@ -1,6 +1,6 @@
 package cz.scrumdojo.quizmaster.quiz.validation;
 
-import cz.scrumdojo.quizmaster.quiz.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

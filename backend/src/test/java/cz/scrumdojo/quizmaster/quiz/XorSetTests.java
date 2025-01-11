@@ -1,5 +1,6 @@
 package cz.scrumdojo.quizmaster.quiz;
 
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

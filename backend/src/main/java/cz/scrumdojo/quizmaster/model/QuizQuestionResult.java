@@ -1,6 +1,6 @@
 package cz.scrumdojo.quizmaster.model;
 
-import cz.scrumdojo.quizmaster.quiz.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
 import lombok.*;
 
 @Data

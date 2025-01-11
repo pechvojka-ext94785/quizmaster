@@ -1,4 +1,4 @@
-package cz.scrumdojo.quizmaster.quiz;
+package cz.scrumdojo.quizmaster.question;
 
 import java.util.*;
 import java.util.function.Function;

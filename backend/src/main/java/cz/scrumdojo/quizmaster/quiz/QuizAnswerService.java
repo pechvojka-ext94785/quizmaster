@@ -1,5 +1,8 @@
 package cz.scrumdojo.quizmaster.quiz;
 
+import cz.scrumdojo.quizmaster.question.MultipleAnswersResult;
+import cz.scrumdojo.quizmaster.question.QuizQuestion;
+import cz.scrumdojo.quizmaster.question.QuizQuestionRepository;
 import cz.scrumdojo.quizmaster.quiz.validation.PostQuizAnswerValidator;
 import org.springframework.stereotype.Service;
 
