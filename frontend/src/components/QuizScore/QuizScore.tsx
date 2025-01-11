@@ -1,6 +1,6 @@
 import './QuizScore.css'
 
-import { fetchJson } from 'utils/apiUtils'
+import { fetchJson } from 'services/helpers.ts'
 import { createSignal, onMount } from 'solid-js'
 
 type Score = {
