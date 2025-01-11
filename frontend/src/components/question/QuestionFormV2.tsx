@@ -77,15 +77,9 @@ export const QuestionFormV2 = (props: QuizQuestionProps) => {
                     />
                     <label for={answerId}>
                         {answer}
-                        <Show
-                            when={submitted() && isFeedbackRequired()}
-                            children={Explanation(
-                                createMemo(() => false),
-                                explanation,
-                                isFeedbackRequired,
-                            )}
-                            keyed
-                        />
+                        <Show when={submitted() && isFeedbackRequired()} keyed>
+                            <Explanation correct={false} explanation={explanation} showExplanation={isFeedbackRequired()} />
+                        </Show>
                     </label>
                 </li>
             )

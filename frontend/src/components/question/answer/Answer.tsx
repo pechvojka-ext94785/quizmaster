@@ -50,11 +50,9 @@ export const Answer: Component<AnswerProps> = ({
                 <input type={'checkbox'} name={`${idx}`} id={answerId} value={answer} onInput={handleCheckboxChange} />
                 <label for={answerId}>
                     {answer}
-                    <Show
-                        when={isSubmitted()}
-                        children={Explanation(() => !isFeedbackRequired(), explanation, isFeedbackRequired)}
-                        keyed
-                    />
+                    <Show when={isSubmitted()} keyed>
+                        <Explanation correct={!isFeedbackRequired()} explanation={explanation} showExplanation={isFeedbackRequired()} />
+                    </Show>
                 </label>
             </li>
         )
@@ -65,15 +63,9 @@ export const Answer: Component<AnswerProps> = ({
             <input type={'radio'} name={'answer'} id={answerId} value={answer} onClick={handleRadioChange} />
             <label for={answerId}>
                 {answer}
-                <Show
-                    when={isSubmitted() && selectedIdx() === idx}
-                    children={Explanation(
-                        () => !isFeedbackRequired(),
-                        explanation,
-                        () => true,
-                    )}
-                    keyed
-                />
+                <Show when={isSubmitted() && selectedIdx() === idx} keyed>
+                    <Explanation correct={!isFeedbackRequired()} explanation={explanation} showExplanation={true} />
+                </Show>
             </label>
         </li>
     )

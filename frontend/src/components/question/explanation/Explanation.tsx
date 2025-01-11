@@ -1,23 +1,27 @@
-import { type Accessor, Show } from 'solid-js'
+import { Show } from 'solid-js'
 
-export const Explanation = (correct: Accessor<boolean>, explanation: string, showExplanation: Accessor<boolean>) => {
-    return (
-        <span>
-            {' '}
-            <span class={correct() ? 'greenSpan' : 'redSpan'}>{correct() ? 'Correct!' : 'Incorrect!'}</span> &nbsp;
-            <Show
-                when={showExplanation()}
-                children={
-                    <>
-                        {'Explanation: '}
-                        <span class="explanation">{explanation}</span>
-                    </>
-                }
-                keyed
-            />
-        </span>
-    )
+
+interface ExplanationProps {
+    readonly correct: boolean
+    readonly explanation: string
+    readonly showExplanation: boolean
 }
+
+export const Explanation = (props: ExplanationProps) =>
+    <span>
+        {' '}
+        <span class={props.correct ? 'greenSpan' : 'redSpan'}>{props.correct ? 'Correct!' : 'Incorrect!'}</span> &nbsp;
+        <Show
+            when={props.showExplanation}
+            children={
+                <>
+                    {'Explanation: '}
+                    <span class="explanation">{props.explanation}</span>
+                </>
+            }
+            keyed
+        />
+    </span>
 
 export const QuestionExplanation = (questionExplanation: string) => (
     <p class="questionExplanation">{questionExplanation}</p>
