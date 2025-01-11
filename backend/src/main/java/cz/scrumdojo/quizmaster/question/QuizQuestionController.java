@@ -45,6 +45,12 @@ public class QuizQuestionController {
     }
 
     @Transactional
+    @GetMapping("/quiz-question/{id}/answers")
+    public ResponseEntity<Answers> getAnswers(@PathVariable Integer id) {
+        return response(findQuestion(id).map(Answers::from));
+    }
+
+    @Transactional
     @GetMapping("/quiz-question/{id}/answer/{index}")
     public ResponseEntity<Boolean> answerQuestion(@PathVariable Integer id, @PathVariable int index) {
         return response(findQuestion(id).map(QuizQuestion.isCorrectAnswer(index)));

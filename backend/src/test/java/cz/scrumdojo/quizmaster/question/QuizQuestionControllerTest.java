@@ -53,6 +53,25 @@ public class QuizQuestionControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @Test
+    public void getAnswers() {
+        var question = createSingleChoiceQuestion();
+        var questionId = quizQuestionController.saveQuestion(question);
+        Answers answers = quizQuestionController.getAnswers(questionId).getBody();
+
+        assertNotNull(answers);
+        assertArrayEquals(question.getCorrectAnswers(), answers.getCorrectAnswers());
+        assertArrayEquals(question.getExplanations(), answers.getExplanations());
+        assertSame(question.getQuestionExplanation(), answers.getQuestionExplanation());
+    }
+
+    @Test
+    public void getAnswersForNonExistingQuestion() {
+        ResponseEntity<?> response = quizQuestionController.getAnswers(-1);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
     public void answerQuestion(int answerIdx, boolean isCorrect) {
         var question = createSingleChoiceQuestion();
         var questionId = quizQuestionController.saveQuestion(question);
