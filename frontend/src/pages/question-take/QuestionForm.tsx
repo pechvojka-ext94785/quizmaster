@@ -1,44 +1,44 @@
 import type { QuizQuestion } from '../../model/quiz-question.ts'
 import { createMemo, createSignal, For, Show } from 'solid-js'
 import { preventDefault } from '../../helpers.ts'
-import { isMultipleAnswersCorrect, type MultipleAnswerResult } from '../../services/QuizQuestionService.ts'
 import { QuestionExplanation } from './Explanation.tsx'
 import { Feedback } from './Feedback.tsx'
 import './questionForm.css'
 import { Answer, type UserAnswer } from './Answer.tsx'
 
 export const QuestionForm = ({
-    id,
     question,
     answers,
     explanations,
     correctAnswers,
     questionExplanation,
 }: QuizQuestion) => {
-    const [selectedAnswer, setSelectedAnswer] = createSignal<number | null>(null)
-    const [isAnswerCorrect, setIsAnswerCorrect] = createSignal(false)
-    //const [setExplanation] = createSignal<string | ''>('')
-    //const [_, setExplanationIdx] = createSignal<number | null>(null)
-    const [answersRequiringFeedback, setAnswersRequiringFeedback] = createSignal<number[]>([])
+    const isMultiple = correctAnswers.length > 1
 
     const [selectedAnswerIdxs, setSelectedAnswerIdxs] = createSignal<number[]>([])
     const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
     const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([...selectedAnswerIdxs(), idx])
     const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(selectedAnswerIdxs().filter(i => i !== idx))
 
+    const isQuestionCorrect = createMemo(
+        () =>
+            selectedAnswerIdxs().length === correctAnswers.length &&
+            selectedAnswerIdxs().every(idx => correctAnswers.includes(idx)),
+    )
+
+    const wrongAnswers = createMemo(() =>
+        isMultiple
+            ? [
+                  ...selectedAnswerIdxs().filter(idx => !correctAnswers.includes(idx)),
+                  ...correctAnswers.filter(idx => !selectedAnswerIdxs().includes(idx)),
+              ]
+            : [selectedAnswerIdxs()[0] ?? -1],
+    )
+
     const [submitted, setSubmitted] = createSignal(false)
 
-    const isMultiple = correctAnswers.length > 1
-
-    const submitMultiple = preventDefault(async () => {
-        if (selectedAnswerIdxs().length === 0) return
-
-        isMultipleAnswersCorrect(id, selectedAnswerIdxs()).then((result: MultipleAnswerResult) => {
-            setSubmitted(true)
-
-            setIsAnswerCorrect(result.questionAnsweredCorrectly)
-            setAnswersRequiringFeedback(result.answersRequiringFeedback)
-        })
+    const submitMultiple = preventDefault(() => {
+        if (selectedAnswerIdxs().length > 0) setSubmitted(true)
     })
 
     const handleAnswerChange = (event: UserAnswer) => {
@@ -49,10 +49,6 @@ export const QuestionForm = ({
             if (value) addSelectedAnswerIdx(index)
             else removeSelectedAnswerIdx(index)
         } else setSelectedAnswerIdx(index)
-
-        if (!isMultiple) {
-            setSelectedAnswer(index)
-        }
     }
 
     return (
@@ -61,7 +57,7 @@ export const QuestionForm = ({
             <ul>
                 <For each={answers}>
                     {(answer, idx) => {
-                        const isFeedbackRequired = createMemo(() => answersRequiringFeedback().some(id => id === idx()))
+                        const isFeedbackRequired = createMemo(() => wrongAnswers().some(id => id === idx()))
                         return (
                             <Answer
                                 answer={answer}
@@ -71,7 +67,6 @@ export const QuestionForm = ({
                                 handleAnswerChange={handleAnswerChange}
                                 isFeedbackRequired={isFeedbackRequired}
                                 isSubmitted={submitted}
-                                selectedIdx={selectedAnswer}
                             />
                         )
                     }}
@@ -80,7 +75,7 @@ export const QuestionForm = ({
             <div class="btn-row">
                 <input type="submit" class="submit-btn" value={'Submit'} />
             </div>
-            <Show when={submitted()} children={Feedback(isAnswerCorrect())} keyed />
+            <Show when={submitted()} children={Feedback(isQuestionCorrect())} keyed />
             <Show when={submitted()} children={QuestionExplanation(questionExplanation)} />
         </form>
     )

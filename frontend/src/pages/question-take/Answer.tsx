@@ -14,7 +14,6 @@ export type AnswerProps = {
     isSubmitted: Accessor<boolean>
     isMultiple: boolean
     handleAnswerChange: (value: UserAnswer) => void
-    selectedIdx: Accessor<number | null>
 }
 
 export const Answer: Component<AnswerProps> = ({
@@ -25,7 +24,6 @@ export const Answer: Component<AnswerProps> = ({
     isFeedbackRequired,
     handleAnswerChange,
     isSubmitted,
-    selectedIdx,
 }) => {
     const answerId: string = `answer-${idx}`
 
@@ -67,8 +65,12 @@ export const Answer: Component<AnswerProps> = ({
             <input type={'radio'} name={'answer'} id={answerId} value={answer} onClick={handleRadioChange} />
             <label for={answerId}>
                 {answer}
-                <Show when={isSubmitted() && selectedIdx() === idx} keyed>
-                    <AnswerFeedback correct={!isFeedbackRequired()} explanation={explanation} showExplanation={true} />
+                <Show when={isSubmitted()} keyed>
+                    <AnswerFeedback
+                        correct={!isFeedbackRequired()}
+                        explanation={explanation}
+                        showExplanation={isFeedbackRequired()}
+                    />
                 </Show>
             </label>
         </li>
