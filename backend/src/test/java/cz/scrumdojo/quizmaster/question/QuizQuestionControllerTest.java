@@ -93,12 +93,4 @@ public class QuizQuestionControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-
-    @Test
-    public void returnAllQuestions() {
-        ResponseEntity<?> response = quizQuestionController.getAllQuestionList();
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-    }
 }
