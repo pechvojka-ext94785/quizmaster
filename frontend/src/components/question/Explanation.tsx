@@ -1,5 +1,15 @@
 import { Show } from 'solid-js'
 
+interface CorrectnessProps {
+    readonly isCorrect: boolean
+}
+
+export const Correctness = (props: CorrectnessProps) => {
+    const label = props.isCorrect ? 'Correct!' : 'Incorrect!'
+    const className = props.isCorrect ? 'correct' : 'incorrect'
+
+    return <span class={`feedback ${className}`}>{label}</span>
+}
 
 interface ExplanationProps {
     readonly correct: boolean
@@ -7,10 +17,10 @@ interface ExplanationProps {
     readonly showExplanation: boolean
 }
 
-export const Explanation = (props: ExplanationProps) =>
+export const Explanation = (props: ExplanationProps) => (
     <span>
         {' '}
-        <span class={props.correct ? 'greenSpan' : 'redSpan'}>{props.correct ? 'Correct!' : 'Incorrect!'}</span> &nbsp;
+        <Correctness isCorrect={props.correct} /> &nbsp;
         <Show
             when={props.showExplanation}
             children={
@@ -22,6 +32,7 @@ export const Explanation = (props: ExplanationProps) =>
             keyed
         />
     </span>
+)
 
 export const QuestionExplanation = (questionExplanation: string) => (
     <p class="questionExplanation">{questionExplanation}</p>
