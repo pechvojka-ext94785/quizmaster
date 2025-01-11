@@ -1,5 +1,5 @@
 import { type Accessor, type Component, Show } from 'solid-js'
-import { Explanation } from './Explanation.tsx'
+import { AnswerFeedback } from './Explanation.tsx'
 
 export type UserAnswer = {
     index: number
@@ -51,7 +51,7 @@ export const Answer: Component<AnswerProps> = ({
                 <label for={answerId}>
                     {answer}
                     <Show when={isSubmitted()} keyed>
-                        <Explanation
+                        <AnswerFeedback
                             correct={!isFeedbackRequired()}
                             explanation={explanation}
                             showExplanation={isFeedbackRequired()}
@@ -68,7 +68,7 @@ export const Answer: Component<AnswerProps> = ({
             <label for={answerId}>
                 {answer}
                 <Show when={isSubmitted() && selectedIdx() === idx} keyed>
-                    <Explanation correct={!isFeedbackRequired()} explanation={explanation} showExplanation={true} />
+                    <AnswerFeedback correct={!isFeedbackRequired()} explanation={explanation} showExplanation={true} />
                 </Show>
             </label>
         </li>

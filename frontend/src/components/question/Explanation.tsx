@@ -11,13 +11,13 @@ export const Correctness = (props: CorrectnessProps) => {
     return <span class={`feedback ${className}`}>{label}</span>
 }
 
-interface ExplanationProps {
+interface AnswerFeedbackProps {
     readonly correct: boolean
     readonly explanation: string
     readonly showExplanation: boolean
 }
 
-export const Explanation = (props: ExplanationProps) => (
+export const AnswerFeedback = (props: AnswerFeedbackProps) => (
     <span>
         {' '}
         <Correctness isCorrect={props.correct} /> &nbsp;
