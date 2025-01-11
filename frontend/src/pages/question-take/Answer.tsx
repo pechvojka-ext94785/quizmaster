@@ -1,5 +1,5 @@
 import { type Accessor, type Component, Show } from 'solid-js'
-import { AnswerFeedback } from './Explanation.tsx'
+import { AnswerFeedback } from 'pages/question-take'
 
 export type UserAnswer = {
     index: number
