@@ -16,26 +16,27 @@ public class QuizQuestionControllerTest {
     @Autowired
     private QuizQuestionController quizQuestionController;
 
-    private QuizQuestion createQuestion(int[] correctAnswers) {
-        return createQuestionBuilderBase()
-            .correctAnswers(correctAnswers)
+    private static QuizQuestion createSingleChoiceQuestion() {
+        return QuizQuestion.builder()
+            .question("What is the capital of Italy?")
+            .answers(new String[] { "Naples", "Rome", "Florence", "Palermo" })
+            .explanations(new String[] { "Nope", "Of course!", "You wish", "Sicilia!" })
+            .correctAnswers(new int[] { 1 })
             .build();
     }
 
-    private QuizQuestion createQuestion() {
-        return createQuestion(new int[] { 1 });
-    }
-
-    private static QuizQuestion.QuizQuestionBuilder createQuestionBuilderBase() {
+    private static QuizQuestion createMultipleChoiceQuestion() {
         return QuizQuestion.builder()
-            .question("What is the capital of Italy?")
-            .answers(new String[]{"Naples", "Rome", "Florence", "Palermo"})
-            .explanations(new String[]{"Nope", "Never", "You wish", "Bleh"});
+            .question("What countries are in Europe?")
+            .answers(new String[] { "USA", "Italy", "Mexico", "France" })
+            .explanations(new String[] { "Nope", "Yes", "No", "Yes" })
+            .correctAnswers(new int[] { 1, 3 })
+            .build();
     }
 
     @Test
     public void getQuestion() {
-        var question = createQuestion();
+        var question = createSingleChoiceQuestion();
         var questionId = quizQuestionController.saveQuestion(question);
 
         var result = quizQuestionController.getQuestion(questionId).getBody();
@@ -53,7 +54,7 @@ public class QuizQuestionControllerTest {
     }
 
     public void answerQuestion(int answerIdx, boolean isCorrect) {
-        var question = createQuestion();
+        var question = createSingleChoiceQuestion();
         var questionId = quizQuestionController.saveQuestion(question);
 
         var result = quizQuestionController.answerQuestion(questionId, answerIdx).getBody();
@@ -73,7 +74,7 @@ public class QuizQuestionControllerTest {
     }
 
     private void checkMultipleAnswers(List<Integer> userAnswersIndexes, boolean isCorrect, List<Integer> expectedWrongAnswers) {
-        QuizQuestion question = createQuestion(new int[] { 1, 3 });
+        QuizQuestion question = createMultipleChoiceQuestion();
         var questionId = quizQuestionController.saveQuestion(question);
 
         MultipleAnswersResult result = quizQuestionController.answerMultipleChoice(questionId, userAnswersIndexes).getBody();
