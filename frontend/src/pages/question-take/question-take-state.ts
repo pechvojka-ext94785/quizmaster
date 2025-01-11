@@ -1,4 +1,4 @@
-import { type Accessor, createSignal } from 'solid-js'
+import { type Accessor, createEffect, createSignal, on } from 'solid-js'
 import type { QuizQuestion } from 'model/quiz-question'
 
 export interface QuestionTakeState {
@@ -19,6 +19,13 @@ export const createQuestionTakeState = (question: Accessor<QuizQuestion>): Quest
 
     const [submitted, setSubmitted] = createSignal(false)
     const submit = () => setSubmitted(true)
+
+    const reset = () => {
+        setSelectedAnswerIdxs([])
+        setSubmitted(false)
+    }
+
+    createEffect(on(question, reset))
 
     const onSelectedAnswerChange = (idx: number, selected: boolean) => {
         setSubmitted(false)

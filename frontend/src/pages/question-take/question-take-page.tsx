@@ -1,6 +1,6 @@
 import './question-take-page.scss'
 
-import { createSignal, onMount, Show } from 'solid-js'
+import { createEffect, createSignal, Show } from 'solid-js'
 import { useParams } from '@solidjs/router'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
@@ -9,11 +9,11 @@ import { QuestionForm } from 'pages/question-take'
 
 export const QuestionTakePage = () => {
     const params = useParams()
-    const questionId = Number.parseInt(params.id)
+    const questionId = () => Number.parseInt(params.id)
 
     const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
 
-    onMount(async () => setQuizQuestion(await getQuestion(questionId)))
+    createEffect(async () => setQuizQuestion(await getQuestion(questionId())))
 
-    return <Show when={quizQuestion()} children={QuestionForm} keyed />
+    return <Show when={quizQuestion()} children={ question => <QuestionForm question={question} /> }/>
 }
