@@ -51,7 +51,11 @@ export const Answer: Component<AnswerProps> = ({
                 <label for={answerId}>
                     {answer}
                     <Show when={isSubmitted()} keyed>
-                        <Explanation correct={!isFeedbackRequired()} explanation={explanation} showExplanation={isFeedbackRequired()} />
+                        <Explanation
+                            correct={!isFeedbackRequired()}
+                            explanation={explanation}
+                            showExplanation={isFeedbackRequired()}
+                        />
                     </Show>
                 </label>
             </li>
