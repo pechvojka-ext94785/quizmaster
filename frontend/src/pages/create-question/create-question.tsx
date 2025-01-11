@@ -1,15 +1,6 @@
 import './create-question.css'
 import { createSignal, Show } from 'solid-js'
-import { saveQuestion } from 'services/QuizQuestionService'
-
-type Question = {
-    question: string
-    answers: string[]
-    correctAnswers: number[]
-    explanations: string[]
-    questionExplanation: string
-    quizType: string
-}
+import { QuestionData, saveQuestion } from 'services/QuizQuestionService'
 
 export function CreateQuestionForm() {
     const [question, setQuestion] = createSignal<string>('')
@@ -20,7 +11,7 @@ export function CreateQuestionForm() {
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
 
-    const postData = (formData: Question) => {
+    const postData = (formData: QuestionData) => {
         if (validationIsFailing(formData)) return
 
         saveQuestion(formData)
@@ -28,7 +19,7 @@ export function CreateQuestionForm() {
             .catch(error => setLinkToQuestion(error.message))
     }
 
-    const validationIsFailing = (formData: Question) => {
+    const validationIsFailing = (formData: QuestionData) => {
         if (formData.question === '' && formData.answers[0] === '' && formData.correctAnswers?.length === 0) {
             setLinkToQuestion('Fill all required fields.')
             return true
@@ -49,7 +40,7 @@ export function CreateQuestionForm() {
             setLinkToQuestion('Question must have at least 2 answers')
             return true
         }
-        if (formData.quizType === 'SINGLE' && formData.correctAnswers !== null && formData.correctAnswers.length > 1) {
+        if (!isMultipleAnswer() && formData.correctAnswers !== null && formData.correctAnswers.length > 1) {
             setLinkToQuestion('Multiple answers are checked but the test is considered as a single answer only.')
             return true
         }
@@ -94,7 +85,6 @@ export function CreateQuestionForm() {
             question: question(),
             answers: answers(),
             correctAnswers: correctAnswers(),
-            quizType: isMultipleAnswer() ? 'MULTIPLE' : 'SINGLE',
             explanations: questionExplanations(),
             questionExplanation: answerExplanation(),
         }
