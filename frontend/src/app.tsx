@@ -1,5 +1,5 @@
 import { Route, Router } from '@solidjs/router'
-import { Quiz } from 'quiz.tsx'
+import { QuestionTakePage } from 'pages/question-take'
 import { CreateQuestionForm } from './pages/CreateQuestion.tsx'
 import { QuestionList } from 'questions.tsx'
 import { QuizMaster } from 'quizmaster.tsx'
@@ -16,7 +16,7 @@ export const App = () => (
         <Route path="/quiz/new" component={QuestionList} />
 
         <Route path="/question/new" component={CreateQuestionForm} />
-        <Route path="/question/:id" component={Quiz} />
+        <Route path="/question/:id" component={QuestionTakePage} />
 
         <Route path="/quizmaster/:id" component={QuizMaster} />
         <Route path="/quizmaster/:id/result" component={QuizResult} />

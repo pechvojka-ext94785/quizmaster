@@ -1,10 +1,9 @@
-import type { QuizQuestion } from '../../model/quiz-question.ts'
+import './question-form.css'
 import { createMemo, createSignal, For, Show } from 'solid-js'
-import { preventDefault } from '../../helpers.ts'
-import { QuestionExplanation } from './Explanation.tsx'
-import { Feedback } from './Feedback.tsx'
-import './questionForm.css'
-import { Answer } from './Answer.tsx'
+
+import type { QuizQuestion } from 'model/quiz-question.ts'
+import { preventDefault } from 'helpers.ts'
+import { Answer, QuestionCorrectness, QuestionExplanation } from 'pages/question-take'
 
 export const QuestionForm = ({
     question,
@@ -63,8 +62,12 @@ export const QuestionForm = ({
             <div class="btn-row">
                 <input type="submit" class="submit-btn" value={'Submit'} />
             </div>
-            <Show when={submitted()} children={Feedback(isQuestionCorrect())} keyed />
-            <Show when={submitted()} children={QuestionExplanation(questionExplanation)} />
+            <Show when={submitted()}>
+                <QuestionCorrectness isCorrect={isQuestionCorrect()} />
+            </Show>
+            <Show when={submitted()}>
+                <QuestionExplanation text={questionExplanation} />
+            </Show>
         </form>
     )
 }

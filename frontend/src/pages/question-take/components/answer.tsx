@@ -16,8 +16,7 @@ export const Answer = (props: AnswerProps) => {
     const checkType = () => (props.isMultipleChoice ? 'checkbox' : 'radio')
     const checkName = () => (props.isMultipleChoice ? answerId() : 'answer')
 
-    const onChange = (event: InputEvent) =>
-        props.onAnswerChange(props.idx, (event.target as HTMLInputElement).checked)
+    const onChange = (event: InputEvent) => props.onAnswerChange(props.idx, (event.target as HTMLInputElement).checked)
 
     return (
         <li>

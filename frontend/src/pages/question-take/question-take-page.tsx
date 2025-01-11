@@ -1,13 +1,13 @@
-import './quiz.scss'
+import './question-take-page.scss'
 
 import { createSignal, onMount, Show } from 'solid-js'
 import { useParams } from '@solidjs/router'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
-import { getQuestion } from './services/QuizQuestionService.ts'
-import { QuestionForm } from './pages/question-take/QuestionForm.tsx'
+import { getQuestion } from '../../services/QuizQuestionService.ts'
+import { QuestionForm } from 'pages/question-take'
 
-export const Quiz = () => {
+export const QuestionTakePage = () => {
     const params = useParams()
     const questionId = Number.parseInt(params.id)
 

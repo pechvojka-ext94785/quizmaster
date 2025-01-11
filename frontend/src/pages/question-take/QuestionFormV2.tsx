@@ -3,7 +3,7 @@ import { preventDefault } from '../../helpers.ts'
 import * as QuestionService from '../../services/QuizQuestionService.ts'
 import { transformObjectToArray } from '../../utils/transformObjectToArray.ts'
 import { AnswerFeedback } from './components/answer-feedback.tsx'
-import './questionForm.css'
+import './question-form.css'
 import type { QuizQuestionProps } from '../../model/quiz-question.ts'
 
 /**
@@ -78,11 +78,7 @@ export const QuestionFormV2 = (props: QuizQuestionProps) => {
                     <label for={answerId}>
                         {answer}
                         <Show when={submitted() && isFeedbackRequired()} keyed>
-                            <AnswerFeedback
-                                correct={false}
-                                explanation={explanation}
-                                showExplanation={isFeedbackRequired()}
-                            />
+                            <AnswerFeedback correct={false} explanation={explanation} />
                         </Show>
                     </label>
                 </li>

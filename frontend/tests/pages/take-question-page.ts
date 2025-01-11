@@ -24,11 +24,11 @@ export class TakeQuestionPage {
 
     submit = () => this.page.locator('input[type="submit"]').click()
 
-    feedbackLocator = () => this.page.locator('p.feedback')
+    feedbackLocator = () => this.page.locator('p.question-correctness')
 
     answerExplanationLocator = () => this.page.locator('span.explanation')
 
     getFeedback = () => this.page.locator('.feedback').innerText()
 
-    questionExplanationLocator = () => this.page.locator('p.questionExplanation')
+    questionExplanationLocator = () => this.page.locator('p.question-explanation')
 }

@@ -8,3 +8,9 @@ export const Correctness = (props: CorrectnessProps) => {
 
     return <span class={`feedback ${className}`}>{label}</span>
 }
+
+export const QuestionCorrectness = (props: CorrectnessProps) => (
+    <p class="question-correctness">
+        <Correctness isCorrect={props.isCorrect} />
+    </p>
+)
