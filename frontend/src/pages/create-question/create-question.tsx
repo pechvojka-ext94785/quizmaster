@@ -1,10 +1,11 @@
 import './create-question.css'
 import { createSignal, Show } from 'solid-js'
+import { saveQuestion } from 'services/QuizQuestionService'
 
 type Question = {
     question: string
     answers: string[]
-    correctAnswers: number[] | null
+    correctAnswers: number[]
     explanations: string[]
     questionExplanation: string
     quizType: string
@@ -20,40 +21,11 @@ export function CreateQuestionForm() {
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
 
     const postData = (formData: Question) => {
-        if (validationIsFailing(formData)) {
-            return
-        }
-        const data = {
-            question: formData.question,
-            answers: formData.answers,
-            correctAnswers: formData.correctAnswers,
-            explanations: formData.explanations,
-            questionExplanation: formData.questionExplanation,
-            quizType: formData.quizType,
-        }
-        fetch('/api/quiz-question', {
-            method: 'POST', // HTTP method
-            headers: {
-                'Content-Type': 'application/json', // Set the content type to JSON
-            },
-            body: JSON.stringify(data), // Convert the object to a JSON string
-        })
-            .then(response => {
-                if (!response.ok) {
-                    setLinkToQuestion('Invalid question')
-                    throw new Error()
-                }
-                return response.json() // Parse JSON response
-            })
-            .then(questionId => {
-                setLinkToQuestion(`${location.origin}/question/${questionId}`)
-            })
-            .catch(error => {
-                console.error('Error:', error) // Handle errors
-                if (error.message) {
-                    setLinkToQuestion(error.message)
-                }
-            })
+        if (validationIsFailing(formData)) return
+
+        saveQuestion(formData)
+            .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
+            .catch(error => setLinkToQuestion(error.message))
     }
 
     const validationIsFailing = (formData: Question) => {

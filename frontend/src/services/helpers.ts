@@ -1,7 +1,14 @@
-export const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> => {
-    const response = await fetch(url, init)
-    return (await response.json()) as T
-}
+export const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> =>
+    fetch(url, init)
+        .then(async response => {
+            if (!response.ok) {
+                const error = await response.json()
+                throw new Error(error.message)
+            }
+            return response
+        })
+        .then(response => response.json())
+        .then(data => data as T)
 
 export const postJson = <T, U>(url: string, data: T): Promise<U> =>
     fetchJson(url, {
