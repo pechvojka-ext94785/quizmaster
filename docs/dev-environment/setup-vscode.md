@@ -1,4 +1,4 @@
-# Setup IntelliJ IDEA
+# Setup VS Code
 
 When working in GitHub Codespace, VS Code automatically installs recommended extensions.
 
