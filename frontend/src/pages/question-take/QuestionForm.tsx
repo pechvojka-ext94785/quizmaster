@@ -4,7 +4,7 @@ import { preventDefault } from '../../helpers.ts'
 import { QuestionExplanation } from './Explanation.tsx'
 import { Feedback } from './Feedback.tsx'
 import './questionForm.css'
-import { Answer, type UserAnswer } from './Answer.tsx'
+import { Answer } from './Answer.tsx'
 
 export const QuestionForm = ({
     question,
@@ -16,9 +16,13 @@ export const QuestionForm = ({
     const isMultiple = correctAnswers.length > 1
 
     const [selectedAnswerIdxs, setSelectedAnswerIdxs] = createSignal<number[]>([])
-    const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
     const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([...selectedAnswerIdxs(), idx])
     const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(selectedAnswerIdxs().filter(i => i !== idx))
+
+    const onSelectedAnswerChange = (idx: number, selected: boolean) => {
+        if (selected) addSelectedAnswerIdx(idx)
+        else removeSelectedAnswerIdx(idx)
+    }
 
     const isQuestionCorrect = createMemo(
         () =>
@@ -38,16 +42,6 @@ export const QuestionForm = ({
         if (selectedAnswerIdxs().length > 0) setSubmitted(true)
     })
 
-    const handleAnswerChange = (event: UserAnswer) => {
-        const { index, value } = event
-        setSubmitted(false)
-
-        if (isMultiple) {
-            if (value) addSelectedAnswerIdx(index)
-            else removeSelectedAnswerIdx(index)
-        } else setSelectedAnswerIdx(index)
-    }
-
     return (
         <form onSubmit={submitMultiple}>
             <h1>{question}</h1>
@@ -55,13 +49,13 @@ export const QuestionForm = ({
                 <For each={answers}>
                     {(answer, idx) => (
                         <Answer
+                            isMultipleChoice={isMultiple}
                             idx={idx()}
                             answer={answer}
                             isCorrect={isAnswerCorrect(idx())}
                             explanation={explanations ? explanations[idx()] : 'not defined'}
-                            isMultiple={isMultiple}
-                            handleAnswerChange={handleAnswerChange}
                             showFeedback={submitted() && showFeedback(idx())}
+                            onAnswerChange={onSelectedAnswerChange}
                         />
                     )}
                 </For>
