@@ -1,9 +1,7 @@
 import type { QuizQuestion } from '../../model/quiz-question.ts'
 import { createMemo, createSignal, For, Show } from 'solid-js'
 import { preventDefault } from '../../helpers.ts'
-import * as QuestionService from '../../services/QuizQuestionService.ts'
 import { isMultipleAnswersCorrect, type MultipleAnswerResult } from '../../services/QuizQuestionService.ts'
-import { transformObjectToArray } from '../../utils/transformObjectToArray.ts'
 import { QuestionExplanation } from './Explanation.tsx'
 import { Feedback } from './Feedback.tsx'
 import './questionForm.css'
@@ -18,33 +16,24 @@ export const QuestionForm = ({
     questionExplanation,
 }: QuizQuestion) => {
     const [selectedAnswer, setSelectedAnswer] = createSignal<number | null>(null)
-    const [selectedAnswers, setSelectedAnswers] = createSignal<{ [idx: number]: boolean } | Record<number, boolean>>({})
     const [isAnswerCorrect, setIsAnswerCorrect] = createSignal(false)
     //const [setExplanation] = createSignal<string | ''>('')
     //const [_, setExplanationIdx] = createSignal<number | null>(null)
     const [answersRequiringFeedback, setAnswersRequiringFeedback] = createSignal<number[]>([])
 
+    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = createSignal<number[]>([])
+    const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
+    const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([...selectedAnswerIdxs(), idx])
+    const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(selectedAnswerIdxs().filter(i => i !== idx))
+
     const [submitted, setSubmitted] = createSignal(false)
 
     const isMultiple = correctAnswers.length > 1
 
-    const submitSingle = preventDefault(async () => {
-        const selectedAnswerIdx = selectedAnswer()
-        if (selectedAnswerIdx === null) return
-        QuestionService.isAnswerCorrect(id, selectedAnswerIdx).then(isCorrect => {
-            setSubmitted(true)
-            setIsAnswerCorrect(isCorrect)
-
-            setAnswersRequiringFeedback(isCorrect ? [] : [selectedAnswerIdx])
-        })
-    })
-
     const submitMultiple = preventDefault(async () => {
-        if (Object.keys(selectedAnswers()).length === 0) return
+        if (selectedAnswerIdxs().length === 0) return
 
-        const payload = transformObjectToArray(selectedAnswers())
-
-        isMultipleAnswersCorrect(id, payload).then((result: MultipleAnswerResult) => {
+        isMultipleAnswersCorrect(id, selectedAnswerIdxs()).then((result: MultipleAnswerResult) => {
             setSubmitted(true)
 
             setIsAnswerCorrect(result.questionAnsweredCorrectly)
@@ -55,18 +44,19 @@ export const QuestionForm = ({
     const handleAnswerChange = (event: UserAnswer) => {
         const { index, value } = event
         setSubmitted(false)
+
         if (isMultiple) {
-            setSelectedAnswers(prevState => ({
-                ...prevState,
-                [index]: value,
-            }))
-        } else {
+            if (value) addSelectedAnswerIdx(index)
+            else removeSelectedAnswerIdx(index)
+        } else setSelectedAnswerIdx(index)
+
+        if (!isMultiple) {
             setSelectedAnswer(index)
         }
     }
 
     return (
-        <form onSubmit={isMultiple ? submitMultiple : submitSingle}>
+        <form onSubmit={submitMultiple}>
             <h1>{question}</h1>
             <ul>
                 <For each={answers}>
