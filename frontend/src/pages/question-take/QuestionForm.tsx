@@ -26,14 +26,11 @@ export const QuestionForm = ({
             selectedAnswerIdxs().every(idx => correctAnswers.includes(idx)),
     )
 
-    const wrongAnswers = createMemo(() =>
-        isMultiple
-            ? [
-                  ...selectedAnswerIdxs().filter(idx => !correctAnswers.includes(idx)),
-                  ...correctAnswers.filter(idx => !selectedAnswerIdxs().includes(idx)),
-              ]
-            : [selectedAnswerIdxs()[0] ?? -1],
-    )
+    const isAnswerCorrect = (idx: number) =>
+        (correctAnswers.includes(idx) && selectedAnswerIdxs().includes(idx)) ||
+        (!correctAnswers.includes(idx) && !selectedAnswerIdxs().includes(idx))
+
+    const showFeedback = (idx: number) => (isMultiple ? !isAnswerCorrect(idx) : selectedAnswerIdxs()[0] === idx)
 
     const [submitted, setSubmitted] = createSignal(false)
 
@@ -56,20 +53,17 @@ export const QuestionForm = ({
             <h1>{question}</h1>
             <ul>
                 <For each={answers}>
-                    {(answer, idx) => {
-                        const isFeedbackRequired = createMemo(() => wrongAnswers().some(id => id === idx()))
-                        return (
-                            <Answer
-                                answer={answer}
-                                idx={idx()}
-                                explanation={explanations ? explanations[idx()] : 'not defined'}
-                                isMultiple={isMultiple}
-                                handleAnswerChange={handleAnswerChange}
-                                isFeedbackRequired={isFeedbackRequired}
-                                isSubmitted={submitted}
-                            />
-                        )
-                    }}
+                    {(answer, idx) => (
+                        <Answer
+                            idx={idx()}
+                            answer={answer}
+                            isCorrect={isAnswerCorrect(idx())}
+                            explanation={explanations ? explanations[idx()] : 'not defined'}
+                            isMultiple={isMultiple}
+                            handleAnswerChange={handleAnswerChange}
+                            showFeedback={submitted() && showFeedback(idx())}
+                        />
+                    )}
                 </For>
             </ul>
             <div class="btn-row">

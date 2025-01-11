@@ -1,59 +1,53 @@
-import { type Accessor, type Component, Show } from 'solid-js'
+import { Show } from 'solid-js'
 import { AnswerFeedback } from 'pages/question-take'
 
 export type UserAnswer = {
-    index: number
-    value: boolean
+    readonly index: number
+    readonly value: boolean
 }
 
 export type AnswerProps = {
-    answer: string // Adjust type based on the actual answer object
-    idx: number
-    explanation: string
-    isFeedbackRequired: Accessor<boolean>
-    isSubmitted: Accessor<boolean>
-    isMultiple: boolean
-    handleAnswerChange: (value: UserAnswer) => void
+    readonly idx: number
+    readonly answer: string
+    readonly explanation: string
+    readonly isCorrect: boolean
+    readonly showFeedback: boolean
+    readonly isMultiple: boolean
+    readonly handleAnswerChange: (value: UserAnswer) => void
 }
 
-export const Answer: Component<AnswerProps> = ({
-    answer,
-    idx,
-    explanation,
-    isMultiple,
-    isFeedbackRequired,
-    handleAnswerChange,
-    isSubmitted,
-}) => {
-    const answerId: string = `answer-${idx}`
+export const Answer = (props: AnswerProps) => {
+    const answerId: string = `answer-${props.idx}`
 
     const handleCheckboxChange = (event: InputEvent) => {
         const { checked } = event.target as HTMLInputElement
-        handleAnswerChange({
-            index: idx,
+        props.handleAnswerChange({
+            index: props.idx,
             value: checked,
         })
     }
 
     const handleRadioChange = () => {
-        handleAnswerChange({
-            index: idx,
+        props.handleAnswerChange({
+            index: props.idx,
             value: true,
         })
     }
     //<!--checked={selectedAnswers()?.[idx]}-->
-    if (isMultiple) {
+    if (props.isMultiple) {
         return (
             <li class="answerOption">
-                <input type={'checkbox'} name={`${idx}`} id={answerId} value={answer} onInput={handleCheckboxChange} />
+                <input
+                    type={'checkbox'}
+                    name={`${props.idx}`}
+                    id={answerId}
+                    value={props.answer}
+                    onInput={handleCheckboxChange}
+                />
                 <label for={answerId}>
-                    {answer}
-                    <Show when={isSubmitted()} keyed>
-                        <AnswerFeedback
-                            correct={!isFeedbackRequired()}
-                            explanation={explanation}
-                            showExplanation={isFeedbackRequired()}
-                        />
+                    {props.answer}
+                    <Show when={props.showFeedback} keyed>
+                        <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />
                     </Show>
                 </label>
             </li>
@@ -62,15 +56,11 @@ export const Answer: Component<AnswerProps> = ({
 
     return (
         <li>
-            <input type={'radio'} name={'answer'} id={answerId} value={answer} onClick={handleRadioChange} />
+            <input type={'radio'} name={'answer'} id={answerId} value={props.answer} onClick={handleRadioChange} />
             <label for={answerId}>
-                {answer}
-                <Show when={isSubmitted()} keyed>
-                    <AnswerFeedback
-                        correct={!isFeedbackRequired()}
-                        explanation={explanation}
-                        showExplanation={isFeedbackRequired()}
-                    />
+                {props.answer}
+                <Show when={props.showFeedback} keyed>
+                    <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />
                 </Show>
             </label>
         </li>
