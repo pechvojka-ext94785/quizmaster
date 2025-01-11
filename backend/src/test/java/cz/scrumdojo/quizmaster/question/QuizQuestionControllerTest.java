@@ -16,10 +16,14 @@ public class QuizQuestionControllerTest {
     @Autowired
     private QuizQuestionController quizQuestionController;
 
-    private QuizQuestion createQuestion() {
+    private QuizQuestion createQuestion(int[] correctAnswers) {
         return createQuestionBuilderBase()
-            .correctAnswer(1)
+            .correctAnswers(correctAnswers)
             .build();
+    }
+
+    private QuizQuestion createQuestion() {
+        return createQuestion(new int[] { 1 });
     }
 
     private static QuizQuestion.QuizQuestionBuilder createQuestionBuilderBase() {
@@ -49,7 +53,8 @@ public class QuizQuestionControllerTest {
     }
 
     public void answerQuestion(int answerIdx, boolean isCorrect) {
-        var questionId = quizQuestionController.saveQuestion(createQuestion());
+        var question = createQuestion();
+        var questionId = quizQuestionController.saveQuestion(question);
 
         var result = quizQuestionController.answerQuestion(questionId, answerIdx).getBody();
 
@@ -68,10 +73,7 @@ public class QuizQuestionControllerTest {
     }
 
     private void checkMultipleAnswers(List<Integer> userAnswersIndexes, boolean isCorrect, List<Integer> expectedWrongAnswers) {
-        QuizQuestion question = createQuestionBuilderBase()
-            .correctAnswers(new int[]{1,3})
-            .build();
-
+        QuizQuestion question = createQuestion(new int[] { 1, 3 });
         var questionId = quizQuestionController.saveQuestion(question);
 
         MultipleAnswersResult result = quizQuestionController.answerMultipleChoice(questionId, userAnswersIndexes).getBody();

@@ -41,9 +41,6 @@ public class QuizQuestionController {
     @Transactional
     @PostMapping("/quiz-question")
     public Integer saveQuestion(@RequestBody QuizQuestion question) {
-        if (question.getCorrectAnswers() == null) {
-            question.setCorrectAnswers(new int[]{question.getCorrectAnswer()});
-        }
         return quizQuestionService.saveQuestion(question);
     }
 

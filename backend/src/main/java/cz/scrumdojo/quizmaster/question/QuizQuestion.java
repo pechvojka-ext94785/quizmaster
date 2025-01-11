@@ -32,9 +32,6 @@ public class QuizQuestion {
     @JdbcTypeCode(SqlTypes.ARRAY)
     private int[] correctAnswers;
 
-    @Transient
-    private int correctAnswer;
-
     public static Function<QuizQuestion, Boolean> isCorrectAnswer(int index) {
         return quizQuestion -> quizQuestion.getCorrectAnswers().length == 1
             && quizQuestion.getCorrectAnswers()[0] == index;
