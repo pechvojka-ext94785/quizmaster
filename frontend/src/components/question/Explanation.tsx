@@ -11,6 +11,16 @@ export const Correctness = (props: CorrectnessProps) => {
     return <span class={`feedback ${className}`}>{label}</span>
 }
 
+interface ExplanationProps {
+    readonly text: string
+}
+
+export const Explanation = (props: ExplanationProps) => (
+    <>
+        Explanation: <span class="explanation">{props.text}</span>
+    </>
+)
+
 interface AnswerFeedbackProps {
     readonly correct: boolean
     readonly explanation: string
@@ -19,18 +29,12 @@ interface AnswerFeedbackProps {
 
 export const AnswerFeedback = (props: AnswerFeedbackProps) => (
     <span>
-        {' '}
-        <Correctness isCorrect={props.correct} /> &nbsp;
-        <Show
-            when={props.showExplanation}
-            children={
-                <>
-                    {'Explanation: '}
-                    <span class="explanation">{props.explanation}</span>
-                </>
-            }
-            keyed
-        />
+        &nbsp;
+        <Correctness isCorrect={props.correct} />
+        &nbsp;
+        <Show when={props.showExplanation} keyed>
+            <Explanation text={props.explanation} />
+        </Show>
     </span>
 )
 
