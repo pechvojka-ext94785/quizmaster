@@ -1,5 +1,5 @@
+import './create-question.css'
 import { createSignal, Show } from 'solid-js'
-import './createQuestion.css'
 
 type Question = {
     question: string

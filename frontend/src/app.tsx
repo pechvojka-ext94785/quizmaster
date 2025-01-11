@@ -1,6 +1,6 @@
 import { Route, Router } from '@solidjs/router'
 import { QuestionTakePage } from 'pages/question-take'
-import { CreateQuestionForm } from './pages/CreateQuestion.tsx'
+import { CreateQuestionForm } from 'pages/create-question'
 import { QuestionList } from 'questions.tsx'
 import { QuizMaster } from 'quizmaster.tsx'
 import { QuizResult } from './pages/QuizResult.tsx'
