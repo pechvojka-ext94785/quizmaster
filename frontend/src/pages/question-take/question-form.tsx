@@ -15,13 +15,9 @@ export const QuestionForm = ({
     const isMultiple = correctAnswers.length > 1
 
     const [selectedAnswerIdxs, setSelectedAnswerIdxs] = createSignal<number[]>([])
+    const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
     const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([...selectedAnswerIdxs(), idx])
     const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(selectedAnswerIdxs().filter(i => i !== idx))
-
-    const onSelectedAnswerChange = (idx: number, selected: boolean) => {
-        if (selected) addSelectedAnswerIdx(idx)
-        else removeSelectedAnswerIdx(idx)
-    }
 
     const isQuestionCorrect = createMemo(
         () =>
@@ -40,6 +36,13 @@ export const QuestionForm = ({
     const submitMultiple = preventDefault(() => {
         if (selectedAnswerIdxs().length > 0) setSubmitted(true)
     })
+
+    const onSelectedAnswerChange = (idx: number, selected: boolean) => {
+        setSubmitted(false)
+        if (!isMultiple) setSelectedAnswerIdx(idx)
+        else if (selected) addSelectedAnswerIdx(idx)
+        else removeSelectedAnswerIdx(idx)
+    }
 
     return (
         <form onSubmit={submitMultiple}>
