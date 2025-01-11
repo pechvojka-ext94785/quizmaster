@@ -25,15 +25,13 @@ Feature: Answering a quiz question with multiple choice
       | Italy, France, Spain          | Correct!   |
       | Italy, France, Morocco, Spain | Incorrect! |
 
-    @focus
   Scenario:
     When I take question "Europe"
     And I answer "France, Morocco, Spain"
     Then I see the answer explanations for answers
-      | answer                        | explanation         |
-      | Italy                         | And where is it? |
-      | France                        |                  |
-      | Morocco                       | Almost :D        |
-      | Spain                         |                  |
+      | answer  | explanation      |
+      | Italy   | And where is it? |
+      | France  |                  |
+      | Morocco | Almost :D        |
+      | Spain   |                  |
     And I see the question explanation
-
