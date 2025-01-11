@@ -7,7 +7,7 @@
     "scripts": {
         "playwright:install": "playwright install --with-deps",
         "dev": "vite",
-        "build": "vite build",
+        "build": "tsc -b && vite build",
         "check": "biome ci",
         "format": "biome format --write",
         "lint": "biome lint",

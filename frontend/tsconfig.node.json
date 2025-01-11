@@ -19,7 +19,6 @@
     "include": [
         "vite.config.ts",
         "playwright.config.ts",
-        "src/**/*.ts",
-        "tests/**/*.ts",
+        "tests/**/*.ts"
     ]
 }
