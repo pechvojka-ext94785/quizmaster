@@ -13,7 +13,7 @@ Feature: Create a quiz question
     Given I take question "France"
     Then I see the question and the answers
 
-  Scenario Outline:
+  Scenario Outline: Feedback is displayed after answering the question
     Given I take question "France"
     When I answer "<answer>"
     Then I see feedback "<feedback>"
@@ -22,21 +22,21 @@ Feature: Create a quiz question
       | Paris  | Correct!   |
       | Lyon   | Incorrect! |
 
-  Scenario Outline:
-    And a question "What is capital of Italy?"
+  Scenario Outline: Explanation for answered question is displayed after answering it
+    Given a question "What is capital of Italy?"
     * with answers:
-      | Rome     | * | Rome is the capital of Italy         |
-      | Naples   |   | Naples is not the capital of Italy   |
-      | Florence |   | Florence is not the capital of Italy |
-      | Palermo  |   | Palermo is not the capital of Italy  |
+      | Rome     | * | Rome is the capital of Italy              |
+      | Naples   |   | Naples is the capital of Campania region  |
+      | Florence |   | Florence is the capital of Tuscany region |
+      | Palermo  |   | Palermo is the capital of Sicily region   |
     * with explanation "Rome is the capital city of Italy. It is also the capital of the Lazio region"
     * saved and bookmarked as "Italy"
     When I take question "Italy"
-    And I answer "<answer>"
+    * I answer "<answer>"
     Then I see feedback "<feedback>"
-    And I see the answer explanation "<explanation>"
-    And I see the question explanation
+    * I see the answer explanation "<explanation>"
+    * I see the question explanation
     Examples:
-      | answer | feedback   | explanation                        |
-      | Rome   | Correct!   | Rome is the capital of Italy       |
-      | Naples | Incorrect! | Naples is not the capital of Italy |
+      | answer | feedback   | explanation                              |
+      | Rome   | Correct!   | Rome is the capital of Italy             |
+      | Naples | Incorrect! | Naples is the capital of Campania region |
