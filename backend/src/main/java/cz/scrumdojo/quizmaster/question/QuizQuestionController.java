@@ -51,12 +51,6 @@ public class QuizQuestionController {
     }
 
     @Transactional
-    @GetMapping("/quiz-question/{id}/answer/{index}")
-    public ResponseEntity<Boolean> answerQuestion(@PathVariable Integer id, @PathVariable int index) {
-        return response(findQuestion(id).map(QuizQuestion.isCorrectAnswer(index)));
-    }
-
-    @Transactional
     @PostMapping("/quiz-question/{id}/answer")
     public ResponseEntity<MultipleAnswersResult> answerMultipleChoice(@PathVariable Integer id, @RequestBody List<Integer> answers) {
 

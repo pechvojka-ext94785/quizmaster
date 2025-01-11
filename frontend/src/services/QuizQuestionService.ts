@@ -4,9 +4,6 @@ import { fetchJson } from '../utils/apiUtils.ts'
 export const getQuestion = async (questionId: number | string) =>
     await fetchJson<QuizQuestion>(`/api/quiz-question/${questionId}`)
 
-export const isAnswerCorrect = async (questionId: number, answerIdx: number) =>
-    await fetchJson<boolean>(`/api/quiz-question/${questionId}/answer/${answerIdx}`)
-
 export type MultipleAnswerResult = {
     questionAnsweredCorrectly: boolean
     answersRequiringFeedback: number[]

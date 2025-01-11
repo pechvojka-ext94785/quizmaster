@@ -72,16 +72,6 @@ public class QuizQuestionControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    public void answerQuestion(int answerIdx, boolean isCorrect) {
-        var question = createSingleChoiceQuestion();
-        var questionId = quizQuestionController.saveQuestion(question);
-
-        var result = quizQuestionController.answerQuestion(questionId, answerIdx).getBody();
-
-        assertNotNull(result);
-        assertEquals(isCorrect, result);
-    }
-
     @Test
     public void answerMultipleQuestionsCorrectly() {
         checkMultipleAnswers(List.of(1,3), true, List.of());
@@ -102,17 +92,5 @@ public class QuizQuestionControllerTest {
         assertEquals(isCorrect, result.getQuestionAnsweredCorrectly());
 
         assertEquals(expectedWrongAnswers,result.getAnswersRequiringFeedback());
-    }
-
-    @Test
-    public void answerSingleChoiceQuestionCorrectly() {
-        answerQuestion(1, true);
-    }
-
-    @Test
-    public void answerNonExistingQuestion() {
-        ResponseEntity<?> response = quizQuestionController.answerQuestion(-1, 0);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
