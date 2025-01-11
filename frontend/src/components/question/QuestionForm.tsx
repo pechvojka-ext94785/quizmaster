@@ -4,10 +4,10 @@ import { preventDefault } from '../../helpers.ts'
 import * as QuestionService from '../../services/QuizQuestionService.ts'
 import { isMultipleAnswersCorrect, type MultipleAnswerResult } from '../../services/QuizQuestionService.ts'
 import { transformObjectToArray } from '../../utils/transformObjectToArray.ts'
-import { QuestionExplanation } from './explanation/Explanation.tsx'
-import { Feedback } from './feedback/Feedback.tsx'
+import { QuestionExplanation } from './Explanation.tsx'
+import { Feedback } from './Feedback.tsx'
 import './questionForm.css'
-import { Answer, type UserAnswer } from './answer/Answer.tsx'
+import { Answer, type UserAnswer } from './Answer.tsx'
 
 export const QuestionForm = ({
     id,

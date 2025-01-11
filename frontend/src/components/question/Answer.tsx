@@ -1,5 +1,5 @@
 import { type Accessor, type Component, Show } from 'solid-js'
-import { Explanation } from '../explanation/Explanation.tsx'
+import { Explanation } from './Explanation.tsx'
 
 export type UserAnswer = {
     index: number

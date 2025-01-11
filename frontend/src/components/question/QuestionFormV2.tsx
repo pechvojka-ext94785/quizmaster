@@ -2,7 +2,7 @@ import { type Accessor, type Component, createMemo, createSignal, For, Show } fr
 import { preventDefault } from '../../helpers.ts'
 import * as QuestionService from '../../services/QuizQuestionService.ts'
 import { transformObjectToArray } from '../../utils/transformObjectToArray.ts'
-import { Explanation } from './explanation/Explanation.tsx'
+import { Explanation } from './Explanation.tsx'
 import './questionForm.css'
 import type { QuizQuestionProps } from '../../model/quiz-question.ts'
 
