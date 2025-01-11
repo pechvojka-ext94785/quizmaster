@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -70,27 +68,5 @@ public class QuizQuestionControllerTest {
         ResponseEntity<?> response = quizQuestionController.getAnswers(-1);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
-
-    @Test
-    public void answerMultipleQuestionsCorrectly() {
-        checkMultipleAnswers(List.of(1,3), true, List.of());
-    }
-
-    @Test
-    public void answerMultipleQuestionsIncorrectly() {
-        checkMultipleAnswers(List.of(2), false, List.of(1, 2, 3));
-    }
-
-    private void checkMultipleAnswers(List<Integer> userAnswersIndexes, boolean isCorrect, List<Integer> expectedWrongAnswers) {
-        QuizQuestion question = createMultipleChoiceQuestion();
-        var questionId = quizQuestionController.saveQuestion(question);
-
-        MultipleAnswersResult result = quizQuestionController.answerMultipleChoice(questionId, userAnswersIndexes).getBody();
-
-        assertNotNull(result);
-        assertEquals(isCorrect, result.getQuestionAnsweredCorrectly());
-
-        assertEquals(expectedWrongAnswers,result.getAnswersRequiringFeedback());
     }
 }

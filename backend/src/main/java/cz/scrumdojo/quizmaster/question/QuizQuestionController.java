@@ -1,6 +1,5 @@
 package cz.scrumdojo.quizmaster.question;
 
-import cz.scrumdojo.quizmaster.quiz.QuizAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,18 +16,13 @@ public class QuizQuestionController {
 
     private final QuizQuestionService quizQuestionService;
 
-    private final QuizAnswerService quizAnswerService;
-
     @Autowired
     public QuizQuestionController(
         QuizQuestionRepository quizQuestionRepository,
-        QuizQuestionService quizQuestionService,
-        QuizAnswerService quizAnswerService) {
+        QuizQuestionService quizQuestionService) {
 
         this.quizQuestionRepository = quizQuestionRepository;
         this.quizQuestionService = quizQuestionService;
-        this.quizAnswerService = quizAnswerService;
-
     }
 
     @Transactional
@@ -48,15 +42,6 @@ public class QuizQuestionController {
     @GetMapping("/quiz-question/{id}/answers")
     public ResponseEntity<Answers> getAnswers(@PathVariable Integer id) {
         return response(findQuestion(id).map(Answers::from));
-    }
-
-    @Transactional
-    @PostMapping("/quiz-question/{id}/answer")
-    public ResponseEntity<MultipleAnswersResult> answerMultipleChoice(@PathVariable Integer id, @RequestBody List<Integer> answers) {
-
-        var result = quizAnswerService.getAnswerFeedback(id, answers);
-
-        return response(Optional.of(result));
     }
 
     @Transactional

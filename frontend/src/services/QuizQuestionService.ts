@@ -4,21 +4,6 @@ import { fetchJson } from '../utils/apiUtils.ts'
 export const getQuestion = async (questionId: number | string) =>
     await fetchJson<QuizQuestion>(`/api/quiz-question/${questionId}`)
 
-export type MultipleAnswerResult = {
-    questionAnsweredCorrectly: boolean
-    answersRequiringFeedback: number[]
-}
-
-export const isMultipleAnswersCorrect = async (questionId: number, answersList: number[]) => {
-    return await fetchJson<MultipleAnswerResult>(`/api/quiz-question/${questionId}/answer`, {
-        method: 'POST',
-        body: JSON.stringify(answersList),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-}
-
 export const getQuestions = async () => await fetchJson<QuizQuestion[]>('/api/quiz-question/all')
 
 export const setAnswer = async (runId: string, questionId: string | number, answers: number[]) =>
