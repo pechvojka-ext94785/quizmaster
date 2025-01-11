@@ -6,7 +6,7 @@ import { Spinner } from '../components/Spinner.tsx'
 import { getQuestion } from '../services/QuizQuestionService.ts'
 import './quizQuestion.css'
 import { getQuizMaster } from '../services/QuizService.ts'
-import { QuestionFormV2 } from '../components/question/QuestionFormV2.tsx'
+import { QuestionFormV2 } from './question-take/QuestionFormV2.tsx'
 
 export const QuizQuestionDetail = () => {
     const navigate = useNavigate()

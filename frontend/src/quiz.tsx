@@ -5,7 +5,7 @@ import { useParams } from '@solidjs/router'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
 import { getQuestion } from './services/QuizQuestionService.ts'
-import { QuestionForm } from './components/question/QuestionForm.tsx'
+import { QuestionForm } from './pages/question-take/QuestionForm.tsx'
 
 export const Quiz = () => {
     const params = useParams()
