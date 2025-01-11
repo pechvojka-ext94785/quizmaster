@@ -33,30 +33,16 @@ export const Answer = (props: AnswerProps) => {
             value: true,
         })
     }
-    //<!--checked={selectedAnswers()?.[idx]}-->
-    if (props.isMultiple) {
-        return (
-            <li class="answerOption">
-                <input
-                    type={'checkbox'}
-                    name={`${props.idx}`}
-                    id={answerId}
-                    value={props.answer}
-                    onInput={handleCheckboxChange}
-                />
-                <label for={answerId}>
-                    {props.answer}
-                    <Show when={props.showFeedback} keyed>
-                        <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />
-                    </Show>
-                </label>
-            </li>
-        )
-    }
+
+    const Input = props.isMultiple ? (
+        <input type="checkbox" id={answerId} value={props.answer} onInput={handleCheckboxChange} />
+    ) : (
+        <input type="radio" name="answer" id={answerId} value={props.answer} onClick={handleRadioChange} />
+    )
 
     return (
         <li>
-            <input type={'radio'} name={'answer'} id={answerId} value={props.answer} onClick={handleRadioChange} />
+            {Input}
             <label for={answerId}>
                 {props.answer}
                 <Show when={props.showFeedback} keyed>
