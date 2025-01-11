@@ -15,5 +15,5 @@ export const QuestionTakePage = () => {
 
     createEffect(async () => setQuizQuestion(await getQuestion(questionId())))
 
-    return <Show when={quizQuestion()} children={ question => <QuestionForm question={question} /> }/>
+    return <Show when={quizQuestion()} children={question => <QuestionForm question={question} />} />
 }

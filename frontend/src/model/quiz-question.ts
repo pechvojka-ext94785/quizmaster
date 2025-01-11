@@ -8,6 +8,12 @@ export interface QuizQuestion {
     readonly correctAnswers: number[]
 }
 
+export interface Answers {
+    readonly correctAnswers: readonly number[]
+    readonly explanations: readonly string[]
+    readonly questionExplanation: string
+}
+
 export interface QuizQuestionProps extends QuizQuestion {
     readonly quizId: string
     readonly quizRunId: string

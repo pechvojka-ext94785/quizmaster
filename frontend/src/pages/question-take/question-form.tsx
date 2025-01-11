@@ -1,10 +1,15 @@
 import './question-form.css'
-import { type Accessor, createMemo, For, Show } from 'solid-js'
+import { type Accessor, For, Show } from 'solid-js'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
 import { preventDefault } from 'helpers.ts'
-import { Answer, createQuestionTakeState, QuestionCorrectness, QuestionExplanation } from 'pages/question-take'
-
+import {
+    Answer,
+    createQuestionFeedbackState,
+    createQuestionTakeState,
+    QuestionCorrectness,
+    QuestionExplanation,
+} from 'pages/question-take'
 
 interface QuestionFormProps {
     readonly question: Accessor<QuizQuestion>
@@ -13,19 +18,7 @@ interface QuestionFormProps {
 export const QuestionForm = (props: QuestionFormProps) => {
     const question = props.question
     const state = createQuestionTakeState(question)
-
-    const isQuestionCorrect = createMemo(
-        () =>
-            state.selectedAnswerIdxs().length === question().correctAnswers.length &&
-            state.selectedAnswerIdxs().every(idx => question().correctAnswers.includes(idx)),
-    )
-
-    const isAnswerCorrect = (idx: number) =>
-        (question().correctAnswers.includes(idx) && state.selectedAnswerIdxs().includes(idx)) ||
-        (!question().correctAnswers.includes(idx) && !state.selectedAnswerIdxs().includes(idx))
-
-    const showFeedback = (idx: number) =>
-        state.isMultipleChoice() ? !isAnswerCorrect(idx) : state.selectedAnswerIdxs()[0] === idx
+    const feedback = createQuestionFeedbackState(state, question)
 
     const submitAnswers = preventDefault(() => {
         if (state.selectedAnswerIdxs().length > 0) state.submit()
@@ -41,9 +34,9 @@ export const QuestionForm = (props: QuestionFormProps) => {
                             isMultipleChoice={state.isMultipleChoice()}
                             idx={idx()}
                             answer={answer}
-                            isCorrect={isAnswerCorrect(idx())}
+                            isCorrect={feedback.isAnswerCorrect(idx())}
                             explanation={question().explanations ? question().explanations[idx()] : 'not defined'}
-                            showFeedback={state.submitted() && showFeedback(idx())}
+                            showFeedback={state.submitted() && feedback.showFeedback(idx())}
                             onAnswerChange={state.onSelectedAnswerChange}
                         />
                     )}
@@ -51,7 +44,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
             </ul>
             <input type="submit" value="Submit" />
             <Show when={state.submitted()}>
-                <QuestionCorrectness isCorrect={isQuestionCorrect()} />
+                <QuestionCorrectness isCorrect={feedback.isQuestionCorrect()} />
             </Show>
             <Show when={state.submitted()}>
                 <QuestionExplanation text={question().questionExplanation} />
