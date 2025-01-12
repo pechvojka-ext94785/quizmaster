@@ -1,4 +1,4 @@
-import type { QuizQuestion } from '../model/quiz-question.ts'
+import type { QuizQuestion } from 'model/quiz-question.ts'
 import { fetchJson, postJson } from './helpers.ts'
 
 export const getQuestion = async (questionId: number | string) =>

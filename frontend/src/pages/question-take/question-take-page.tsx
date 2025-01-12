@@ -4,7 +4,7 @@ import { createEffect, createSignal, Show } from 'solid-js'
 import { useParams } from '@solidjs/router'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
-import { getQuestion } from '../../services/QuizQuestionService.ts'
+import { getQuestion } from 'api/quiz-question.ts'
 import { QuestionForm } from 'pages/question-take'
 
 export const QuestionTakePage = () => {
