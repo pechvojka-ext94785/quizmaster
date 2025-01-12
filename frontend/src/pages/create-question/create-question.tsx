@@ -1,6 +1,6 @@
 import './create-question.css'
 import { createSignal, Show } from 'solid-js'
-import { QuestionData, saveQuestion } from 'services/QuizQuestionService'
+import { type QuestionData, saveQuestion } from 'services/QuizQuestionService'
 
 export function CreateQuestionForm() {
     const [question, setQuestion] = createSignal<string>('')
