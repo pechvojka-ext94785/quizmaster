@@ -23,15 +23,6 @@ public class QuizQuestionControllerTest {
             .build();
     }
 
-    private static QuizQuestion createMultipleChoiceQuestion() {
-        return QuizQuestion.builder()
-            .question("What countries are in Europe?")
-            .answers(new String[] { "USA", "Italy", "Mexico", "France" })
-            .explanations(new String[] { "Nope", "Yes", "No", "Yes" })
-            .correctAnswers(new int[] { 1, 3 })
-            .build();
-    }
-
     @Test
     public void getQuestion() {
         var question = createSingleChoiceQuestion();

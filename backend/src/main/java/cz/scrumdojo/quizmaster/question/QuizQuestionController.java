@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -44,13 +43,6 @@ public class QuizQuestionController {
         return response(findQuestion(id).map(Answers::from));
     }
 
-    @Transactional
-    @GetMapping("/quiz-question/all")
-    public ResponseEntity<List<QuizQuestion>> getAllQuestionList() {
-        List<QuizQuestion> quizQuestions = quizQuestionRepository.findAll();
-        return ResponseEntity.ok().body(quizQuestions);
-    }
-
     private Optional<QuizQuestion> findQuestion(Integer id) {
         return quizQuestionRepository.findById(id);
     }
@@ -61,4 +53,3 @@ public class QuizQuestionController {
             .orElse(ResponseEntity.notFound().build());
     }
 }
-
