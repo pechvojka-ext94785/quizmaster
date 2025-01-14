@@ -11,41 +11,10 @@ export function CreateQuestionForm() {
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
 
-    const postData = (formData: QuestionData) => {
-        if (validationIsFailing(formData)) return
-
+    const postData = (formData: QuestionData) =>
         saveQuestion(formData)
             .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
             .catch(error => setLinkToQuestion(error.message))
-    }
-
-    const validationIsFailing = (formData: QuestionData) => {
-        if (formData.question === '' && formData.answers[0] === '' && formData.correctAnswers?.length === 0) {
-            setLinkToQuestion('Fill all required fields.')
-            return true
-        }
-        if (formData.question === '' && formData.answers[0] !== '' && formData.correctAnswers?.length !== 0) {
-            setLinkToQuestion('Question must be filled.')
-            return true
-        }
-        if (formData.question !== '' && formData.answers[0] === '' && formData.correctAnswers?.length === 0) {
-            setLinkToQuestion('At least 2 answers must be filled.')
-            return true
-        }
-        if (formData.question !== '' && formData.answers[0] !== '' && formData.correctAnswers?.length === 0) {
-            setLinkToQuestion('At least one answer must be selected as correct answer.')
-            return true
-        }
-        if (formData.question !== '' && formData.answers[1] === '' && formData.correctAnswers?.length === 1) {
-            setLinkToQuestion('Question must have at least 2 answers')
-            return true
-        }
-        if (!isMultipleAnswer() && formData.correctAnswers !== null && formData.correctAnswers.length > 1) {
-            setLinkToQuestion('Multiple answers are checked but the test is considered as a single answer only.')
-            return true
-        }
-        return false
-    }
 
     const updateAnswer = (index: number, value: string) => {
         setAnswers(prev => {

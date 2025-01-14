@@ -13,15 +13,11 @@ public class QuizQuestionController {
 
     private final QuizQuestionRepository quizQuestionRepository;
 
-    private final QuizQuestionService quizQuestionService;
-
     @Autowired
     public QuizQuestionController(
-        QuizQuestionRepository quizQuestionRepository,
-        QuizQuestionService quizQuestionService) {
+        QuizQuestionRepository quizQuestionRepository) {
 
         this.quizQuestionRepository = quizQuestionRepository;
-        this.quizQuestionService = quizQuestionService;
     }
 
     @Transactional
@@ -34,7 +30,7 @@ public class QuizQuestionController {
     @Transactional
     @PostMapping("/quiz-question")
     public Integer saveQuestion(@RequestBody QuizQuestion question) {
-        return quizQuestionService.saveQuestion(question);
+        return quizQuestionRepository.save(question).getId();
     }
 
     @Transactional
