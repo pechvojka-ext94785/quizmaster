@@ -1,8 +1,9 @@
 import { Before, Given, When, Then, type DataTable } from '@cucumber/cucumber'
+import { expect } from '@playwright/test'
+
 import { type TableOf, worldAs, expectTextToBe } from './common.ts'
 import type { Question } from './question.ts'
 import { CreateQuestionPage } from '../pages'
-import { expect } from '@playwright/test'
 
 type AnswerRaw = [string, '*' | '', string]
 
