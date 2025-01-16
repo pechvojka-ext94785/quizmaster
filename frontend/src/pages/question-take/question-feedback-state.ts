@@ -22,9 +22,7 @@ export const createQuestionFeedbackState = (
         (answers().correctAnswers.includes(idx) && state.selectedAnswerIdxs().includes(idx)) ||
         (!answers().correctAnswers.includes(idx) && !state.selectedAnswerIdxs().includes(idx))
 
-    const showFeedback = (idx: number) =>
-        state.isMultipleChoice() ? true : state.selectedAnswerIdxs()[0] === idx
-
+    const showFeedback = (idx: number) => (state.isMultipleChoice() ? true : state.selectedAnswerIdxs()[0] === idx)
 
     return { isQuestionCorrect, isAnswerCorrect, showFeedback }
 }
