@@ -24,6 +24,8 @@ export class TakeQuestionPage {
 
     submit = () => this.page.locator('input[type="submit"]').click()
 
+    button = (name: string) => this.page.locator('input[type="button"]', { hasText: name }).click()
+
     feedbackLocator = () => this.page.locator('p.question-correctness')
 
     answerExplanationLocator = () => this.page.locator('span.explanation')

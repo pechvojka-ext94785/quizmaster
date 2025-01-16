@@ -21,16 +21,6 @@ export interface QuizQuestionProps extends QuizQuestion {
 }
 
 export interface Quiz {
-    readonly name: string
-    readonly questionIds: number[]
-}
-
-export interface SingleQuestion {
-    readonly id: number
-    readonly question: string
-}
-
-export interface SingleQuiz {
-    readonly name: string
-    readonly questions: SingleQuestion[]
+    readonly questions: string[]
+    readonly actualQuestionNumber: number
 }
