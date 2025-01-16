@@ -83,7 +83,6 @@ export function CreateQuestionForm() {
         postData(formData)
     }
 
-    {
         return (
             <div class="wrapper">
                 <h1>Quiz Question Creation Page</h1>
