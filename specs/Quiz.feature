@@ -35,4 +35,3 @@ Feature: Create quiz
     Then I see the "Finish" button
     When I click "Finish"
     Then I see the finish message
-

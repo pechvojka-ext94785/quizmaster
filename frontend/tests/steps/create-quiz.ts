@@ -27,8 +27,3 @@ When('I start the quiz', async () => {
 Then('I see question number {int}', async (questions: number) => {
     await world.page.goto(world.bookmarks[world.quiz.questions[questions - 1]].url)
 })
-
-
-
-
-
