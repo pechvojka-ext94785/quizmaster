@@ -33,4 +33,4 @@ Prior to the class ge yourself familiar with the tech stack:
     - Setup [VS Code](docs/dev-environment/setup-vscode.md)
 
 3. [How to run & develop Quizmaster](docs/dev-environment/how-to-develop.md)
-.
+
