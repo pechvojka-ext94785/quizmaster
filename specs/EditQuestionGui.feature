@@ -9,7 +9,7 @@ Feature: Edit question GUI
       | Prague      | * |
     * saved and bookmarked as "Czechia"
 
-  @ignore
+  @focus
   Scenario: Edit a single-choice question
     Given I start editing a question
     When I replace Brno with Ostrava
