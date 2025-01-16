@@ -26,7 +26,6 @@ export function CreateQuestionForm() {
             setQuestion(quizQuestion.question)
             setIsLoaded(true)
         }
-
     })
 
     const postData = (formData: QuestionData) =>
@@ -83,35 +82,35 @@ export function CreateQuestionForm() {
         postData(formData)
     }
 
-        return (
-            <div class="wrapper">
-                <h1>Quiz Question Creation Page</h1>
-                <h2>If you're happy and you know it create the question</h2>
-                <form class="question-create-form" onSubmit={handleSubmit}>
-                    <input id="is-loaded" type="hidden" value={isLoaded() ? 'loaded' : ''} />
-                    {/* Question input */}
-                    <div>
-                        <label for="question-text-area">Enter your question:</label>
-                        <textarea
-                            id="question-text-area"
-                            class="textarea"
-                            value={question()}
-                            onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
-                            rows="3"
-                        />
-                    </div>
-                    <div class="multipleQuestionsRow">
-                        <input
-                            id="multiple-possible-answers"
-                            type="checkbox"
-                            checked={isMultipleAnswer()}
-                            onChange={toggleMultipleAnswers}
-                        />
-                        Is this question with multiple possible answers?
-                        <br />
-                    </div>
-                    {/* Answer rows */}
-                    <Index each={answers()}>
+    return (
+        <div class="wrapper">
+            <h1>Quiz Question Creation Page</h1>
+            <h2>If you're happy and you know it create the question</h2>
+            <form class="question-create-form" onSubmit={handleSubmit}>
+                <input id="is-loaded" type="hidden" value={isLoaded() ? 'loaded' : ''} />
+                {/* Question input */}
+                <div>
+                    <label for="question-text-area">Enter your question:</label>
+                    <textarea
+                        id="question-text-area"
+                        class="textarea"
+                        value={question()}
+                        onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
+                        rows="3"
+                    />
+                </div>
+                <div class="multipleQuestionsRow">
+                    <input
+                        id="multiple-possible-answers"
+                        type="checkbox"
+                        checked={isMultipleAnswer()}
+                        onChange={toggleMultipleAnswers}
+                    />
+                    Is this question with multiple possible answers?
+                    <br />
+                </div>
+                {/* Answer rows */}
+                <Index each={answers()}>
                     {(_answer, index) => (
                         <div class="answerRow">
                             <input
