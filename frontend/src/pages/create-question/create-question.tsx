@@ -50,6 +50,11 @@ export function CreateQuestionForm() {
         }
     }
 
+    const addAnswer = () => {
+        setAnswers(prev => [...prev, ''])
+        setQuestionExplanations(prev => [...prev, ''])
+    }
+
     const handleSubmit = (e: Event) => {
         e.preventDefault()
         const formData = {
@@ -90,35 +95,39 @@ export function CreateQuestionForm() {
                     {/* Answer rows */}
                     <For each={answers()}>
                         {(_answer, index) => (
-                        <div class="answerRow">
-                            <input
+                            <div class="answerRow">
+                                <input
                                     id={`answer-text-${index() + 1}`}
-                                type="text"
+                                    type="text"
                                     placeholder={`Answer ${index() + 1}`}
                                     value={answers()[index()]}
                                     onInput={e => updateAnswer(index(), (e.target as HTMLInputElement).value)}
-                                class="answerInput"
-                            />
-                            <input
+                                    class="answerInput"
+                                />
+                                <input
                                     id={`answer-checkbox-${index() + 1}`}
-                                type="checkbox"
+                                    type="checkbox"
                                     checked={correctAnswers().includes(index())}
                                     onChange={() => handleCorrectAnswerClick(index())}
-                                class="checkbox"
-                            />
-                            {
-                                <input
+                                    class="checkbox"
+                                />
+                                {
+                                    <input
                                         id={`answer-explanation-${index() + 1}`}
-                                    type="text"
-                                    placeholder="Explanation for wrong answer"
+                                        type="text"
+                                        placeholder="Explanation for wrong answer"
                                         value={questionExplanations()[index()]}
                                         onInput={e => updateExplanation(index(), (e.target as HTMLInputElement).value)}
-                                    class="explanationInput"
-                                />
-                            }
-                        </div>
+                                        class="explanationInput"
+                                    />
+                                }
+                            </div>
                         )}
                     </For>
+                    {/* Add answer button */}
+                    <button type="button" onClick={addAnswer} class="addAnswerButton">
+                        Add Answer
+                    </button>
                     {
                         <div class="generalExplanationWrapper">
                             <label for="general-explanation">General explanation for the entire question:</label>
@@ -142,5 +151,4 @@ export function CreateQuestionForm() {
                 </form>
             </div>
         )
-    }
 }
