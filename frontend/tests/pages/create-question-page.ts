@@ -24,6 +24,11 @@ export class CreateQuestionPage {
 
     enterGeneralExplanation = (question: string) => this.page.fill('textArea.generalExplanation', question)
 
+    clickAddAnswerButton = async (idx: number) => {
+        await this.page.locator('button.addAnswerButton').click()
+        await this.page.waitForSelector(`#answer-text-${String(idx + 1)}`)
+    }
+
     submit = () => this.page.locator('button.submitButton').click()
 
     questionUrlLocator = () => this.page.locator('#question-link')

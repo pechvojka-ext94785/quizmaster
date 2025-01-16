@@ -3,7 +3,7 @@ import { createEffect, createSignal, Index, Show } from 'solid-js'
 import { type QuestionData, saveQuestion, getQuestion } from 'api/quiz-question.ts'
 import { useParams } from '@solidjs/router'
 
-const NUM_ANSWERS = 4
+const NUM_ANSWERS = 2
 
 export function CreateQuestionForm() {
     const params = useParams()

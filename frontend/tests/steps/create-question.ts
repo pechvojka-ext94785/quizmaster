@@ -17,6 +17,8 @@ interface CreateQuestionWorld {
 
 const world = worldAs<CreateQuestionWorld>()
 
+const NUM_ANSWERS = 2
+
 Before(() => {
     world.createQuestionPage = new CreateQuestionPage(world.page)
     world.questionWip = { url: '', question: '', answers: [], explanation: '' }
@@ -42,6 +44,10 @@ const saveQuestion = async (bookmark: string) => {
     world.bookmarks[bookmark] = world.questionWip
 }
 
+const addAnswer = async (i: number) => {
+    await world.createQuestionPage.clickAddAnswerButton(i)
+}
+
 Given('a question {string}', async (question: string) => {
     await openCreatePage()
     await enterQuestion(question)
@@ -54,6 +60,7 @@ Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
     if (isMultipleChoice) await world.createQuestionPage.setMultipleChoice()
 
     for (let i = 0; i < raw.length; i++) {
+        if (i >= NUM_ANSWERS) await addAnswer(i)
         const [answer, correct, explanation] = raw[i]
         const isCorrect = correct === '*'
         await enterAnswer(i, answer, isCorrect, explanation || '')
@@ -74,6 +81,8 @@ When('I enter question {string}', enterQuestion)
 When(/^I add the answer "(.+)" marked as (correct|incorrect)$/, async (answer: string, correct: string) => {
     await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', '')
 })
+
+When('I add an additional answer field', async () => await addAnswer(world.nextAnswerIdx))
 
 When('I save the question', async () => await saveQuestion('manual'))
 
