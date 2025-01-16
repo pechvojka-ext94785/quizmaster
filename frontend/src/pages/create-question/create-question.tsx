@@ -5,7 +5,8 @@ import { type QuestionData, saveQuestion } from 'api/quiz-question.ts'
 const NUM_ANSWERS = 4
 
 export function CreateQuestionForm() {
-    const [question, setQuestion] = createSignal<string>('')
+
+    const [question, setQuestion] = createSignal<string>('What is capital of Czech Republic?')
     const [answers, setAnswers] = createSignal<string[]>(Array(NUM_ANSWERS).fill(''))
     const [correctAnswers, setCorrectAnswers] = createSignal<number[]>([])
     const [questionExplanations, setQuestionExplanations] = createSignal<string[]>(Array(NUM_ANSWERS).fill(''))

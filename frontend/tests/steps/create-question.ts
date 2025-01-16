@@ -18,7 +18,7 @@ interface CreateQuestionWorld {
 const world = worldAs<CreateQuestionWorld>()
 
 Before(() => {
-    world.createQuestionPage = new CreateQuestionPage(world.page)
+    world.createQuestionPage = new CreateQuestionPage(world.page, '/question/new')
     world.questionWip = { url: '', question: '', answers: [], explanation: '' }
     world.nextAnswerIdx = 0
     world.bookmarks = {}

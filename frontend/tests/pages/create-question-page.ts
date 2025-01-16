@@ -1,9 +1,9 @@
 import type { Page } from '@playwright/test'
 
 export class CreateQuestionPage {
-    constructor(private page: Page) {}
+    constructor(private page: Page, private uri:string) {}
 
-    goto = () => this.page.goto('/question/new')
+    goto = () => this.page.goto(this.uri)
 
     questionLocator = () => this.page.locator('#question-text-area')
 
