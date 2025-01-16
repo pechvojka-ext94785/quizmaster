@@ -1,5 +1,5 @@
 import './create-question.css'
-import { createSignal, Show } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import { type QuestionData, saveQuestion } from 'api/quiz-question.ts'
 
 const NUM_ANSWERS = 4
@@ -61,9 +61,6 @@ export function CreateQuestionForm() {
         }
         postData(formData)
     }
-
-    {
-        const answersArray = answers()
         return (
             <div class="wrapper">
                 <h1>Quiz Question Creation Page</h1>
@@ -91,35 +88,37 @@ export function CreateQuestionForm() {
                         <br />
                     </div>
                     {/* Answer rows */}
-                    {answersArray.map((_answer, index) => (
+                    <For each={answers()}>
+                        {(_answer, index) => (
                         <div class="answerRow">
                             <input
-                                id={`answer-text-${index + 1}`}
+                                    id={`answer-text-${index() + 1}`}
                                 type="text"
-                                placeholder={`Answer ${index + 1}`}
-                                value={answers()[index]}
-                                onInput={e => updateAnswer(index, (e.target as HTMLInputElement).value)}
+                                    placeholder={`Answer ${index() + 1}`}
+                                    value={answers()[index()]}
+                                    onInput={e => updateAnswer(index(), (e.target as HTMLInputElement).value)}
                                 class="answerInput"
                             />
                             <input
-                                id={`answer-checkbox-${index + 1}`}
+                                    id={`answer-checkbox-${index() + 1}`}
                                 type="checkbox"
-                                checked={correctAnswers().includes(index)}
-                                onChange={() => handleCorrectAnswerClick(index)}
+                                    checked={correctAnswers().includes(index())}
+                                    onChange={() => handleCorrectAnswerClick(index())}
                                 class="checkbox"
                             />
                             {
                                 <input
-                                    id={`answer-explanation-${index + 1}`}
+                                        id={`answer-explanation-${index() + 1}`}
                                     type="text"
                                     placeholder="Explanation for wrong answer"
-                                    value={questionExplanations()[index]}
-                                    onInput={e => updateExplanation(index, (e.target as HTMLInputElement).value)}
+                                        value={questionExplanations()[index()]}
+                                        onInput={e => updateExplanation(index(), (e.target as HTMLInputElement).value)}
                                     class="explanationInput"
                                 />
                             }
                         </div>
-                    ))}
+                        )}
+                    </For>
                     {
                         <div class="generalExplanationWrapper">
                             <label for="general-explanation">General explanation for the entire question:</label>
