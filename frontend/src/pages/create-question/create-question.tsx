@@ -2,7 +2,7 @@ import './create-question.css'
 import { createSignal, Show } from 'solid-js'
 import { type QuestionData, saveQuestion } from 'api/quiz-question.ts'
 
-const NUM_ANSWERS = 4;
+const NUM_ANSWERS = 4
 
 export function CreateQuestionForm() {
     const [question, setQuestion] = createSignal<string>('')
