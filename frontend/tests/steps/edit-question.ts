@@ -11,16 +11,18 @@ interface EditQuestionWorld {
 }
 
 const world = worldAs<EditQuestionWorld>()
-const openEditPage = async () => world.editQuestionPage.goto()
+const openEditPage = async (bookmark: string) => world.editQuestionPage.goto(world.bookmarks[bookmark].url + '/edit')
 Before(() => {
-    world.editQuestionPage = new CreateQuestionPage(world.page, '/question/:id/edit')
+    world.editQuestionPage = new CreateQuestionPage(world.page)
 })
 When('I start editing question {string}', async (bookmark: string) => {
-    await openEditPage()
+    await openEditPage(bookmark)
     world.activeBookmark = bookmark
 })
 
 Then('I see the question, answers and explanations', async () => {
+    await world.page.waitForSelector('#is-loaded[value="loaded"]', { state: 'hidden' })
+
     const question = await world.editQuestionPage.questionLocator().inputValue()
     expect(question).toBe(world.bookmarks[world.activeBookmark].question)
 })

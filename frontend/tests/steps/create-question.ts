@@ -18,13 +18,13 @@ interface CreateQuestionWorld {
 const world = worldAs<CreateQuestionWorld>()
 
 Before(() => {
-    world.createQuestionPage = new CreateQuestionPage(world.page, '/question/new')
+    world.createQuestionPage = new CreateQuestionPage(world.page)
     world.questionWip = { url: '', question: '', answers: [], explanation: '' }
     world.nextAnswerIdx = 0
     world.bookmarks = {}
 })
 
-const openCreatePage = async () => world.createQuestionPage.goto()
+const openCreatePage = async () => world.createQuestionPage.goto('/question/new')
 
 const enterQuestion = async (question: string) => {
     await world.createQuestionPage.enterQuestion(question)

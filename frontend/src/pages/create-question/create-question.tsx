@@ -1,18 +1,33 @@
 import './create-question.css'
-import { createSignal, Index, Show } from 'solid-js'
-import { type QuestionData, saveQuestion } from 'api/quiz-question.ts'
+import { createEffect, createSignal, Index, Show } from 'solid-js'
+import { type QuestionData, saveQuestion, getQuestion } from 'api/quiz-question.ts'
+import { useParams } from '@solidjs/router'
 
 const NUM_ANSWERS = 4
 
 export function CreateQuestionForm() {
+    const params = useParams()
+    const questionId = () => Number.parseInt(params.id)
+    const [isLoaded, setIsLoaded] = createSignal<boolean>(false)
 
-    const [question, setQuestion] = createSignal<string>('What is capital of Czech Republic?')
+    const [question, setQuestion] = createSignal<string>('')
     const [answers, setAnswers] = createSignal<string[]>(Array(NUM_ANSWERS).fill(''))
     const [correctAnswers, setCorrectAnswers] = createSignal<number[]>([])
     const [questionExplanations, setQuestionExplanations] = createSignal<string[]>(Array(NUM_ANSWERS).fill(''))
     const [answerExplanation, setAnswerExplanation] = createSignal<string>('')
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
+
+    // const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
+
+    createEffect(async () => {
+        if (questionId()) {
+            const quizQuestion = await getQuestion(questionId())
+            setQuestion(quizQuestion.question)
+            setIsLoaded(true)
+        }
+
+    })
 
     const postData = (formData: QuestionData) =>
         saveQuestion(formData)
@@ -67,34 +82,37 @@ export function CreateQuestionForm() {
         }
         postData(formData)
     }
-    return (
-        <div class="wrapper">
-            <h1>Quiz Question Creation Page</h1>
-            <h2>If you're happy and you know it create the question</h2>
-            <form class="question-create-form" onSubmit={handleSubmit}>
-                {/* Question input */}
-                <div>
-                    <label for="question-text-area">Enter your question:</label>
-                    <textarea
-                        id="question-text-area"
-                        class="textarea"
-                        value={question()}
-                        onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
-                        rows="3"
-                    />
-                </div>
-                <div class="multipleQuestionsRow">
-                    <input
-                        id="multiple-possible-answers"
-                        type="checkbox"
-                        checked={isMultipleAnswer()}
-                        onChange={toggleMultipleAnswers}
-                    />
-                    Is this question with multiple possible answers?
-                    <br />
-                </div>
-                {/* Answer rows */}
-                <Index each={answers()}>
+
+    {
+        return (
+            <div class="wrapper">
+                <h1>Quiz Question Creation Page</h1>
+                <h2>If you're happy and you know it create the question</h2>
+                <form class="question-create-form" onSubmit={handleSubmit}>
+                    <input id="is-loaded" type="hidden" value={isLoaded() ? 'loaded' : ''} />
+                    {/* Question input */}
+                    <div>
+                        <label for="question-text-area">Enter your question:</label>
+                        <textarea
+                            id="question-text-area"
+                            class="textarea"
+                            value={question()}
+                            onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
+                            rows="3"
+                        />
+                    </div>
+                    <div class="multipleQuestionsRow">
+                        <input
+                            id="multiple-possible-answers"
+                            type="checkbox"
+                            checked={isMultipleAnswer()}
+                            onChange={toggleMultipleAnswers}
+                        />
+                        Is this question with multiple possible answers?
+                        <br />
+                    </div>
+                    {/* Answer rows */}
+                    <Index each={answers()}>
                     {(_answer, index) => (
                         <div class="answerRow">
                             <input
