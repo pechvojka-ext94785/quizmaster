@@ -1,6 +1,6 @@
 import { Before, Given, Then, When } from '@cucumber/cucumber'
 import type { Question } from './question.ts'
-import { Quiz } from './quiz.ts'
+import type { Quiz } from './quiz.ts'
 
 import { worldAs } from './common.ts'
 
@@ -12,7 +12,7 @@ interface CreateQuizWorld {
 const world = worldAs<CreateQuizWorld>()
 
 Before(() => {
-    world.quiz = {questions: []}
+    world.quiz = { questions: [] }
     world.bookmarks = {}
 })
 
@@ -25,7 +25,7 @@ When('I start the quiz', async () => {
 })
 
 Then('I see question number {int}', async (questions: number) => {
-    await world.page.goto(world.bookmarks[world.quiz.questions[questions-1]].url)
+    await world.page.goto(world.bookmarks[world.quiz.questions[questions - 1]].url)
 })
 
 

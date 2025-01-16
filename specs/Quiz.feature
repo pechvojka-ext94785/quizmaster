@@ -2,13 +2,13 @@ Feature: Create quiz
   Background:
     Given a question "What is capital of France?"
     * with answers:
-      | Paris     | * |
-      | Toulouse  |   |
+      | Paris    | * |
+      | Toulouse |   |
     * saved and bookmarked as "France"
     And a question "What is capital of Italy?"
     * with answers:
-      | Rome     | * |
-      | Milan    |   |
+      | Rome  | * |
+      | Milan |   |
     * saved and bookmarked as "Italy"
     And a quiz with questions "France,Italy"
 
