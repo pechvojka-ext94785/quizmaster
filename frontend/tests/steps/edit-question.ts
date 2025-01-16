@@ -1,7 +1,7 @@
 import { Before, Then, When } from '@cucumber/cucumber'
 import { CreateQuestionPage } from '../pages'
 import { expectTextToBe, worldAs } from './common'
-import { Question } from './question'
+import type { Question } from './question'
 
 interface EditQuestionWorld {
     editQuestionPage: CreateQuestionPage
