@@ -31,13 +31,11 @@ Feature: Answering a quiz question with multiple choice
     Then I see the answer explanations for answers
       | answer  | explanation      |
       | Italy   | And where is it? |
-      | France  |                  |
+      | France  | You wish!        |
       | Morocco | Almost :D        |
-      | Spain   |                  |
+      | Spain   | Manana!          |
     And I see the question explanation
 
-
-@ignore
   Scenario:
     When I take question "Europe"
     And I answer "France, Italy, Spain"
@@ -45,6 +43,6 @@ Feature: Answering a quiz question with multiple choice
       | answer  | explanation      |
       | Italy   | And where is it? |
       | France  | You wish!        |
-      | Morocco |                  |
-      | Spain   |  Manana!         |
+      | Morocco | Almost :D        |
+      | Spain   | Manana!          |
     And I see the question explanation
