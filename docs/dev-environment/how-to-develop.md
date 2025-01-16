@@ -22,7 +22,7 @@ and becomes part of the JAR assembly.
 To run the application, in the `backend` directory execute:
 
 ```
-./gradlew bootRun`
+./gradlew bootRun
 ```
 
 This command does not build the front end, so you need to run `assembleFrontend` or `pnpm run build` first.
