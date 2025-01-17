@@ -28,7 +28,11 @@ export class TakeQuestionPage {
 
     button = (name: string) => this.page.locator(`input#${name}`).click()
 
-    buttonExists = (name: string) => this.page.locator(`input#${name}`).count().then(count => count == 1)
+    buttonExists = (name: string) =>
+        this.page
+            .locator(`input#${name}`)
+            .count()
+            .then(count => count === 1)
 
     feedbackLocator = () => this.page.locator('p.question-correctness')
 
