@@ -11,7 +11,7 @@ interface EditQuestionWorld {
 }
 
 const world = worldAs<EditQuestionWorld>()
-const openEditPage = async (bookmark: string) => world.editQuestionPage.goto('${world.bookmarks[bookmark].url}/edit')
+const openEditPage = async (bookmark: string) => world.editQuestionPage.goto(`${world.bookmarks[bookmark].url}/edit`)
 Before(() => {
     world.editQuestionPage = new CreateQuestionPage(world.page)
 })
