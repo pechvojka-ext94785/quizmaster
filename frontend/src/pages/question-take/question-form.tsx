@@ -34,10 +34,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
         } else if (quiz) {
             quiz.actualQuestionNumber = 0
         }
-        if (quiz) {
-            console.log('incrementActualQuestionNumber', quiz.actualQuestionNumber)
-        }
-
     }
 
     return (
