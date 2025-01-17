@@ -18,7 +18,6 @@ export function CreateQuestionForm() {
     const [answerExplanation, setAnswerExplanation] = createSignal<string>('')
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
-    const [isExplanationsAlways, setExplanationsAlways] = createSignal<boolean>(true)
     const [errorMessage, setErrorMessage] = createSignal<string>('')
 
     // const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
@@ -61,9 +60,6 @@ export function CreateQuestionForm() {
         setIsMultipleAnswer(prev => !prev)
     }
 
-    const toggleExplanationAlways = () => {
-        setExplanationsAlways(prev => !prev)
-    }
     const handleCorrectAnswerClick = (index: number) => {
         if (isMultipleAnswer()) {
             if (correctAnswers().includes(index)) {
@@ -125,17 +121,6 @@ export function CreateQuestionForm() {
                         onChange={toggleMultipleAnswers}
                     />
                     Is this question with multiple possible answers?
-                    <br />
-                </div>
-                <div class="showExplanationsAlways">
-                    <input
-                        id="show-explanations-always"
-                        type="checkbox"
-                        checked={isExplanationsAlways()}
-                        onChange={toggleExplanationAlways}
-                        //                            disabled={!isExplanationsAlways()}
-                    />
-                    Always show explanation for all answers?
                     <br />
                 </div>
                 <br />
