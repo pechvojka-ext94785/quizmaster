@@ -38,11 +38,11 @@ export function CreateQuestionForm() {
     const postData = async (formData: QuestionData) =>
         questionId()
             ? updateQuestion(formData, questionId())
-                .then(() => setLinkToQuestion(`${location.origin}/question/${questionId()}`))
-                .catch(error => setLinkToQuestion(error.message))
+                  .then(() => setLinkToQuestion(`${location.origin}/question/${questionId()}`))
+                  .catch(error => setLinkToQuestion(error.message))
             : saveQuestion(formData)
-                .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
-                .catch(error => setLinkToQuestion(error.message))
+                  .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
+                  .catch(error => setLinkToQuestion(error.message))
 
     const updateAnswer = (index: number, value: string) => {
         setAnswers(prev => {
