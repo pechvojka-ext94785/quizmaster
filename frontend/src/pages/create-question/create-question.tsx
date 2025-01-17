@@ -3,6 +3,7 @@ import { createEffect, createSignal, Index, Show } from 'solid-js'
 import { type QuestionData, saveQuestion, getQuestion } from 'api/quiz-question.ts'
 import { useParams } from '@solidjs/router'
 
+// if change this value, also change in frontend/tests/steps/create-question.ts
 const NUM_ANSWERS = 2
 
 export function CreateQuestionForm() {

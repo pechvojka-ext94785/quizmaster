@@ -17,6 +17,7 @@ interface CreateQuestionWorld {
 
 const world = worldAs<CreateQuestionWorld>()
 
+// if change this value, also change in frontend/src/pages/create-question/create-question.tsx
 const NUM_ANSWERS = 2
 
 Before(() => {
