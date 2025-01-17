@@ -7,7 +7,7 @@ import { worldAs } from './common.ts'
 
 interface CreateQuizWorld {
     quizTakingPage: TakeQuestionPage
-    bookmarks: Record<string, Question>
+    quizBookmarks: Record<string, Question>
     quiz: Quiz
 }
 
@@ -15,7 +15,7 @@ const world = worldAs<CreateQuizWorld>()
 
 Before(() => {
     world.quiz = { questions: [], actualQuestionNumber: 0 }
-    world.bookmarks = {}
+    world.quizBookmarks = {}
     world.quizTakingPage = new TakeQuestionPage(world.page)
 })
 
@@ -24,7 +24,7 @@ Given('a quiz with questions {string}', async (questions: string) => {
 })
 
 When('I start the quiz', async () => {
-    await world.page.goto(world.bookmarks[world.quiz.questions[world.quiz.actualQuestionNumber]].url)
+    await world.quizTakingPage.gotoQuiz()
 })
 
 Then('I see question', async () => {
@@ -32,7 +32,12 @@ Then('I see question', async () => {
 })
 
 Then('I see question number {int}', async (questions: number) => {
-    await world.page.goto(world.bookmarks[world.quiz.questions[questions - 1]].url)
+    await world.page.goto(world.quizBookmarks[world.quiz.questions[questions - 1]].url)
+})
+
+When('I see {string}', async (name: string) => {
+    await world.quizTakingPage.buttonExists(name)
+    world.quiz.actualQuestionNumber++
 })
 
 When('I click {string}', async (name: string) => {

@@ -22,5 +22,5 @@ export interface QuizQuestionProps extends QuizQuestion {
 
 export interface Quiz {
     readonly questions: string[]
-    readonly actualQuestionNumber: number
+    actualQuestionNumber: number
 }

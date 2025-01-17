@@ -1,7 +1,7 @@
 import './question-form.css'
 import { type Accessor, For, Show } from 'solid-js'
 
-import type { QuizQuestion } from 'model/quiz-question.ts'
+import type { Quiz, QuizQuestion } from 'model/quiz-question.ts'
 import { preventDefault } from 'helpers.ts'
 import {
     Answer,
@@ -13,7 +13,7 @@ import {
 
 interface QuestionFormProps {
     readonly question: Accessor<QuizQuestion>
-    readonly quiz: boolean
+    quiz: Quiz | null
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
@@ -22,8 +22,22 @@ export const QuestionForm = (props: QuestionFormProps) => {
     const state = createQuestionTakeState(question)
     const feedback = createQuestionFeedbackState(state, question)
 
+
+
     const submitAnswers = preventDefault(() => {
         if (state.selectedAnswerIdxs().length > 0) state.submit()
+    })
+
+    const incrementActualQuestionNumber = (() => {
+        if (quiz && quiz.actualQuestionNumber < quiz.questions.length - 1) {
+            quiz.actualQuestionNumber++
+        } else if (quiz) {
+            quiz.actualQuestionNumber = 0
+        }
+        if (quiz) {
+            console.log('incrementActualQuestionNumber', quiz.actualQuestionNumber)
+        }
+
     })
 
     return (
@@ -54,7 +68,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                 <QuestionExplanation text={question().questionExplanation} />
             </Show>
             <Show when={quiz}>
-                <input type="button" value="Next" id="next" />
+                <input type="button" value="Next" id="next" onclick={() => incrementActualQuestionNumber()} />
             </Show>
         </form>
     )

@@ -14,10 +14,10 @@ Feature: Create quiz
 
   Scenario: Start quiz
     When I start the quiz
-    Then I see question
+    Then I see "next"
 
   Scenario: Start quiz and finish
     When I start the quiz
-    Then I see question
+    Then I see "next"
     When I click "next"
     Then I see question
