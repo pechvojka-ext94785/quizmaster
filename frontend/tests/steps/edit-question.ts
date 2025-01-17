@@ -26,3 +26,20 @@ Then('I see the question, answers and explanations', async () => {
     const question = await world.editQuestionPage.questionLocator().inputValue()
     expect(question).toBe(world.bookmarks[world.activeBookmark].question)
 })
+
+When('I change question to {string}', async (newQuestion: string) => {
+    await world.editQuestionPage.questionLocator().fill(newQuestion)
+})
+
+When('I save it', async () => {
+    await world.editQuestionPage.submit()
+ })
+
+
+Then('I see unchanged url', async () => {
+    const link = await world.editQuestionPage.questionUrlLocator().textContent()
+    expect(link).toBe(world.bookmarks[world.activeBookmark].url)
+  });
+
+
+

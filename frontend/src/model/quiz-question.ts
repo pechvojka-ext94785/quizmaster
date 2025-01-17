@@ -2,8 +2,8 @@
 export interface QuizQuestion {
     readonly id: number
     readonly question: string
-    readonly answers: readonly string[]
-    readonly explanations: readonly string[]
+    readonly answers: string[]
+    readonly explanations: string[]
     readonly questionExplanation: string
     readonly correctAnswers: number[]
 }

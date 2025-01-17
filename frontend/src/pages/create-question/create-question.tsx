@@ -20,12 +20,15 @@ export function CreateQuestionForm() {
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
     const [isExplanationsAlways, setExplanationsAlways] = createSignal<boolean>(true)
 
-    // const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
-
     createEffect(async () => {
         if (questionId()) {
             const quizQuestion = await getQuestion(questionId())
             setQuestion(quizQuestion.question)
+            setAnswers(quizQuestion.answers)
+            setCorrectAnswers(quizQuestion.correctAnswers)
+            setQuestionExplanations(quizQuestion.explanations)
+            setAnswerExplanation(quizQuestion.questionExplanation)
+            setIsMultipleAnswer(quizQuestion.correctAnswers.length > 1)
             setIsLoaded(true)
         }
     })
