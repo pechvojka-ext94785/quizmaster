@@ -20,9 +20,11 @@ export class CreateQuestionPage {
 
     async setExplanationsAlways(always: boolean) {
         const checkbox = await this.page.$('#show-explanations-always')
-        const isChecked = await checkbox.isChecked()
-        if (isChecked !== always) {
-            await checkbox.click()
+        if (checkbox) {
+            const isChecked = await checkbox.isChecked()
+            if (isChecked !== always) {
+                await checkbox.click()
+            }
         }
     }
 
