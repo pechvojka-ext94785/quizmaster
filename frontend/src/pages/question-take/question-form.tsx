@@ -13,10 +13,12 @@ import {
 
 interface QuestionFormProps {
     readonly question: Accessor<QuizQuestion>
+    readonly quiz: boolean
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
     const question = props.question
+    const quiz = props.quiz
     const state = createQuestionTakeState(question)
     const feedback = createQuestionFeedbackState(state, question)
 
@@ -42,14 +44,17 @@ export const QuestionForm = (props: QuestionFormProps) => {
                     )}
                 </For>
             </ul>
-            <input type="submit" value="Submit" />
-            &nbsp;
-            <input type="button" value="Next" />
+            <Show when={!state.submitted()}>
+              <input type="submit" value="Submit" />
+            </Show>
             <Show when={state.submitted()}>
                 <QuestionCorrectness isCorrect={feedback.isQuestionCorrect()} />
             </Show>
             <Show when={state.submitted()}>
                 <QuestionExplanation text={question().questionExplanation} />
+            </Show>
+            <Show when={quiz}>
+                <input type="button" value="Next" id="next" />
             </Show>
         </form>
     )

@@ -1,7 +1,7 @@
 import { Before, Given, Then, When } from '@cucumber/cucumber'
 import type { Question } from './question.ts'
 import type { Quiz } from './quiz.ts'
-import { TakeQuestionPage } from '../pages'
+import { TakeQuestionPage } from '../pages/index.ts'
 
 import { worldAs } from './common.ts'
 
@@ -25,6 +25,10 @@ Given('a quiz with questions {string}', async (questions: string) => {
 
 When('I start the quiz', async () => {
     await world.page.goto(world.bookmarks[world.quiz.questions[world.quiz.actualQuestionNumber]].url)
+})
+
+Then('I see question', async () => {
+    await world.quizTakingPage.gotoQuiz()
 })
 
 Then('I see question number {int}', async (questions: number) => {

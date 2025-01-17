@@ -5,6 +5,8 @@ export class TakeQuestionPage {
 
     goto = async (id: number) => this.page.goto(`/question/${id}`)
 
+    gotoQuiz = async () => this.page.goto(`/quiz`)
+
     questionLocator = () => this.page.locator('h1')
 
     getQuestionType = () => this.page.locator('.question-type').innerText()
@@ -24,7 +26,7 @@ export class TakeQuestionPage {
 
     submit = () => this.page.locator('input[type="submit"]').click()
 
-    button = (name: string) => this.page.locator('input[type="button"]', { hasText: name }).click()
+    button = (name: string) => this.page.locator(`input#${name}`).click()
 
     feedbackLocator = () => this.page.locator('p.question-correctness')
 
