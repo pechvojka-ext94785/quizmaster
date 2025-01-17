@@ -5,7 +5,7 @@ export class TakeQuestionPage {
 
     goto = async (id: number) => this.page.goto(`/question/${id}`)
 
-    gotoQuiz = async () => this.page.goto(`/quiz`)
+    gotoQuiz = async () => this.page.goto('/quiz')
 
     questionLocator = () => this.page.locator('h1')
 

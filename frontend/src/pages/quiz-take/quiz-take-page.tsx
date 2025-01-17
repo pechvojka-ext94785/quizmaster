@@ -6,7 +6,6 @@ import type { QuizQuestion } from 'model/quiz-question.ts'
 import { getQuestion } from 'api/quiz-question.ts'
 import { QuestionForm } from 'pages/question-take'
 
-
 export const QuizTakePage = () => {
     const questionId = () => 1
 
