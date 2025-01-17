@@ -77,6 +77,13 @@ Given('saved and bookmarked as {string}', saveQuestion)
 
 Given('I start creating a question', openCreatePage)
 
+Given('which displays only incorrect answer explanations', async () => {
+    await world.createQuestionPage.setExplanationsAlways(false)
+})
+Given('which displays all answer explanations', async () => {
+    await world.createQuestionPage.setExplanationsAlways(true)
+})
+
 When('I enter question {string}', enterQuestion)
 
 When(/^I add the answer "(.+)" marked as (correct|incorrect)$/, async (answer: string, correct: string) => {

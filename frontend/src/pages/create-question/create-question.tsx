@@ -18,6 +18,7 @@ export function CreateQuestionForm() {
     const [answerExplanation, setAnswerExplanation] = createSignal<string>('')
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
+    const [isExplanationsAlways, setExplanationsAlways] = createSignal<boolean>(true)
 
     // const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
 
@@ -54,6 +55,9 @@ export function CreateQuestionForm() {
         setIsMultipleAnswer(prev => !prev)
     }
 
+    const toggleExplanationAlways = () => {
+        setExplanationsAlways(prev => !prev)
+    }
     const handleCorrectAnswerClick = (index: number) => {
         if (isMultipleAnswer()) {
             if (correctAnswers().includes(index)) {
@@ -83,88 +87,103 @@ export function CreateQuestionForm() {
         postData(formData)
     }
 
-    return (
-        <div class="wrapper">
-            <h1>Quiz Question Creation Page</h1>
-            <h2>If you're happy and you know it create the question</h2>
-            <form class="question-create-form" onSubmit={handleSubmit}>
-                <input id="is-loaded" type="hidden" value={isLoaded() ? 'loaded' : ''} />
-                {/* Question input */}
-                <div>
-                    <label for="question-text-area">Enter your question:</label>
-                    <textarea
-                        id="question-text-area"
-                        class="textarea"
-                        value={question()}
-                        onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
-                        rows="3"
-                    />
-                </div>
-                <div class="multipleQuestionsRow">
-                    <input
-                        id="multiple-possible-answers"
-                        type="checkbox"
-                        checked={isMultipleAnswer()}
-                        onChange={toggleMultipleAnswers}
-                    />
-                    Is this question with multiple possible answers?
-                    <br />
-                </div>
-                {/* Answer rows */}
-                <Index each={answers()}>
-                    {(_answer, index) => (
-                        <div class="answerRow">
-                            <input
-                                id={`answer-text-${index + 1}`}
-                                type="text"
-                                placeholder={`Answer ${index + 1}`}
-                                value={answers()[index]}
-                                onInput={e => updateAnswer(index, (e.target as HTMLInputElement).value)}
-                                class="answerInput"
-                            />
-                            <input
-                                id={`answer-checkbox-${index + 1}`}
-                                type="checkbox"
-                                checked={correctAnswers().includes(index)}
-                                onChange={() => handleCorrectAnswerClick(index)}
-                                class="checkbox"
-                            />
-                            <input
-                                id={`answer-explanation-${index + 1}`}
-                                type="text"
-                                placeholder="Explanation for wrong answer"
-                                value={questionExplanations()[index]}
-                                onInput={e => updateExplanation(index, (e.target as HTMLInputElement).value)}
-                                class="explanationInput"
-                            />
-                        </div>
-                    )}
-                </Index>
-                {/* Add answer button */}
-                <button type="button" onClick={addAnswer} class="addAnswerButton">
-                    Add Answer
-                </button>
-                {
-                    <div class="generalExplanationWrapper">
-                        <label for="general-explanation">General explanation for the entire question:</label>
+    {
+        const answersArray = answers()
+        return (
+            <div class="wrapper">
+                <h1>Quiz Question Creation Page</h1>
+                <h2>If you're happy and you know it create the question</h2>
+                <form class="question-create-form" onSubmit={handleSubmit}>
+                    <input id="is-loaded" type="hidden" value={isLoaded() ? 'loaded' : ''} />
+                    {/* Question input */}
+                    <div>
+                        <label for="question-text-area">Enter your question:</label>
                         <textarea
-                            id="general-explanation"
-                            class="generalExplanation"
-                            value={answerExplanation()}
-                            onInput={e => setAnswerExplanation((e.target as HTMLTextAreaElement).value)}
-                            rows="2"
+                            id="question-text-area"
+                            class="textarea"
+                            value={question()}
+                            onInput={e => setQuestion((e.target as HTMLTextAreaElement).value)}
+                            rows="3"
                         />
                     </div>
-                }
-                {/* Submit button */}
-                <button type="submit" class="submitButton">
-                    Submit
-                </button>{' '}
-                <br />
-                <Show when={linkToQuestion()}>
-                    <span id="question-link">{linkToQuestion()}</span>
-                </Show>
-            </form>
-        </div>
-    )
+                    <div class="multipleQuestionsRow">
+                        <input
+                            id="multiple-possible-answers"
+                            type="checkbox"
+                            checked={isMultipleAnswer()}
+                            onChange={toggleMultipleAnswers}
+                        />
+                        Is this question with multiple possible answers?
+                        <br />
+                    </div>
+                    <div class="showExplanationsAlways">
+                        <input
+                            id="show-explanations-always"
+                            type="checkbox"
+                            checked={isExplanationsAlways()}
+                            onChange={toggleExplanationAlways}
+                            //                            disabled={!isExplanationsAlways()}
+                        />
+                        Always show explanation for all answers?
+                        <br />
+                    </div>
+                    <br />
+                    {/* Answer rows */}
+                    <Index each={answers()}>
+                        {(_answer, index) => (
+                            <div class="answerRow">
+                                <input
+                                    id={`answer-text-${index + 1}`}
+                                    type="text"
+                                    placeholder={`Answer ${index + 1}`}
+                                    value={answers()[index]}
+                                    onInput={e => updateAnswer(index, (e.target as HTMLInputElement).value)}
+                                    class="answerInput"
+                                />
+                                <input
+                                    id={`answer-checkbox-${index + 1}`}
+                                    type="checkbox"
+                                    checked={correctAnswers().includes(index)}
+                                    onChange={() => handleCorrectAnswerClick(index)}
+                                    class="checkbox"
+                                />
+                                <input
+                                    id={`answer-explanation-${index + 1}`}
+                                    type="text"
+                                    placeholder="Explanation for wrong answer"
+                                    value={questionExplanations()[index]}
+                                    onInput={e => updateExplanation(index, (e.target as HTMLInputElement).value)}
+                                    class="explanationInput"
+                                />
+                            </div>
+                        )}
+                    </Index>
+                    {/* Add answer button */}
+                    <button type="button" onClick={addAnswer} class="addAnswerButton">
+                        Add Answer
+                    </button>
+                    {
+                        <div class="generalExplanationWrapper">
+                            <label for="general-explanation">General explanation for the entire question:</label>
+                            <textarea
+                                id="general-explanation"
+                                class="generalExplanation"
+                                value={answerExplanation()}
+                                onInput={e => setAnswerExplanation((e.target as HTMLTextAreaElement).value)}
+                                rows="2"
+                            />
+                        </div>
+                    }
+                    {/* Submit button */}
+                    <button type="submit" class="submitButton">
+                        Submit
+                    </button>{' '}
+                    <br />
+                    <Show when={linkToQuestion()}>
+                        <span id="question-link">{linkToQuestion()}</span>
+                    </Show>
+                </form>
+            </div>
+        )
+    }
 }
