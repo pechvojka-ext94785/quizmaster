@@ -10,7 +10,7 @@ import { QuestionForm } from 'pages/question-take'
 export const QuizTakePage = () => {
     const quiz = {
         questions: ['1', '2'],
-        actualQuestionNumber: 1
+        actualQuestionNumber: 1,
     } as Quiz
 
     const questionId = () => quiz.actualQuestionNumber

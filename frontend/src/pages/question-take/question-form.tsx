@@ -28,7 +28,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
         if (state.selectedAnswerIdxs().length > 0) state.submit()
     })
 
-    const incrementActualQuestionNumber = (() => {
+    const incrementActualQuestionNumber = () => {
         if (quiz && quiz.actualQuestionNumber < quiz.questions.length - 1) {
             quiz.actualQuestionNumber++
         } else if (quiz) {
@@ -38,7 +38,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
             console.log('incrementActualQuestionNumber', quiz.actualQuestionNumber)
         }
 
-    })
+    }
 
     return (
         <form onSubmit={submitAnswers}>
