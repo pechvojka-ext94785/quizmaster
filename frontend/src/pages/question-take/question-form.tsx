@@ -22,8 +22,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
     const state = createQuestionTakeState(question)
     const feedback = createQuestionFeedbackState(state, question)
 
-
-
     const submitAnswers = preventDefault(() => {
         if (state.selectedAnswerIdxs().length > 0) state.submit()
     })
