@@ -1,6 +1,6 @@
 import './create-question.css'
 import { createEffect, createSignal, Index, Show } from 'solid-js'
-import { type QuestionData, saveQuestion, getQuestion } from 'api/quiz-question.ts'
+import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { useParams } from '@solidjs/router'
 
 // if change this value, also change in frontend/tests/steps/create-question.ts
@@ -35,10 +35,14 @@ export function CreateQuestionForm() {
         }
     })
 
-    const postData = (formData: QuestionData) =>
-        saveQuestion(formData)
-            .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
-            .catch(error => setLinkToQuestion(error.message))
+    const postData = async (formData: QuestionData) =>
+        questionId()
+            ? updateQuestion(formData, questionId())
+                .then(() => setLinkToQuestion(`${location.origin}/question/${questionId()}`))
+                .catch(error => setLinkToQuestion(error.message))
+            : saveQuestion(formData)
+                .then(questionId => setLinkToQuestion(`${location.origin}/question/${questionId}`))
+                .catch(error => setLinkToQuestion(error.message))
 
     const updateAnswer = (index: number, value: string) => {
         setAnswers(prev => {

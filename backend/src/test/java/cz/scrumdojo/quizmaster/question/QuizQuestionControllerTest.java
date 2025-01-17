@@ -60,4 +60,35 @@ public class QuizQuestionControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @Test
+    public void testUpdateQuestion() {
+        // Step 1: Create and save a test question
+        var question = createSingleChoiceQuestion();
+        var questionId = quizQuestionController.saveQuestion(question);
+
+        // Step 2: Create updated question data
+        var updatedQuestion = QuizQuestion.builder()
+            .questionText("What is the capital of France?")
+            .answers(List.of("Paris", "Lyon", "Marseille", "Nice"))
+            .questionExplanations(List.of("Correct!", "Nope", "Nope", "Nope"))
+            .correctAnswers(List.of(0))
+            .answerExplanation("Paris is the capital of France.")
+            .isMultipleAnswer(false)
+            .isExplanationsAlways(true)
+            .build();
+
+        // Step 3: Call the updateQuestion method
+        quizQuestionController.updateQuestion(updatedQuestion, questionId);
+
+        // Step 4: Retrieve the updated question and verify the changes
+        var retrievedQuestion = quizQuestionRepository.findById(questionId).orElseThrow();
+        assertEquals("What is the capital of France?", retrievedQuestion.getQuestionText());
+        assertEquals(List.of("Paris", "Lyon", "Marseille", "Nice"), retrievedQuestion.getAnswers());
+        assertEquals(List.of("Correct!", "Nope", "Nope", "Nope"), retrievedQuestion.getQuestionExplanations());
+        assertEquals(List.of(0), retrievedQuestion.getCorrectAnswers());
+        assertEquals("Paris is the capital of France.", retrievedQuestion.getAnswerExplanation());
+        assertFalse(retrievedQuestion.getIsMultipleAnswer());
+        assertTrue(retrievedQuestion.getIsExplanationsAlways());
+    }
 }

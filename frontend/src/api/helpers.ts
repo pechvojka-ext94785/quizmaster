@@ -18,3 +18,12 @@ export const postJson = <T, U>(url: string, data: T): Promise<U> =>
         },
         body: JSON.stringify(data),
     })
+
+export const putJson = <T, U>(url: string, data: T): Promise<U> =>
+    fetchJson(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })

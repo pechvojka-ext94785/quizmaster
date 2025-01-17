@@ -9,8 +9,7 @@ Feature: Edit question GUI
       | Prague      | * | D |
     * saved and bookmarked as "Czechia"
 
-  @ignore
-  Scenario: Edit a single-choice question
+   Scenario: Edit a single-choice question
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
     When I change question to "What is capital of Slovakia?"

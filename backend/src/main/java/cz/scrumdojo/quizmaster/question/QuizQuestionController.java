@@ -34,6 +34,15 @@ public class QuizQuestionController {
     }
 
     @Transactional
+    @PutMapping("/quiz-question/{id}")
+    public Integer updateQuestion(@RequestBody QuizQuestion question, @PathVariable Integer id) {
+        question.setId(id);
+        System.out.println("Updating question: " + question);
+        quizQuestionRepository.save(question);
+        return id;
+    }
+
+    @Transactional
     @GetMapping("/quiz-question/{id}/answers")
     public ResponseEntity<Answers> getAnswers(@PathVariable Integer id) {
         return response(findQuestion(id).map(Answers::from));
