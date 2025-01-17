@@ -49,4 +49,9 @@ export class CreateQuestionPage {
     questionUrlLocator = () => this.page.locator('#question-link')
 
     questionUrl = () => this.questionUrlLocator().textContent()
+
+    async getErrorMessage(): Promise<string> {
+        const errorMessage = await this.page.textContent('#error-message')
+        return errorMessage ?? ''
+    }
 }

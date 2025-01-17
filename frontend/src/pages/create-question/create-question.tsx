@@ -19,6 +19,9 @@ export function CreateQuestionForm() {
     const [linkToQuestion, setLinkToQuestion] = createSignal<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = createSignal<boolean>(false)
     const [isExplanationsAlways, setExplanationsAlways] = createSignal<boolean>(true)
+    const [errorMessage, setErrorMessage] = createSignal<string>('')
+
+    // const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
 
     createEffect(async () => {
         if (questionId()) {
@@ -80,6 +83,13 @@ export function CreateQuestionForm() {
 
     const handleSubmit = (e: Event) => {
         e.preventDefault()
+        setErrorMessage('')
+        // Validate form data
+        if (correctAnswers().length === 0) {
+            setErrorMessage('At least one correct answer must be selected')
+            return
+        }
+
         const formData = {
             question: question(),
             answers: answers(),
@@ -182,6 +192,9 @@ export function CreateQuestionForm() {
                 <br />
                 <Show when={linkToQuestion()}>
                     <span id="question-link">{linkToQuestion()}</span>
+                </Show>
+                <Show when={errorMessage()}>
+                    <span id="error-message">{errorMessage()}</span>
                 </Show>
             </form>
         </div>

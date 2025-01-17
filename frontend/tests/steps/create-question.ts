@@ -99,7 +99,16 @@ When('I take the question', async () => {
     world.activeBookmark = 'manual'
 })
 
+When('I try saving the question', async () => {
+    await world.createQuestionPage.submit()
+})
+
 Then('I see a link to take the question', async () => {
     const url = await world.createQuestionPage.questionUrl()
     expect(url).not.toBe('')
+})
+
+Then('I see an error message', async () => {
+    const errorMessage = await world.createQuestionPage.getErrorMessage()
+    expect(errorMessage).not.toBe('')
 })
