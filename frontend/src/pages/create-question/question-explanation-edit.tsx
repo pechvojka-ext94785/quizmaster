@@ -1,6 +1,6 @@
 interface QuestionExplanationEditProps {
     readonly questionExplanation: string
-    readonly setQuestionExplanation: React.Dispatch<React.SetStateAction<string>>
+    readonly setQuestionExplanation: (questionExplanation: string) => void
 }
 
 export const QuestionExplanationEdit = ({

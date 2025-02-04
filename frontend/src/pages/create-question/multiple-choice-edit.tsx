@@ -1,6 +1,6 @@
 interface MultipleChoiceEditProps {
     readonly isMultipleChoice: boolean
-    readonly setIsMultipleChoice: React.Dispatch<React.SetStateAction<boolean>>
+    readonly setIsMultipleChoice: (isMultipleChoice: boolean) => void
 }
 
 export const MultipleChoiceEdit = ({ isMultipleChoice, setIsMultipleChoice }: MultipleChoiceEditProps) => (

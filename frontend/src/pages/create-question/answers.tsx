@@ -48,18 +48,17 @@ export const AddAnswerButton = ({ addAnswer }: AddAnswerProps) => (
 
 interface AnswersProps {
     readonly answers: readonly AnswerData[]
-    readonly setAnswerData: React.Dispatch<React.SetStateAction<AnswerData[]>>
+    readonly setAnswers: (answers: readonly AnswerData[]) => void
 }
 
-export const Answers = ({ answers, setAnswerData }: AnswersProps) => {
-    const updateAnswerData = (index: number, newValue: Partial<AnswerData>) =>
-        setAnswerData(prev => {
-            const newAnswerData = [...prev]
-            newAnswerData[index] = { ...newAnswerData[index], ...newValue }
-            return newAnswerData
-        })
+export const Answers = ({ answers, setAnswers }: AnswersProps) => {
+    const updateAnswerData = (index: number, newValue: Partial<AnswerData>) => {
+        const newAnswerData = [...answers]
+        newAnswerData[index] = { ...newAnswerData[index], ...newValue }
+        setAnswers(newAnswerData)
+    }
 
-    const addAnswer = () => setAnswerData(prev => [...prev, emptyAnswerData()])
+    const addAnswer = () => setAnswers([...answers, emptyAnswerData()])
 
     return (
         <>
