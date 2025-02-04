@@ -112,7 +112,7 @@ export function CreateQuestionForm() {
                         rows={3}
                     />
                 </div>
-                <div className="multipleQuestionsRow">
+                <div className="multiple-questions-row">
                     <input
                         id="multiple-possible-answers"
                         type="checkbox"
@@ -127,14 +127,14 @@ export function CreateQuestionForm() {
                 {answers.map((answer, index) => {
                     const uniqueId = `${answer}-${explanations[index]}-${index}`
                     return (
-                        <div key={uniqueId} className="answerRow">
+                        <div key={uniqueId} className="answer-row">
                             <input
                                 id={`answer-text-${index + 1}`}
                                 type="text"
                                 placeholder={`Answer ${index + 1}`}
                                 value={answers[index]}
                                 onChange={e => updateAnswer(index, e.target.value)}
-                                className="answerInput"
+                                className="answer-input"
                             />
                             <input
                                 id={`answer-checkbox-${index + 1}`}
@@ -149,27 +149,27 @@ export function CreateQuestionForm() {
                                 placeholder="Explanation for wrong answer"
                                 value={explanations[index]}
                                 onChange={e => updateExplanation(index, e.target.value)}
-                                className="explanationInput"
+                                className="explanation-input"
                             />
                         </div>
                     )
                 })}
                 {/* Add answer button */}
-                <button type="button" onClick={addAnswer} className="addAnswerButton">
+                <button type="button" onClick={addAnswer} className="add-answer-button">
                     Add Answer
                 </button>
-                <div className="generalExplanationWrapper">
+                <div className="general-explanation-wrapper">
                     <label htmlFor="general-explanation">General explanation for the entire question:</label>
                     <textarea
                         id="general-explanation"
-                        className="generalExplanation"
+                        className="general-explanation"
                         value={questionExplanation}
                         onChange={e => setQuestionExplanation(e.target.value)}
                         rows={2}
                     />
                 </div>
                 {/* Submit button */}
-                <button type="submit" className="submitButton">
+                <button type="submit" className="submit-button">
                     Submit
                 </button>
                 <br />
