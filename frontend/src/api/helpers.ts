@@ -22,4 +22,4 @@ const sendData =
         })
 
 export const postJson = sendData('POST')
-export const putJson = sendData('PUT')
+export const patchJson = sendData('PATCH')

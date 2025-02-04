@@ -34,7 +34,7 @@ public class QuizQuestionController {
     }
 
     @Transactional
-    @PutMapping("/quiz-question/{id}")
+    @PatchMapping("/quiz-question/{id}")
     public Integer updateQuestion(@RequestBody QuizQuestion question, @PathVariable Integer id) {
         question.setId(id);
         System.out.println("Updating question: " + question);
