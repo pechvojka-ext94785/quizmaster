@@ -9,7 +9,7 @@ interface AnswerRowProps {
 export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) => (
     <div key={`answer-${index}`} className="answer-row">
         <input
-            id={`answer-text-${index + 1}`}
+            id={`answer-text-${index}`}
             type="text"
             placeholder={`Answer ${index + 1}`}
             value={answer.answer}
@@ -17,14 +17,14 @@ export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) =
             className="answer-input"
         />
         <input
-            id={`answer-checkbox-${index + 1}`}
+            id={`answer-checkbox-${index}`}
             type="checkbox"
             checked={answer.isCorrect}
             onChange={e => updateAnswerData(index, { isCorrect: e.target.checked })}
             className="checkbox"
         />
         <input
-            id={`answer-explanation-${index + 1}`}
+            id={`answer-explanation-${index}`}
             type="text"
             placeholder="Explanation for wrong answer"
             value={answer.explanation}

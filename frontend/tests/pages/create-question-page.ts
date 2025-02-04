@@ -24,19 +24,18 @@ export class CreateQuestionPage {
     }
 
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
-        const value1 = index + 1
-        await this.page.fill(`#answer-text-${String(value1)}`, value)
+        await this.page.fill(`#answer-text-${index}`, value)
 
-        if (explanation) await this.page.fill(`#answer-explanation-${String(value1)}`, explanation)
+        if (explanation) await this.page.fill(`#answer-explanation-${index}`, explanation)
 
-        if (correct) await this.page.check(`#answer-checkbox-${String(value1)}`)
+        if (correct) await this.page.check(`#answer-checkbox-${index}`)
     }
 
     enterGeneralExplanation = (question: string) => this.page.fill('textarea.general-explanation', question)
 
     clickAddAnswerButton = async (idx: number) => {
         await this.page.locator('button.add-answer-button').click()
-        await this.page.waitForSelector(`#answer-text-${String(idx + 1)}`)
+        await this.page.waitForSelector(`#answer-text-${idx}`)
     }
 
     submit = () => this.page.locator('button[type="submit"]').click()
