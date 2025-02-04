@@ -1,10 +1,4 @@
-export interface AnswerData {
-    readonly answer: string
-    readonly isCorrect: boolean
-    readonly explanation: string
-}
-
-export const emptyAnswerData = (): AnswerData => ({ answer: '', isCorrect: false, explanation: '' })
+import { type AnswerData, emptyAnswerData } from './question-form-data.ts'
 
 interface AnswerRowProps {
     readonly answer: AnswerData
