@@ -7,7 +7,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
-    id("org.siouan.frontend-jdk21") version "8.1.0"
+    id("org.siouan.frontend-jdk21") version "10.0.0"
 }
 
 group = "cz.scrumdojo"
