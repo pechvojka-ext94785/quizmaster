@@ -5,11 +5,11 @@ export class CreateQuestionPage {
 
     goto = (url: string) => this.page.goto(url)
 
-    questionLocator = () => this.page.locator('#question-text-area')
+    questionLocator = () => this.page.locator('#question-text')
 
     enterQuestion = (question: string) => this.questionLocator().fill(question)
 
-    multipleChoiceLocator = () => this.page.locator('.multiple-questions-row > input')
+    multipleChoiceLocator = () => this.page.locator('#is-multiple-choice')
 
     setMultipleChoice = () => this.multipleChoiceLocator().check()
 
@@ -31,10 +31,12 @@ export class CreateQuestionPage {
         if (correct) await this.page.check(`#answer-checkbox-${index}`)
     }
 
-    enterGeneralExplanation = (question: string) => this.page.fill('textarea.general-explanation', question)
+    questionExplanationLocator = () => this.page.locator('#question-explanation')
+
+    enterQuestionExplanation = (question: string) => this.questionExplanationLocator().fill(question)
 
     clickAddAnswerButton = async (idx: number) => {
-        await this.page.locator('button.add-answer-button').click()
+        await this.page.locator('button#add-answer').click()
         await this.page.waitForSelector(`#answer-text-${idx}`)
     }
 

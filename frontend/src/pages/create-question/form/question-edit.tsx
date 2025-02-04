@@ -5,13 +5,7 @@ interface QuestionEditProps {
 
 export const QuestionEdit = ({ question, setQuestion }: QuestionEditProps) => (
     <>
-        <label htmlFor="question-text-area">Enter your question:</label>
-        <textarea
-            id="question-text-area"
-            className="textarea"
-            value={question}
-            onChange={e => setQuestion(e.target.value)}
-            rows={3}
-        />
+        <label htmlFor="question-text">Enter your question:</label>
+        <textarea id="question-text" value={question} onChange={e => setQuestion(e.target.value)} rows={3} />
     </>
 )

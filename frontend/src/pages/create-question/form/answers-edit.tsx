@@ -14,14 +14,12 @@ export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) =
             placeholder={`Answer ${index + 1}`}
             value={answer.answer}
             onChange={e => updateAnswerData(index, { answer: e.target.value })}
-            className="answer-input"
         />
         <input
             id={`answer-checkbox-${index}`}
             type="checkbox"
             checked={answer.isCorrect}
             onChange={e => updateAnswerData(index, { isCorrect: e.target.checked })}
-            className="checkbox"
         />
         <input
             id={`answer-explanation-${index}`}
@@ -29,7 +27,6 @@ export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) =
             placeholder="Explanation for wrong answer"
             value={answer.explanation}
             onChange={e => updateAnswerData(index, { explanation: e.target.value })}
-            className="explanation-input"
         />
     </div>
 )
@@ -40,7 +37,7 @@ interface AddAnswerProps {
 
 export const AddAnswerButton = ({ addAnswer }: AddAnswerProps) => (
     <div>
-        <button type="button" onClick={addAnswer} className="add-answer-button">
+        <button type="button" onClick={addAnswer} id="add-answer">
             Add Answer
         </button>
     </div>

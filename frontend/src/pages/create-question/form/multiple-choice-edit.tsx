@@ -4,14 +4,13 @@ interface MultipleChoiceEditProps {
 }
 
 export const MultipleChoiceEdit = ({ isMultipleChoice, setIsMultipleChoice }: MultipleChoiceEditProps) => (
-    <div className="multiple-questions-row">
+    <div>
         <input
-            id="multiple-possible-answers"
+            id="is-multiple-choice"
             type="checkbox"
             checked={isMultipleChoice}
             onChange={e => setIsMultipleChoice(e.target.checked)}
         />
-        Is this question with multiple possible answers?
-        <br />
+        <label htmlFor="is-multiple-choice">Multiple choice</label>
     </div>
 )

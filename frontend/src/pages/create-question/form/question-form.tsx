@@ -1,12 +1,12 @@
 import { SubmitButton } from 'pages/components/submit-button.tsx'
 import { preventDefault } from 'helpers.ts'
 import {
-    AnswerData,
+    type AnswerData,
     AnswersEdit,
     MultipleChoiceEdit,
     QuestionEdit,
     QuestionExplanationEdit,
-    QuestionFormData,
+    type QuestionFormData,
 } from 'pages/create-question/form'
 
 interface QuestionEditProps {
@@ -23,7 +23,7 @@ export const QuestionEditForm = ({ questionData, setQuestionData, onSubmit }: Qu
         setQuestionData({ ...questionData, questionExplanation })
 
     return (
-        <form className="question-create-form" onSubmit={preventDefault(onSubmit)}>
+        <form id="question-create-form" onSubmit={preventDefault(onSubmit)}>
             <QuestionEdit question={questionData.question} setQuestion={setQuestion} />
             <MultipleChoiceEdit
                 isMultipleChoice={questionData.isMultipleChoice}

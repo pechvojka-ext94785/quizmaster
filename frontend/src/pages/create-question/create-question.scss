@@ -1,63 +1,35 @@
 
-.wrapper {
+.question-page {
     padding: 10px 25px 30px;
     background: linear-gradient(180deg, rgb(182, 244, 146), rgb(51, 139, 147));
 
-}
-.create {
-    display: flex;
-    flex-direction: column;
-}
+    #question-create-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
 
-.textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-}
+        textarea {
+            width: 100%;
+            font-size: 1.2em;
+        }
 
-.answer-row {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-}
+        .answer-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
 
-.answer-input {
-    width: 40%;
-    margin-right: 10px;
-}
+            input[type="text"] { flex: 1 }
+        }
 
-.checkbox {
-    margin-right: 10px;
-}
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+    }
 
-.explanation-input {
-    width: 40%;
-}
-
-.general-explanation {
-    width: 100%;
-    min-height: 60px;
-    margin: 15px 0 20px;
-}
-
-button[type="submit"] {
-    padding: 10px 20px;
-    font-size: 1em;
-}
-
-.multiple-questions-row {
-    margin-bottom: 20px;
-    cursor: default;
-    max-width: fit-content;
-}
-
-.general-explanation-wrapper {
-    display: flex;
-    flex-direction: column;
-}
-
-#question-link {
-    margin-top: 15px;
-    display: block;
-    font-size: larger;
+    #question-link {
+        margin-top: 15px;
+        display: block;
+        font-size: larger;
+    }
 }

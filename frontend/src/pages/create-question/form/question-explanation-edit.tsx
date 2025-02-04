@@ -10,8 +10,7 @@ export const QuestionExplanationEdit = ({
     <>
         <label htmlFor="general-explanation">General explanation for the entire question:</label>
         <textarea
-            id="general-explanation"
-            className="general-explanation"
+            id="question-explanation"
             value={questionExplanation}
             onChange={e => setQuestionExplanation(e.target.value)}
             rows={2}

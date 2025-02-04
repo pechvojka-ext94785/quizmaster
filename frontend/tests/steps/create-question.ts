@@ -69,7 +69,7 @@ Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
 })
 
 Given('with explanation {string}', async (explanation: string) => {
-    await world.createQuestionPage.enterGeneralExplanation(explanation)
+    await world.createQuestionPage.enterQuestionExplanation(explanation)
     world.questionWip.explanation = explanation
 })
 
