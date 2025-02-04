@@ -14,12 +14,6 @@ export interface Answers {
     readonly questionExplanation: string
 }
 
-export interface QuizQuestionProps extends QuizQuestion {
-    readonly quizId: string
-    readonly quizRunId: string
-    readonly onSuccessfulSubmit: () => void
-}
-
 export interface Quiz {
     readonly questions: string[]
     actualQuestionNumber: number
