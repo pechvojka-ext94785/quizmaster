@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { type AnswerData, Answers, emptyAnswerData } from 'pages/create-question'
+import { QuestionEdit } from './question-edit'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -74,17 +75,7 @@ export function CreateQuestionForm() {
             <h2>If you're happy and you know it create the question</h2>
             <form className="question-create-form" onSubmit={handleSubmit}>
                 <input id="is-loaded" type="hidden" value={isLoaded ? 'loaded' : ''} />
-                {/* Question input */}
-                <div>
-                    <label htmlFor="question-text-area">Enter your question:</label>
-                    <textarea
-                        id="question-text-area"
-                        className="textarea"
-                        value={question}
-                        onChange={e => setQuestion(e.target.value)}
-                        rows={3}
-                    />
-                </div>
+                <QuestionEdit question={question} setQuestion={setQuestion} />
                 <div className="multiple-questions-row">
                     <input
                         id="multiple-possible-answers"
