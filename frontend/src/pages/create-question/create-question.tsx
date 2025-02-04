@@ -3,8 +3,13 @@ import { useEffect, useState } from 'react'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { useParams } from 'react-router-dom'
 
-// if change this value, also change in frontend/tests/steps/create-question.ts
-const NUM_ANSWERS = 2
+interface AnswerData {
+    readonly answer: string
+    readonly isCorrect: boolean
+    readonly explanation: string
+}
+
+const emptyAnswerData = (): AnswerData => ({ answer: '', isCorrect: false, explanation: '' })
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -12,9 +17,7 @@ export function CreateQuestionForm() {
     const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
     const [question, setQuestion] = useState<string>('')
-    const [answers, setAnswers] = useState<string[]>(Array(NUM_ANSWERS).fill(''))
-    const [correctAnswers, setCorrectAnswers] = useState<number[]>([])
-    const [explanations, setExplanations] = useState<string[]>(Array(NUM_ANSWERS).fill(''))
+    const [answerData, setAnswerData] = useState<AnswerData[]>([emptyAnswerData(), emptyAnswerData()])
     const [questionExplanation, setQuestionExplanation] = useState<string>('')
     const [linkToQuestion, setLinkToQuestion] = useState<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = useState<boolean>(false)
@@ -24,10 +27,13 @@ export function CreateQuestionForm() {
         const fetchQuestion = async () => {
             if (questionId) {
                 const quizQuestion = await getQuestion(questionId)
+                const answerData = quizQuestion.answers.map((answer, index) => ({
+                    answer,
+                    isCorrect: quizQuestion.correctAnswers.includes(index),
+                    explanation: quizQuestion.explanations[index],
+                }))
                 setQuestion(quizQuestion.question)
-                setAnswers(quizQuestion.answers)
-                setCorrectAnswers(quizQuestion.correctAnswers)
-                setExplanations(quizQuestion.explanations)
+                setAnswerData(answerData)
                 setQuestionExplanation(quizQuestion.questionExplanation)
                 setIsMultipleAnswer(quizQuestion.correctAnswers.length > 1)
                 setIsLoaded(true)
@@ -45,19 +51,11 @@ export function CreateQuestionForm() {
                   .then(newQuestionId => setLinkToQuestion(`${location.origin}/question/${newQuestionId}`))
                   .catch(error => setLinkToQuestion(error.message))
 
-    const updateAnswer = (index: number, value: string) => {
-        setAnswers(prev => {
-            const newAnswers = [...prev]
-            newAnswers[index] = value
-            return newAnswers
-        })
-    }
-
-    const updateExplanation = (index: number, value: string) => {
-        setExplanations(prev => {
-            const newExplanations = [...prev]
-            newExplanations[index] = value
-            return newExplanations
+    const updateAnswerData = (index: number, newValue: Partial<AnswerData>) => {
+        setAnswerData(prev => {
+            const newAnswerData = [...prev]
+            newAnswerData[index] = { ...newAnswerData[index], ...newValue }
+            return newAnswerData
         })
     }
 
@@ -65,27 +63,21 @@ export function CreateQuestionForm() {
         setIsMultipleAnswer(prev => !prev)
     }
 
-    const handleCorrectAnswerClick = (index: number) => {
-        if (isMultipleAnswer) {
-            if (correctAnswers.includes(index)) {
-                setCorrectAnswers(correctAnswers.filter(item => item !== index))
-            } else {
-                setCorrectAnswers([...correctAnswers, index])
-            }
-        } else {
-            setCorrectAnswers([index])
-        }
-    }
-
     const addAnswer = () => {
-        setAnswers(prev => [...prev, ''])
-        setExplanations(prev => [...prev, ''])
+        setAnswerData(prev => [...prev, emptyAnswerData()])
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setErrorMessage('')
         // Validate form data
+        const answers = answerData.map(answer => answer.answer)
+        const correctAnswers = answerData.reduce(
+            (acc, answer, index) => (answer.isCorrect ? [...acc, index] : acc),
+            [] as number[],
+        )
+        const explanations = answerData.map(answer => answer.explanation)
+
         if (correctAnswers.length === 0) {
             setErrorMessage('At least one correct answer must be selected')
             return
@@ -124,29 +116,29 @@ export function CreateQuestionForm() {
                 </div>
                 <br />
                 {/* Answer rows */}
-                {answers.map((_, index) => (
+                {answerData.map((answer, index) => (
                     <div key={`answer-${index}`} className="answer-row">
                         <input
                             id={`answer-text-${index + 1}`}
                             type="text"
                             placeholder={`Answer ${index + 1}`}
-                            value={answers[index]}
-                            onChange={e => updateAnswer(index, e.target.value)}
+                            value={answer.answer}
+                            onChange={e => updateAnswerData(index, { answer: e.target.value })}
                             className="answer-input"
                         />
                         <input
                             id={`answer-checkbox-${index + 1}`}
                             type="checkbox"
-                            checked={correctAnswers.includes(index)}
-                            onChange={() => handleCorrectAnswerClick(index)}
+                            checked={answer.isCorrect}
+                            onChange={e => updateAnswerData(index, { isCorrect: e.target.checked })}
                             className="checkbox"
                         />
                         <input
                             id={`answer-explanation-${index + 1}`}
                             type="text"
                             placeholder="Explanation for wrong answer"
-                            value={explanations[index]}
-                            onChange={e => updateExplanation(index, e.target.value)}
+                            value={answer.explanation}
+                            onChange={e => updateAnswerData(index, { explanation: e.target.value })}
                             className="explanation-input"
                         />
                     </div>
