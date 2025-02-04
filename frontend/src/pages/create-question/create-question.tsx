@@ -124,36 +124,33 @@ export function CreateQuestionForm() {
                 </div>
                 <br />
                 {/* Answer rows */}
-                {answers.map((answer, index) => {
-                    const uniqueId = `${answer}-${explanations[index]}-${index}`
-                    return (
-                        <div key={uniqueId} className="answer-row">
-                            <input
-                                id={`answer-text-${index + 1}`}
-                                type="text"
-                                placeholder={`Answer ${index + 1}`}
-                                value={answers[index]}
-                                onChange={e => updateAnswer(index, e.target.value)}
-                                className="answer-input"
-                            />
-                            <input
-                                id={`answer-checkbox-${index + 1}`}
-                                type="checkbox"
-                                checked={correctAnswers.includes(index)}
-                                onChange={() => handleCorrectAnswerClick(index)}
-                                className="checkbox"
-                            />
-                            <input
-                                id={`answer-explanation-${index + 1}`}
-                                type="text"
-                                placeholder="Explanation for wrong answer"
-                                value={explanations[index]}
-                                onChange={e => updateExplanation(index, e.target.value)}
-                                className="explanation-input"
-                            />
-                        </div>
-                    )
-                })}
+                {answers.map((_, index) => (
+                    <div key={`answer-${index}`} className="answer-row">
+                        <input
+                            id={`answer-text-${index + 1}`}
+                            type="text"
+                            placeholder={`Answer ${index + 1}`}
+                            value={answers[index]}
+                            onChange={e => updateAnswer(index, e.target.value)}
+                            className="answer-input"
+                        />
+                        <input
+                            id={`answer-checkbox-${index + 1}`}
+                            type="checkbox"
+                            checked={correctAnswers.includes(index)}
+                            onChange={() => handleCorrectAnswerClick(index)}
+                            className="checkbox"
+                        />
+                        <input
+                            id={`answer-explanation-${index + 1}`}
+                            type="text"
+                            placeholder="Explanation for wrong answer"
+                            value={explanations[index]}
+                            onChange={e => updateExplanation(index, e.target.value)}
+                            className="explanation-input"
+                        />
+                    </div>
+                ))}
                 {/* Add answer button */}
                 <button type="button" onClick={addAnswer} className="add-answer-button">
                     Add Answer
