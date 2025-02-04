@@ -14,8 +14,8 @@ export function CreateQuestionForm() {
     const [question, setQuestion] = useState<string>('')
     const [answers, setAnswers] = useState<string[]>(Array(NUM_ANSWERS).fill(''))
     const [correctAnswers, setCorrectAnswers] = useState<number[]>([])
-    const [questionExplanations, setQuestionExplanations] = useState<string[]>(Array(NUM_ANSWERS).fill(''))
-    const [answerExplanation, setAnswerExplanation] = useState<string>('')
+    const [explanations, setExplanations] = useState<string[]>(Array(NUM_ANSWERS).fill(''))
+    const [questionExplanation, setQuestionExplanation] = useState<string>('')
     const [linkToQuestion, setLinkToQuestion] = useState<string>('')
     const [isMultipleAnswer, setIsMultipleAnswer] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -27,8 +27,8 @@ export function CreateQuestionForm() {
                 setQuestion(quizQuestion.question)
                 setAnswers(quizQuestion.answers)
                 setCorrectAnswers(quizQuestion.correctAnswers)
-                setQuestionExplanations(quizQuestion.explanations)
-                setAnswerExplanation(quizQuestion.questionExplanation)
+                setExplanations(quizQuestion.explanations)
+                setQuestionExplanation(quizQuestion.questionExplanation)
                 setIsMultipleAnswer(quizQuestion.correctAnswers.length > 1)
                 setIsLoaded(true)
             }
@@ -54,7 +54,7 @@ export function CreateQuestionForm() {
     }
 
     const updateExplanation = (index: number, value: string) => {
-        setQuestionExplanations(prev => {
+        setExplanations(prev => {
             const newExplanations = [...prev]
             newExplanations[index] = value
             return newExplanations
@@ -79,7 +79,7 @@ export function CreateQuestionForm() {
 
     const addAnswer = () => {
         setAnswers(prev => [...prev, ''])
-        setQuestionExplanations(prev => [...prev, ''])
+        setExplanations(prev => [...prev, ''])
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,13 +91,7 @@ export function CreateQuestionForm() {
             return
         }
 
-        const formData = {
-            question,
-            answers,
-            correctAnswers,
-            explanations: questionExplanations,
-            questionExplanation: answerExplanation,
-        }
+        const formData = { question, answers, correctAnswers, explanations, questionExplanation }
         postData(formData)
     }
 
@@ -131,7 +125,7 @@ export function CreateQuestionForm() {
                 <br />
                 {/* Answer rows */}
                 {answers.map((answer, index) => {
-                    const uniqueId = `${answer}-${questionExplanations[index]}-${index}`
+                    const uniqueId = `${answer}-${explanations[index]}-${index}`
                     return (
                         <div key={uniqueId} className="answerRow">
                             <input
@@ -153,7 +147,7 @@ export function CreateQuestionForm() {
                                 id={`answer-explanation-${index + 1}`}
                                 type="text"
                                 placeholder="Explanation for wrong answer"
-                                value={questionExplanations[index]}
+                                value={explanations[index]}
                                 onChange={e => updateExplanation(index, e.target.value)}
                                 className="explanationInput"
                             />
@@ -169,8 +163,8 @@ export function CreateQuestionForm() {
                     <textarea
                         id="general-explanation"
                         className="generalExplanation"
-                        value={answerExplanation}
-                        onChange={e => setAnswerExplanation(e.target.value)}
+                        value={questionExplanation}
+                        onChange={e => setQuestionExplanation(e.target.value)}
                         rows={2}
                     />
                 </div>
