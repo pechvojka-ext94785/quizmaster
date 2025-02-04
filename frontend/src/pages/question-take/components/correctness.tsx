@@ -6,11 +6,11 @@ export const Correctness = (props: CorrectnessProps) => {
     const label = props.isCorrect ? 'Correct!' : 'Incorrect!'
     const className = props.isCorrect ? 'correct' : 'incorrect'
 
-    return <span class={`feedback ${className}`}>{label}</span>
+    return <span className={`feedback ${className}`}>{label}</span>
 }
 
 export const QuestionCorrectness = (props: CorrectnessProps) => (
-    <p class="question-correctness">
+    <p className="question-correctness">
         <Correctness isCorrect={props.isCorrect} />
     </p>
 )

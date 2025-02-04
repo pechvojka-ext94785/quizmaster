@@ -1,23 +1,24 @@
-import { type Accessor, createEffect, createSignal, on } from 'solid-js'
+import { useEffect, useState } from 'react'
 import type { QuizQuestion } from 'model/quiz-question'
 
 export interface QuestionTakeState {
-    readonly isMultipleChoice: () => boolean
-    readonly selectedAnswerIdxs: Accessor<number[]>
-    readonly submitted: Accessor<boolean>
+    readonly isMultipleChoice: boolean
+    readonly selectedAnswerIdxs: number[]
+    readonly submitted: boolean
     readonly submit: () => void
     readonly onSelectedAnswerChange: (idx: number, selected: boolean) => void
 }
 
-export const createQuestionTakeState = (question: Accessor<QuizQuestion>): QuestionTakeState => {
-    const isMultipleChoice = () => question().correctAnswers.length > 1
+export const useQuestionTakeState = (question: QuizQuestion): QuestionTakeState => {
+    const isMultipleChoice = question.correctAnswers.length > 1
 
-    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = createSignal<number[]>([])
+    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = useState<number[]>([])
+    const [submitted, setSubmitted] = useState(false)
+
     const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
-    const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([...selectedAnswerIdxs(), idx])
-    const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(selectedAnswerIdxs().filter(i => i !== idx))
+    const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => [...prev, idx])
+    const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => prev.filter(i => i !== idx))
 
-    const [submitted, setSubmitted] = createSignal(false)
     const submit = () => setSubmitted(true)
 
     const reset = () => {
@@ -25,14 +26,22 @@ export const createQuestionTakeState = (question: Accessor<QuizQuestion>): Quest
         setSubmitted(false)
     }
 
-    createEffect(on(question, reset))
+    useEffect(() => {
+        reset()
+    }, [question])
 
     const onSelectedAnswerChange = (idx: number, selected: boolean) => {
         setSubmitted(false)
-        if (!isMultipleChoice()) setSelectedAnswerIdx(idx)
+        if (!isMultipleChoice) setSelectedAnswerIdx(idx)
         else if (selected) addSelectedAnswerIdx(idx)
         else removeSelectedAnswerIdx(idx)
     }
 
-    return { isMultipleChoice, selectedAnswerIdxs, submitted, submit, onSelectedAnswerChange }
+    return {
+        isMultipleChoice,
+        selectedAnswerIdxs,
+        submitted,
+        submit,
+        onSelectedAnswerChange,
+    }
 }

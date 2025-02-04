@@ -1,69 +1,55 @@
-import './question-form.css'
-import { type Accessor, For, Show } from 'solid-js'
-
 import type { Quiz, QuizQuestion } from 'model/quiz-question.ts'
-import { preventDefault } from 'helpers.ts'
 import {
     Answer,
-    createQuestionFeedbackState,
-    createQuestionTakeState,
+    useQuestionFeedbackState,
+    useQuestionTakeState,
     QuestionCorrectness,
     QuestionExplanation,
 } from 'pages/question-take'
 
 interface QuestionFormProps {
-    readonly question: Accessor<QuizQuestion>
+    readonly question: QuizQuestion
     quiz: Quiz | null
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
-    const question = props.question
-    const quiz = props.quiz
-    const state = createQuestionTakeState(question)
-    const feedback = createQuestionFeedbackState(state, question)
+    const state = useQuestionTakeState(props.question)
+    const feedback = useQuestionFeedbackState(state, props.question)
 
-    const submitAnswers = preventDefault(() => {
-        if (state.selectedAnswerIdxs().length > 0) state.submit()
-    })
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (state.selectedAnswerIdxs.length > 0) state.submit()
+    }
 
     const incrementActualQuestionNumber = () => {
-        if (quiz && quiz.actualQuestionNumber < quiz.questions.length - 1) {
-            quiz.actualQuestionNumber++
-        } else if (quiz) {
-            quiz.actualQuestionNumber = 0
+        if (props.quiz && props.quiz.actualQuestionNumber < props.quiz.questions.length - 1) {
+            props.quiz.actualQuestionNumber++
+        } else if (props.quiz) {
+            props.quiz.actualQuestionNumber = 0
         }
     }
 
     return (
-        <form onSubmit={submitAnswers}>
-            <h1>{question().question}</h1>
+        <form onSubmit={handleSubmit}>
+            <h1>{props.question.question}</h1>
             <ul>
-                <For each={question().answers}>
-                    {(answer, idx) => (
-                        <Answer
-                            isMultipleChoice={state.isMultipleChoice()}
-                            idx={idx()}
-                            answer={answer}
-                            isCorrect={feedback.isAnswerCorrect(idx())}
-                            explanation={question().explanations ? question().explanations[idx()] : 'not defined'}
-                            showFeedback={state.submitted() && feedback.showFeedback(idx())}
-                            onAnswerChange={state.onSelectedAnswerChange}
-                        />
-                    )}
-                </For>
+                {props.question.answers.map((answer, idx) => (
+                    <Answer
+                        key={idx}
+                        isMultipleChoice={state.isMultipleChoice}
+                        idx={idx}
+                        answer={answer}
+                        isCorrect={feedback.isAnswerCorrect(idx)}
+                        explanation={props.question.explanations ? props.question.explanations[idx] : 'not defined'}
+                        showFeedback={state.submitted && feedback.showFeedback(idx)}
+                        onAnswerChange={state.onSelectedAnswerChange}
+                    />
+                ))}
             </ul>
-            <Show when={!state.submitted()}>
-                <input type="submit" value="Submit" />
-            </Show>
-            <Show when={state.submitted()}>
-                <QuestionCorrectness isCorrect={feedback.isQuestionCorrect()} />
-            </Show>
-            <Show when={state.submitted()}>
-                <QuestionExplanation text={question().questionExplanation} />
-            </Show>
-            <Show when={quiz}>
-                <input type="button" value="Next" id="next" onclick={() => incrementActualQuestionNumber()} />
-            </Show>
+            {!state.submitted && <input type="submit" value="Submit" />}
+            {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
+            {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
+            {props.quiz && <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />}
         </form>
     )
 }

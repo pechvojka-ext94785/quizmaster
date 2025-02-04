@@ -1,13 +1,15 @@
-import { Route, Router } from '@solidjs/router'
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { QuestionTakePage } from 'pages/question-take'
 import { CreateQuestionForm } from 'pages/create-question'
 import { QuizTakePage } from 'pages/quiz-take'
 
 export const App = () => (
-    <Router>
-        <Route path="/question/new" component={CreateQuestionForm} />
-        <Route path="/question/:id/edit" component={CreateQuestionForm} />
-        <Route path="/question/:id" component={QuestionTakePage} />
-        <Route path="/quiz" component={QuizTakePage} />
-    </Router>
+    <BrowserRouter>
+        <Routes>
+            <Route path="/question/new" element={<CreateQuestionForm />} />
+            <Route path="/question/:id/edit" element={<CreateQuestionForm />} />
+            <Route path="/question/:id" element={<QuestionTakePage />} />
+            <Route path="/quiz" element={<QuizTakePage />} />
+        </Routes>
+    </BrowserRouter>
 )

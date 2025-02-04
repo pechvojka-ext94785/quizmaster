@@ -1,4 +1,4 @@
-import { Show } from 'solid-js'
+import React from 'react'
 import { AnswerFeedback } from 'pages/question-take'
 
 export type AnswerProps = {
@@ -12,20 +12,19 @@ export type AnswerProps = {
 }
 
 export const Answer = (props: AnswerProps) => {
-    const answerId = () => `answer-${props.idx}`
-    const checkType = () => (props.isMultipleChoice ? 'checkbox' : 'radio')
-    const checkName = () => (props.isMultipleChoice ? answerId() : 'answer')
+    const answerId = `answer-${props.idx}`
+    const checkType = props.isMultipleChoice ? 'checkbox' : 'radio'
+    const checkName = props.isMultipleChoice ? answerId : 'answer'
 
-    const onChange = (event: InputEvent) => props.onAnswerChange(props.idx, (event.target as HTMLInputElement).checked)
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+        props.onAnswerChange(props.idx, event.target.checked)
 
     return (
         <li>
-            <input type={checkType()} name={checkName()} id={answerId()} value={props.answer} onInput={onChange} />
-            <label for={answerId()}>
+            <input type={checkType} name={checkName} id={answerId} value={props.answer} onChange={onChange} />
+            <label htmlFor={answerId}>
                 {props.answer}
-                <Show when={props.showFeedback} keyed>
-                    <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />
-                </Show>
+                {props.showFeedback && <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />}
             </label>
         </li>
     )

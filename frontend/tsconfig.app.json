@@ -13,9 +13,9 @@
         "moduleDetection": "force",
         "noEmit": true,
         "jsx": "preserve",
-        "jsxImportSource": "solid-js",
+        "jsxImportSource": "react",
         "resolveJsonModule": true,
-        
+
 
         "strict": true,
         "noUnusedLocals": true,

@@ -1,6 +1,5 @@
 import './quiz-take-page.scss'
-
-import { createEffect, createSignal, Show } from 'solid-js'
+import { useEffect, useState } from 'react'
 
 import type { QuizQuestion } from 'model/quiz-question.ts'
 import type { Quiz } from 'model/quiz-question.ts'
@@ -13,13 +12,17 @@ export const QuizTakePage = () => {
         actualQuestionNumber: 1,
     } as Quiz
 
-    const questionId = () => quiz.actualQuestionNumber
+    const [quizQuestion, setQuizQuestion] = useState<QuizQuestion | null>(null)
 
-    console.log('QuizTakePage', questionId())
+    useEffect(() => {
+        const fetchQuestion = async () => {
+            const question = await getQuestion(quiz.actualQuestionNumber)
+            setQuizQuestion(question)
+        }
+        fetchQuestion()
+    }, [quiz.actualQuestionNumber])
 
-    const [quizQuestion, setQuizQuestion] = createSignal<QuizQuestion | null>(null)
+    console.log('QuizTakePage', quiz.actualQuestionNumber)
 
-    createEffect(async () => setQuizQuestion(await getQuestion(questionId())))
-
-    return <Show when={quizQuestion()} children={question => <QuestionForm question={question} quiz={quiz} />} />
+    return quizQuestion ? <QuestionForm question={quizQuestion} quiz={quiz} /> : null
 }
