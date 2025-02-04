@@ -12,7 +12,7 @@ Prior to the class ge yourself familiar with the tech stack:
 - [Gradle](https://gradle.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Flyway](https://flywaydb.org/)
-- [Solid.js](https://solidjs.com/)
+- [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
 - [Cucumber.js](https://cucumber.io/docs/guides/)
 - [Playwright](https://playwright.dev/)
