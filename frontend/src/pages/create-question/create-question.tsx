@@ -1,7 +1,7 @@
 import './create-question.scss'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
+import { type QuestionApiData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 
 import { ErrorMessage, LoadedIndicator, QuestionLink } from './components'
 import { emptyQuestionFormData, QuestionEditForm, toQuestionApiData, toQuestionFormData } from './form'
@@ -27,7 +27,7 @@ export function CreateQuestionForm() {
         fetchQuestion()
     }, [questionId])
 
-    const postData = async (formData: QuestionData) =>
+    const postData = async (formData: QuestionApiData) =>
         questionId
             ? updateQuestion(formData, questionId)
                   .then(() => setLinkToQuestion(`${location.origin}/question/${questionId}`))

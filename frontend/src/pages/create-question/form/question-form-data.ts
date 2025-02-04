@@ -1,4 +1,4 @@
-import type { QuestionData } from 'api/quiz-question'
+import type { QuestionApiData } from 'api/quiz-question'
 
 export interface AnswerData {
     readonly answer: string
@@ -22,7 +22,7 @@ export const emptyQuestionFormData = (): QuestionFormData => ({
     isMultipleChoice: false,
 })
 
-export const toQuestionFormData = (questionData: QuestionData): QuestionFormData => {
+export const toQuestionFormData = (questionData: QuestionApiData): QuestionFormData => {
     const answerData = questionData.answers.map((answer, index) => ({
         answer,
         isCorrect: questionData.correctAnswers.includes(index),
@@ -37,7 +37,7 @@ export const toQuestionFormData = (questionData: QuestionData): QuestionFormData
     }
 }
 
-export const toQuestionApiData = (questionData: QuestionFormData): QuestionData => {
+export const toQuestionApiData = (questionData: QuestionFormData): QuestionApiData => {
     const answers = questionData.answers.map(answer => answer.answer)
     const correctAnswers = questionData.answers.reduce(
         (acc, answer, index) => (answer.isCorrect ? acc.concat([index]) : acc),
