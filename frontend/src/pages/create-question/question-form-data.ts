@@ -40,7 +40,7 @@ export const toQuestionFormData = (questionData: QuestionData): QuestionFormData
 export const toQuestionApiData = (questionData: QuestionFormData): QuestionData => {
     const answers = questionData.answers.map(answer => answer.answer)
     const correctAnswers = questionData.answers.reduce(
-        (acc, answer, index) => (answer.isCorrect ? [...acc, index] : acc),
+        (acc, answer, index) => (answer.isCorrect ? acc.concat([index]) : acc),
         [] as number[],
     )
     const explanations = questionData.answers.map(answer => answer.explanation)
