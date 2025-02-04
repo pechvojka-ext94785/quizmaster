@@ -8,5 +8,4 @@ cd backend
 psql -U postgres -f create_db.sql
 
 # Install Node.js and pnpm
-export COREPACK_INTEGRITY_KEYS=0
 ./gradlew assembleFrontend
