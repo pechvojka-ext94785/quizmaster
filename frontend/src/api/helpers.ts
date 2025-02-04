@@ -10,20 +10,16 @@ export const fetchJson = async <T>(url: string, init?: RequestInit): Promise<T> 
         .then(response => response.json())
         .then(data => data as T)
 
-export const postJson = <T, U>(url: string, data: T): Promise<U> =>
-    fetchJson(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
+const sendData =
+    (method: string) =>
+    <T, U>(url: string, data?: T): Promise<U> =>
+        fetchJson(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
 
-export const putJson = <T, U>(url: string, data: T): Promise<U> =>
-    fetchJson(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
+export const postJson = sendData('POST')
+export const putJson = sendData('PUT')
