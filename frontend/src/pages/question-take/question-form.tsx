@@ -1,4 +1,4 @@
-import type { Quiz, QuizQuestion } from 'model/quiz-question.ts'
+import type { QuizQuestion } from 'model/quiz-question.ts'
 import {
     Answer,
     useQuestionFeedbackState,
@@ -9,7 +9,6 @@ import {
 
 interface QuestionFormProps {
     readonly question: QuizQuestion
-    quiz: Quiz | null
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
@@ -19,14 +18,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (state.selectedAnswerIdxs.length > 0) state.submit()
-    }
-
-    const incrementActualQuestionNumber = () => {
-        if (props.quiz && props.quiz.actualQuestionNumber < props.quiz.questions.length - 1) {
-            props.quiz.actualQuestionNumber++
-        } else if (props.quiz) {
-            props.quiz.actualQuestionNumber = 0
-        }
     }
 
     return (
@@ -53,7 +44,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
             {!state.submitted && <input type="submit" value="Submit" />}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
-            {props.quiz && <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />}
         </form>
     )
 }

@@ -13,8 +13,3 @@ export interface Answers {
     readonly explanations: readonly string[]
     readonly questionExplanation: string
 }
-
-export interface Quiz {
-    readonly questions: string[]
-    actualQuestionNumber: number
-}
