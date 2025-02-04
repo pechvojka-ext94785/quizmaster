@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.lang.reflect.Array;
-
 @SpringBootTest
 public class QuizQuestionControllerTest {
 
