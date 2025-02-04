@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { type AnswerData, Answers, emptyAnswerData } from 'pages/create-question'
 import { QuestionEdit } from './question-edit'
+import { MultipleChoiceEdit } from './multiple-choice-edit'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -14,7 +15,7 @@ export function CreateQuestionForm() {
     const [answerData, setAnswerData] = useState<AnswerData[]>([emptyAnswerData(), emptyAnswerData()])
     const [questionExplanation, setQuestionExplanation] = useState<string>('')
     const [linkToQuestion, setLinkToQuestion] = useState<string>('')
-    const [isMultipleAnswer, setIsMultipleAnswer] = useState<boolean>(false)
+    const [isMultipleChoice, setIsMultipleChoice] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>('')
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export function CreateQuestionForm() {
                 setQuestion(quizQuestion.question)
                 setAnswerData(answerData)
                 setQuestionExplanation(quizQuestion.questionExplanation)
-                setIsMultipleAnswer(quizQuestion.correctAnswers.length > 1)
+                setIsMultipleChoice(quizQuestion.correctAnswers.length > 1)
                 setIsLoaded(true)
             }
         }
@@ -44,10 +45,6 @@ export function CreateQuestionForm() {
             : saveQuestion(formData)
                   .then(newQuestionId => setLinkToQuestion(`${location.origin}/question/${newQuestionId}`))
                   .catch(error => setLinkToQuestion(error.message))
-
-    const toggleMultipleAnswers = () => {
-        setIsMultipleAnswer(prev => !prev)
-    }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -76,17 +73,7 @@ export function CreateQuestionForm() {
             <form className="question-create-form" onSubmit={handleSubmit}>
                 <input id="is-loaded" type="hidden" value={isLoaded ? 'loaded' : ''} />
                 <QuestionEdit question={question} setQuestion={setQuestion} />
-                <div className="multiple-questions-row">
-                    <input
-                        id="multiple-possible-answers"
-                        type="checkbox"
-                        checked={isMultipleAnswer}
-                        onChange={toggleMultipleAnswers}
-                    />
-                    Is this question with multiple possible answers?
-                    <br />
-                </div>
-                <br />
+                <MultipleChoiceEdit isMultipleChoice={isMultipleChoice} setIsMultipleChoice={setIsMultipleChoice} />
                 <Answers answers={answerData} setAnswerData={setAnswerData} />
                 <div className="general-explanation-wrapper">
                     <label htmlFor="general-explanation">General explanation for the entire question:</label>
