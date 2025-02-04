@@ -22,7 +22,7 @@ java {
 frontend {
     cacheDirectory.set(project.layout.projectDirectory.dir(".gradle/org.siouan.frontend-jdk21"))
     nodeVersion.set("20.18.2")
-    corepackVersion.set("0.30.0")
+    corepackVersion.set(null)
     nodeInstallDirectory.set(project.layout.projectDirectory.dir("../frontend/node"))
     packageJsonDirectory.set(project.layout.projectDirectory.dir("../frontend"))
     assembleScript.set("run build")
