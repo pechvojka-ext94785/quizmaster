@@ -44,7 +44,7 @@ export class CreateQuestionPage {
         await this.page.waitForSelector(`#answer-text-${String(idx + 1)}`)
     }
 
-    submit = () => this.page.locator('button.submit-button').click()
+    submit = () => this.page.locator('button[type="submit"]').click()
 
     questionUrlLocator = () => this.page.locator('#question-link')
 

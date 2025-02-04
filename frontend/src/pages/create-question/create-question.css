@@ -40,7 +40,7 @@
     margin: 15px 0 20px;
 }
 
-.submit-button {
+button[type="submit"] {
     padding: 10px 20px;
     font-size: 1em;
 }

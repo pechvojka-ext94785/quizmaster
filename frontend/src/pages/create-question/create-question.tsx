@@ -6,6 +6,7 @@ import { type AnswerData, Answers, emptyAnswerData } from 'pages/create-question
 import { QuestionEdit } from './question-edit'
 import { MultipleChoiceEdit } from './multiple-choice-edit'
 import { QuestionExplanationEdit } from './question-explanation-edit'
+import { SubmitButton } from 'pages/components/submit-button'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -41,11 +42,11 @@ export function CreateQuestionForm() {
     const postData = async (formData: QuestionData) =>
         questionId
             ? updateQuestion(formData, questionId)
-                  .then(() => setLinkToQuestion(`${location.origin}/question/${questionId}`))
-                  .catch(error => setLinkToQuestion(error.message))
+                .then(() => setLinkToQuestion(`${location.origin}/question/${questionId}`))
+                .catch(error => setLinkToQuestion(error.message))
             : saveQuestion(formData)
-                  .then(newQuestionId => setLinkToQuestion(`${location.origin}/question/${newQuestionId}`))
-                  .catch(error => setLinkToQuestion(error.message))
+                .then(newQuestionId => setLinkToQuestion(`${location.origin}/question/${newQuestionId}`))
+                .catch(error => setLinkToQuestion(error.message))
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -80,11 +81,9 @@ export function CreateQuestionForm() {
                     questionExplanation={questionExplanation}
                     setQuestionExplanation={setQuestionExplanation}
                 />
-                {/* Submit button */}
-                <button type="submit" className="submit-button">
-                    Submit
-                </button>
-                <br />
+                <div>
+                    <SubmitButton />
+                </div>
                 {linkToQuestion && <span id="question-link">{linkToQuestion}</span>}
                 {errorMessage && <span id="error-message">{errorMessage}</span>}
             </form>
