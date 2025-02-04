@@ -1,4 +1,4 @@
-import './create-question.css'
+import './create-question.scss'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
