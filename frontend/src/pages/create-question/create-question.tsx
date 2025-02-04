@@ -1,5 +1,5 @@
 import './create-question.css'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { useParams } from 'react-router-dom'
 
@@ -82,7 +82,7 @@ export function CreateQuestionForm() {
         setQuestionExplanations(prev => [...prev, ''])
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setErrorMessage('')
         // Validate form data
@@ -130,33 +130,36 @@ export function CreateQuestionForm() {
                 </div>
                 <br />
                 {/* Answer rows */}
-                {answers.map((_, index) => (
-                    <div key={index} className="answerRow">
-                        <input
-                            id={`answer-text-${index + 1}`}
-                            type="text"
-                            placeholder={`Answer ${index + 1}`}
-                            value={answers[index]}
-                            onChange={e => updateAnswer(index, e.target.value)}
-                            className="answerInput"
-                        />
-                        <input
-                            id={`answer-checkbox-${index + 1}`}
-                            type="checkbox"
-                            checked={correctAnswers.includes(index)}
-                            onChange={() => handleCorrectAnswerClick(index)}
-                            className="checkbox"
-                        />
-                        <input
-                            id={`answer-explanation-${index + 1}`}
-                            type="text"
-                            placeholder="Explanation for wrong answer"
-                            value={questionExplanations[index]}
-                            onChange={e => updateExplanation(index, e.target.value)}
-                            className="explanationInput"
-                        />
-                    </div>
-                ))}
+                {answers.map((answer, index) => {
+                    const uniqueId = `${answer}-${questionExplanations[index]}-${index}`
+                    return (
+                        <div key={uniqueId} className="answerRow">
+                            <input
+                                id={`answer-text-${index + 1}`}
+                                type="text"
+                                placeholder={`Answer ${index + 1}`}
+                                value={answers[index]}
+                                onChange={e => updateAnswer(index, e.target.value)}
+                                className="answerInput"
+                            />
+                            <input
+                                id={`answer-checkbox-${index + 1}`}
+                                type="checkbox"
+                                checked={correctAnswers.includes(index)}
+                                onChange={() => handleCorrectAnswerClick(index)}
+                                className="checkbox"
+                            />
+                            <input
+                                id={`answer-explanation-${index + 1}`}
+                                type="text"
+                                placeholder="Explanation for wrong answer"
+                                value={questionExplanations[index]}
+                                onChange={e => updateExplanation(index, e.target.value)}
+                                className="explanationInput"
+                            />
+                        </div>
+                    )
+                })}
                 {/* Add answer button */}
                 <button type="button" onClick={addAnswer} className="addAnswerButton">
                     Add Answer

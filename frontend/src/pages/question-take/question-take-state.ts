@@ -21,14 +21,10 @@ export const useQuestionTakeState = (question: QuizQuestion): QuestionTakeState 
 
     const submit = () => setSubmitted(true)
 
-    const reset = () => {
+    useEffect(() => {
         setSelectedAnswerIdxs([])
         setSubmitted(false)
-    }
-
-    useEffect(() => {
-        reset()
-    }, [question])
+    }, [])
 
     const onSelectedAnswerChange = (idx: number, selected: boolean) => {
         setSubmitted(false)
@@ -42,6 +38,6 @@ export const useQuestionTakeState = (question: QuizQuestion): QuestionTakeState 
         selectedAnswerIdxs,
         submitted,
         submit,
-        onSelectedAnswerChange,
+        onSelectedAnswerChange
     }
 }

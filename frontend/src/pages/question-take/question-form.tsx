@@ -33,23 +33,29 @@ export const QuestionForm = (props: QuestionFormProps) => {
         <form onSubmit={handleSubmit}>
             <h1>{props.question.question}</h1>
             <ul>
-                {props.question.answers.map((answer, idx) => (
-                    <Answer
-                        key={idx}
-                        isMultipleChoice={state.isMultipleChoice}
-                        idx={idx}
-                        answer={answer}
-                        isCorrect={feedback.isAnswerCorrect(idx)}
-                        explanation={props.question.explanations ? props.question.explanations[idx] : 'not defined'}
-                        showFeedback={state.submitted && feedback.showFeedback(idx)}
-                        onAnswerChange={state.onSelectedAnswerChange}
-                    />
-                ))}
+                {props.question.answers.map((answer, idx) => {
+                    // Create a unique key using stable values from the question
+                    const uniqueKey = `${props.question.id}-${answer}-${props.question.explanations?.[idx] || ''}-${props.question.questionExplanation}`
+                    return (
+                        <Answer
+                            key={uniqueKey}
+                            isMultipleChoice={state.isMultipleChoice}
+                            idx={idx}
+                            answer={answer}
+                            isCorrect={feedback.isAnswerCorrect(idx)}
+                            explanation={props.question.explanations ? props.question.explanations[idx] : 'not defined'}
+                            showFeedback={state.submitted && feedback.showFeedback(idx)}
+                            onAnswerChange={state.onSelectedAnswerChange}
+                        />
+                    )
+                })}
             </ul>
             {!state.submitted && <input type="submit" value="Submit" />}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
-            {props.quiz && <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />}
+            {props.quiz && (
+                <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />
+            )}
         </form>
     )
 }

@@ -9,7 +9,7 @@ import { QuestionForm } from 'pages/question-take'
 
 export const QuestionTakePage = () => {
     const params = useParams()
-    const questionId = params.id ? parseInt(params.id) : undefined
+    const questionId = params.id ? Number.parseInt(params.id) : undefined
 
     const [quizQuestion, setQuizQuestion] = useState<QuizQuestion | null>(null)
 
