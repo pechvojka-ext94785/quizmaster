@@ -38,6 +38,6 @@ export const useQuestionTakeState = (question: QuizQuestion): QuestionTakeState 
         selectedAnswerIdxs,
         submitted,
         submit,
-        onSelectedAnswerChange
+        onSelectedAnswerChange,
     }
 }

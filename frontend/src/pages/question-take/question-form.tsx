@@ -53,9 +53,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
             {!state.submitted && <input type="submit" value="Submit" />}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
-            {props.quiz && (
-                <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />
-            )}
+            {props.quiz && <input type="button" value="Next" id="next" onClick={incrementActualQuestionNumber} />}
         </form>
     )
 }
