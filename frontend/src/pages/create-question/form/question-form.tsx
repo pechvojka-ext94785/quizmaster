@@ -1,10 +1,13 @@
-import { Answers } from './answers.tsx'
-import { QuestionEdit } from './question-edit.tsx'
-import { MultipleChoiceEdit } from './multiple-choice-edit.tsx'
-import { QuestionExplanationEdit } from './question-explanation-edit.tsx'
 import { SubmitButton } from 'pages/components/submit-button.tsx'
-import type { AnswerData, QuestionFormData } from './question-form-data.ts'
 import { preventDefault } from 'helpers.ts'
+import {
+    AnswerData,
+    AnswersEdit,
+    MultipleChoiceEdit,
+    QuestionEdit,
+    QuestionExplanationEdit,
+    QuestionFormData,
+} from 'pages/create-question/form'
 
 interface QuestionEditProps {
     readonly questionData: QuestionFormData
@@ -26,7 +29,7 @@ export const QuestionEditForm = ({ questionData, setQuestionData, onSubmit }: Qu
                 isMultipleChoice={questionData.isMultipleChoice}
                 setIsMultipleChoice={setIsMultipleChoice}
             />
-            <Answers answers={questionData.answers} setAnswers={setAnswers} />
+            <AnswersEdit answers={questionData.answers} setAnswers={setAnswers} />
             <QuestionExplanationEdit
                 questionExplanation={questionData.questionExplanation}
                 setQuestionExplanation={setQuestionExplanation}

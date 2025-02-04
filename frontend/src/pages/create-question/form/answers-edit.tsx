@@ -51,7 +51,7 @@ interface AnswersProps {
     readonly setAnswers: (answers: readonly AnswerData[]) => void
 }
 
-export const Answers = ({ answers, setAnswers }: AnswersProps) => {
+export const AnswersEdit = ({ answers, setAnswers }: AnswersProps) => {
     const updateAnswerData = (index: number, newValue: Partial<AnswerData>) => {
         const newAnswerData = [...answers]
         newAnswerData[index] = { ...newAnswerData[index], ...newValue }

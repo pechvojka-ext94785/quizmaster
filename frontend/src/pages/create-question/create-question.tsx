@@ -2,17 +2,9 @@ import './create-question.scss'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
-import { emptyQuestionFormData, toQuestionApiData, toQuestionFormData } from './question-form-data'
-import { QuestionEditForm } from './question-form'
 
-const LoadedIndicator = ({ isLoaded }: { isLoaded: boolean }) => (
-    <input id="is-loaded" type="hidden" value={isLoaded ? 'loaded' : ''} />
-)
-
-const QuestionLink = ({ url }: { url: string }) => url && <span id="question-link">{url}</span>
-
-const ErrorMessage = ({ errorMessage }: { errorMessage: string }) =>
-    errorMessage && <span id="error-message">{errorMessage}</span>
+import { ErrorMessage, LoadedIndicator, QuestionLink } from './components'
+import { emptyQuestionFormData, QuestionEditForm, toQuestionApiData, toQuestionFormData } from './form'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -58,7 +50,7 @@ export function CreateQuestionForm() {
     }
 
     return (
-        <div className="wrapper">
+        <div className="question-page">
             <h1>Quiz Question Creation Page</h1>
             <h2>If you're happy and you know it create the question</h2>
             <QuestionEditForm questionData={questionData} setQuestionData={setQuestionData} onSubmit={handleSubmit} />
