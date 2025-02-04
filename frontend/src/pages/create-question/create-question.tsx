@@ -1,13 +1,8 @@
 import './create-question.css'
 import { useEffect, useState } from 'react'
-import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
 import { useParams } from 'react-router-dom'
-
-interface AnswerData {
-    readonly answer: string
-    readonly isCorrect: boolean
-    readonly explanation: string
-}
+import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
+import { type AnswerData, AnswerRow } from 'pages/create-question'
 
 const emptyAnswerData = (): AnswerData => ({ answer: '', isCorrect: false, explanation: '' })
 
@@ -117,31 +112,7 @@ export function CreateQuestionForm() {
                 <br />
                 {/* Answer rows */}
                 {answerData.map((answer, index) => (
-                    <div key={`answer-${index}`} className="answer-row">
-                        <input
-                            id={`answer-text-${index + 1}`}
-                            type="text"
-                            placeholder={`Answer ${index + 1}`}
-                            value={answer.answer}
-                            onChange={e => updateAnswerData(index, { answer: e.target.value })}
-                            className="answer-input"
-                        />
-                        <input
-                            id={`answer-checkbox-${index + 1}`}
-                            type="checkbox"
-                            checked={answer.isCorrect}
-                            onChange={e => updateAnswerData(index, { isCorrect: e.target.checked })}
-                            className="checkbox"
-                        />
-                        <input
-                            id={`answer-explanation-${index + 1}`}
-                            type="text"
-                            placeholder="Explanation for wrong answer"
-                            value={answer.explanation}
-                            onChange={e => updateAnswerData(index, { explanation: e.target.value })}
-                            className="explanation-input"
-                        />
-                    </div>
+                    <AnswerRow key={`answer-${index}`} answer={answer} index={index} updateAnswerData={updateAnswerData} />
                 ))}
                 {/* Add answer button */}
                 <button type="button" onClick={addAnswer} className="add-answer-button">
