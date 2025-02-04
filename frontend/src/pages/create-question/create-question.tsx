@@ -5,6 +5,7 @@ import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'ap
 import { type AnswerData, Answers, emptyAnswerData } from 'pages/create-question'
 import { QuestionEdit } from './question-edit'
 import { MultipleChoiceEdit } from './multiple-choice-edit'
+import { QuestionExplanationEdit } from './question-explanation-edit'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -75,16 +76,10 @@ export function CreateQuestionForm() {
                 <QuestionEdit question={question} setQuestion={setQuestion} />
                 <MultipleChoiceEdit isMultipleChoice={isMultipleChoice} setIsMultipleChoice={setIsMultipleChoice} />
                 <Answers answers={answerData} setAnswerData={setAnswerData} />
-                <div className="general-explanation-wrapper">
-                    <label htmlFor="general-explanation">General explanation for the entire question:</label>
-                    <textarea
-                        id="general-explanation"
-                        className="general-explanation"
-                        value={questionExplanation}
-                        onChange={e => setQuestionExplanation(e.target.value)}
-                        rows={2}
-                    />
-                </div>
+                <QuestionExplanationEdit
+                    questionExplanation={questionExplanation}
+                    setQuestionExplanation={setQuestionExplanation}
+                />
                 {/* Submit button */}
                 <button type="submit" className="submit-button">
                     Submit
