@@ -1,6 +1,6 @@
 import java.io.BufferedReader
 
-import org.siouan.frontendgradleplugin.infrastructure.gradle.RunPnpm
+import org.siouan.frontendgradleplugin.infrastructure.gradle.RunPnpmTaskType
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
@@ -73,8 +73,8 @@ tasks.named("installFrontend") {
     finalizedBy("installPlaywright")
 }
 
-tasks.register<RunPnpm>("installPlaywright") {
-    script.set("playwright:install")
+tasks.register<RunPnpmTaskType>("installPlaywright") {
+    args.set("playwright:install")
 }
 
 fun jarFile(): String {
@@ -101,8 +101,8 @@ tasks.register("runBackend") {
     }
 }
 
-tasks.register<RunPnpm>("runE2ETests") {
-    script.set("run test:e2e")
+tasks.register<RunPnpmTaskType>("runE2ETests") {
+    args.set("run test:e2e")
     finalizedBy("killBackend")
 }
 
