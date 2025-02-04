@@ -32,48 +32,6 @@ Key principles:
 - Consistent file naming
 - Central configuration
 
-## Error Handling
-
-We handle errors at different levels:
-
-1. **Page Object Level**:
-```typescript
-async addAnswer(answer: string, correct: boolean) {
-    try {
-        await this.answerInput().fill(answer)
-        if (correct) {
-            await this.correctnessCheckbox().check()
-        }
-    } catch (error) {
-        throw new Error(
-            `Failed to add answer "${answer}": ${error.message}`
-        )
-    }
-}
-```
-
-2. **Step Definition Level**:
-```typescript
-Then('I see an error message', async () => {
-    await expect(
-        world.createQuestionPage.errorMessage()
-    ).toBeVisible({
-        timeout: 5000,
-        message: 'Error message should be visible'
-    })
-})
-```
-
-3. **Assertion Level**:
-```typescript
-const expectTextToBe = async (locator: Locator, text: string) => {
-    await expect(locator).toHaveText(text, {
-        timeout: 5000,
-        message: `Expected text to be "${text}"`
-    })
-}
-```
-
 ## Reusable Utilities
 
 Common utilities are shared across the test suite:
