@@ -2,9 +2,7 @@ import './create-question.css'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { type QuestionData, saveQuestion, getQuestion, updateQuestion } from 'api/quiz-question.ts'
-import { type AnswerData, AnswerRow } from 'pages/create-question'
-
-const emptyAnswerData = (): AnswerData => ({ answer: '', isCorrect: false, explanation: '' })
+import { type AnswerData, Answers, emptyAnswerData } from 'pages/create-question'
 
 export function CreateQuestionForm() {
     const params = useParams()
@@ -46,20 +44,8 @@ export function CreateQuestionForm() {
                   .then(newQuestionId => setLinkToQuestion(`${location.origin}/question/${newQuestionId}`))
                   .catch(error => setLinkToQuestion(error.message))
 
-    const updateAnswerData = (index: number, newValue: Partial<AnswerData>) => {
-        setAnswerData(prev => {
-            const newAnswerData = [...prev]
-            newAnswerData[index] = { ...newAnswerData[index], ...newValue }
-            return newAnswerData
-        })
-    }
-
     const toggleMultipleAnswers = () => {
         setIsMultipleAnswer(prev => !prev)
-    }
-
-    const addAnswer = () => {
-        setAnswerData(prev => [...prev, emptyAnswerData()])
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,14 +96,7 @@ export function CreateQuestionForm() {
                     <br />
                 </div>
                 <br />
-                {/* Answer rows */}
-                {answerData.map((answer, index) => (
-                    <AnswerRow key={`answer-${index}`} answer={answer} index={index} updateAnswerData={updateAnswerData} />
-                ))}
-                {/* Add answer button */}
-                <button type="button" onClick={addAnswer} className="add-answer-button">
-                    Add Answer
-                </button>
+                <Answers answers={answerData} setAnswerData={setAnswerData} />
                 <div className="general-explanation-wrapper">
                     <label htmlFor="general-explanation">General explanation for the entire question:</label>
                     <textarea

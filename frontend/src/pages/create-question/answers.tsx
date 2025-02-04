@@ -4,6 +4,8 @@ export interface AnswerData {
     readonly explanation: string
 }
 
+export const emptyAnswerData = (): AnswerData => ({ answer: '', isCorrect: false, explanation: '' })
+
 interface AnswerRowProps {
     readonly answer: AnswerData
     readonly index: number
@@ -37,3 +39,38 @@ export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) =
         />
     </div>
 )
+
+interface AddAnswerProps {
+    readonly addAnswer: () => void
+}
+
+export const AddAnswerButton = ({ addAnswer }: AddAnswerProps) => (
+    <button type="button" onClick={addAnswer} className="add-answer-button">
+        Add Answer
+    </button>
+)
+
+interface AnswersProps {
+    readonly answers: readonly AnswerData[]
+    readonly setAnswerData: React.Dispatch<React.SetStateAction<AnswerData[]>>
+}
+
+export const Answers = ({ answers, setAnswerData }: AnswersProps) => {
+    const updateAnswerData = (index: number, newValue: Partial<AnswerData>) =>
+        setAnswerData(prev => {
+            const newAnswerData = [...prev]
+            newAnswerData[index] = { ...newAnswerData[index], ...newValue }
+            return newAnswerData
+        })
+
+    const addAnswer = () => setAnswerData(prev => [...prev, emptyAnswerData()])
+
+    return (
+        <>
+            {answers.map((answer, index) => (
+                <AnswerRow answer={answer} index={index} updateAnswerData={updateAnswerData} />
+            ))}
+            <AddAnswerButton addAnswer={addAnswer} />
+        </>
+    )
+}
