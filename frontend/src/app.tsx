@@ -9,7 +9,7 @@ export const App = () => (
             <Route path="/question/new" element={<CreateQuestionForm />} />
             <Route path="/question/:id/edit" element={<CreateQuestionForm />} />
             <Route path="/question/:id" element={<QuestionTakePage />} />
-            <Route path="/" element={<HomePage/>} />
+            <Route path="/" element={<HomePage />} />
         </Routes>
     </BrowserRouter>
 )
