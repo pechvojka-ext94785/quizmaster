@@ -30,9 +30,8 @@ Feature: Create question GUI
     * I try saving the question
     Then I see an error message
 
-  @looseri
   Scenario: Cannot save a question with less than 2 answers
-    Given I start creating a question
+    When I start creating a question
     Then I see 2 answers
 
   Scenario: Cannot save a question with 0 correct answers
