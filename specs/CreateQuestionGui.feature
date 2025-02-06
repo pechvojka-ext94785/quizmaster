@@ -42,3 +42,8 @@ Feature: Create question GUI
     When I enter question "What is XXX?"
     * I try saving the question
     Then I see an error message
+
+  Scenario: By default question is single-choice type
+    Given I start creating a question
+    Then Multiple choice is unchecked
+

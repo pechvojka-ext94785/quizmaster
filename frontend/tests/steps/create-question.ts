@@ -117,3 +117,8 @@ Then('I see 2 answers', async () => {
     const okStr = await world.createQuestionPage.getOKStr()
     expect(okStr).not.toBe('')
 })
+
+Then('Multiple choice is unchecked', async () => {
+    const isChecked = await world.createQuestionPage.multipleChoiceLocator().isChecked()
+    expect(isChecked).toBe(false)
+})
