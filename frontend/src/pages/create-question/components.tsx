@@ -7,5 +7,5 @@ export const QuestionLink = ({ url }: { url: string }) => url && <span id="quest
 export const ErrorMessage = ({ errorMessage }: { errorMessage: string }) =>
     errorMessage && <span id="error-message">{errorMessage}</span>
 
-export const OKStr = ({ OKStr }: { OKStr: string }) =>
-    OKStr && <span id="ok-str">{OKStr}</span>
+export const OKStr = ({ okStr }: { okStr: string }) =>
+    okStr && <span id="ok-str">{okStr}</span>
