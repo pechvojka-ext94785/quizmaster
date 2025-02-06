@@ -1,4 +1,4 @@
-import './correctness.css';
+import './correctness.css'
 
 interface CorrectnessProps {
     readonly isCorrect: boolean
