@@ -56,6 +56,7 @@ Given('a question {string}', async (question: string) => {
 
 Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
     const raw = answerRawTable.raw()
+    // TODO: jozef - this logic should not be in tests, it should be tested
     const isMultipleChoice = raw.filter(([_, correct]) => correct === '*').length > 1
 
     if (isMultipleChoice) await world.createQuestionPage.setMultipleChoice()
@@ -118,7 +119,8 @@ Then('I see 2 answers', async () => {
     expect(okStr).not.toBe('')
 })
 
-Then('Multiple choice is unchecked', async () => {
+Then(/^Multiple choice is (checked|unchecked)$/, async (state: string) => {
+    const expected = state === 'checked'
     const isChecked = await world.createQuestionPage.multipleChoiceLocator().isChecked()
-    expect(isChecked).toBe(false)
+    expect(isChecked).toBe(expected)
 })
