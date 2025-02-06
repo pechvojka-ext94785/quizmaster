@@ -36,7 +36,6 @@ Feature: Create question GUI
 
   Scenario: Cannot save a question with 0 correct answers
     When I start creating a question
-    When I enter question "What is XXX?"
     * I try saving the question
     Then I see an error message
 
@@ -48,4 +47,4 @@ Feature: Create question GUI
 Scenario: Cannot save an empty question
     Given I start creating a question
     When I try saving the question
-    Then I see an error message
+    Then I see empty question

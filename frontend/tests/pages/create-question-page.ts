@@ -26,7 +26,7 @@ export class CreateQuestionPage {
     answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
 
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
-        await this.page.fill(`#answer-text-${index}`, value)
+        await this.answerTextLocator(index).fill(value)
 
         if (explanation) await this.page.fill(`#answer-explanation-${index}`, explanation)
 

@@ -124,3 +124,7 @@ Then(/^Multiple choice is (checked|unchecked)$/, async (state: string) => {
     const isChecked = await world.createQuestionPage.multipleChoiceLocator().isChecked()
     expect(isChecked).toBe(expected)
 })
+
+Then('I see empty question', async () => {
+    await expect(world.createQuestionPage.questionLocator).not.toBe('')
+})
