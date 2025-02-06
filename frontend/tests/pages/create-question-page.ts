@@ -52,7 +52,12 @@ export class CreateQuestionPage {
     }
 
     async getOKStr(): Promise<string> {
-        const errorMessage = await this.page.textContent('#error-message')
+        const errorMessage = await this.page.textContent('#ok-str')
+        return errorMessage ?? ''
+    }
+
+    async getEmptyQuestionErrorMessage(): Promise<string> {
+        const errorMessage = await this.page.textContent('#nok-emptyquestion')
         return errorMessage ?? ''
     }
 }
