@@ -1,4 +1,4 @@
-import { Before, Given, Then, When } from '@cucumber/cucumber'
+import { Before, type DataTable, Given, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { type TableOf, worldAs } from './common.ts'
@@ -56,10 +56,6 @@ Given('a question {string}', async (question: string) => {
 
 Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
     const raw = answerRawTable.raw()
-    // TODO: jozef - this logic should not be in tests, it should be tested
-    const isMultipleChoice = raw.filter(([_, correct]) => correct === '*').length > 1
-
-    if (isMultipleChoice) await world.createQuestionPage.setMultipleChoice()
 
     for (let i = 0; i < raw.length; i++) {
         if (i >= NUM_ANSWERS) await addAnswer(i)
@@ -127,4 +123,20 @@ Then(/^Multiple choice is (checked|unchecked)$/, async (state: string) => {
 
 Then('I see empty question', async () => {
     await expect(world.createQuestionPage.questionLocator).not.toBe('')
+})
+
+When('I click is-correct checkbox for {string}', async (answer: string) => {
+    await world.createQuestionPage.isCorrectCheckboxLocator(answer).click()
+})
+
+Then(/^I see the answers$/, async (data: DataTable) => {
+    for (const row of data.rows()) {
+        const answer = row[0]
+        const shouldBeChecked = row[1] === '*'
+
+        const checkbox = world.createQuestionPage.isCorrectCheckboxLocator(answer)
+        const isChecked = await checkbox.isChecked()
+
+        expect(isChecked, `Answer: ${answer} should be ${shouldBeChecked}`).toBe(shouldBeChecked)
+    }
 })
