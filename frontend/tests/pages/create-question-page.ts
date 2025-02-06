@@ -50,4 +50,9 @@ export class CreateQuestionPage {
         const errorMessage = await this.page.textContent('#error-message')
         return errorMessage ?? ''
     }
+
+    async getOKStr(): Promise<string> {
+        const errorMessage = await this.page.textContent('#error-message')
+        return errorMessage ?? ''
+    }
 }

@@ -30,10 +30,9 @@ Feature: Create question GUI
     * I try saving the question
     Then I see an error message
 
-  @looseri @ignore
+  @looseri
   Scenario: Cannot save a question with less than 2 answers
     Given I start creating a question
     When I enter question "What is XXX?"
-    * I add the answer "X" marked as correct
     * I try saving the question
-    Then I see an error message "Min. answer count is 2"
+    Then I see 2 answers

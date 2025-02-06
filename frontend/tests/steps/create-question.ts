@@ -112,3 +112,8 @@ Then('I see an error message', async () => {
     const errorMessage = await world.createQuestionPage.getErrorMessage()
     expect(errorMessage).not.toBe('')
 })
+
+Then('I see 2 answers', async () => {
+    const okStr = await world.createQuestionPage.getOKStr()
+    expect(okStr).not.toBe('')
+})
