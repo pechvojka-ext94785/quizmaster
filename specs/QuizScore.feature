@@ -1,5 +1,5 @@
 Feature: Displaying the quiz score
-  @focus
+
   Scenario:
     Given I visit the quiz score page
     Then I should see heading "Quiz Score"

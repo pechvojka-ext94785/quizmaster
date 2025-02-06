@@ -10,7 +10,7 @@ export const App = () => (
         <Routes>
             <Route path="/question/new" element={<CreateQuestionForm />} />
             <Route path="/quiz" element={<Quiz />} />
-            <Route path="/quiz/score" element={<QuizScore />} />
+            <Route path="/quiz/score" element={<QuizScore correct={3} total={10} />} />
             <Route path="/question/:id/edit" element={<CreateQuestionForm />} />
             <Route path="/question/:id" element={<QuestionTakePage />} />
             <Route path="/" element={<HomePage />} />
