@@ -23,6 +23,8 @@ export class CreateQuestionPage {
         }
     }
 
+    answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
+
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
         await this.page.fill(`#answer-text-${index}`, value)
 

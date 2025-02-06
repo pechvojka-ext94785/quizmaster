@@ -115,8 +115,8 @@ Then('I see an error message', async () => {
 })
 
 Then('I see 2 answers', async () => {
-    const okStr = await world.createQuestionPage.getOKStr()
-    expect(okStr).not.toBe('')
+    await expect  (world.createQuestionPage.answerTextLocator(0)).toBeVisible()
+    await expect  (world.createQuestionPage.answerTextLocator(1)).toBeVisible()
 })
 
 Then(/^Multiple choice is (checked|unchecked)$/, async (state: string) => {

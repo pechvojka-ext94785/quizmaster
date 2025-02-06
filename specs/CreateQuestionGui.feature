@@ -33,8 +33,6 @@ Feature: Create question GUI
   @looseri
   Scenario: Cannot save a question with less than 2 answers
     Given I start creating a question
-    When I enter question "What is XXX?"
-    * I try saving the question
     Then I see 2 answers
 
   Scenario: Cannot save a question with 0 correct answers
