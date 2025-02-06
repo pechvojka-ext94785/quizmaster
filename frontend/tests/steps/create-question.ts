@@ -151,3 +151,18 @@ Then('I see empty question', async () => {
         index++
     } while (existsElement > 0)
 })*/
+When('I click is-correct checkbox for {string}', async (answer: string) => {
+    await world.createQuestionPage.isCorrectCheckboxLocator(answer).click()
+})
+
+Then(/^I see the answers$/, async (data: DataTable) => {
+    for (const row of data.rows()) {
+        const answer = row[0]
+        const shouldBeChecked = row[1] === '*'
+
+        const checkbox = world.createQuestionPage.isCorrectCheckboxLocator(answer)
+        const isChecked = await checkbox.isChecked()
+
+        expect(isChecked, `Answer: ${answer} should be ${shouldBeChecked}`).toBe(shouldBeChecked)
+    }
+})
