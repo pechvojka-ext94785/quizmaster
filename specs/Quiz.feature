@@ -1,31 +1,26 @@
 Feature: Take a quiz
 
-  # Background:
+   Background:
+    Given a question "What is the standard colour of sky?"
+    * with answers:
+      | Red       |   |
+      | Blue      | * |
+      | Green     |   |
+      | Black     |   |
+    * saved and bookmarked as "Sky"
+    Given a question "What is capital of France?"
+    * with answers:
+      | Marseille |   |
+      | Lyon      |   |
+      | Paris     | * |
+      | Toulouse  |   |
+    * saved and bookmarked as "France"
+    # Given a quiz containing questions "Sky" and "France"
 
-    # Given a question "What is capital of France?"
-    # * with answers:
-    #   | Marseille |   |
-    #   | Lyon      |   |
-    #   | Paris     | * |
-    #   | Toulouse  |   |
-    # * saved and bookmarked as "France"
-    # Given a question "What is the standard colour of grass?"
-    # * with answers:
-    #   | Red       |   |
-    #   | Blue      |   |
-    #   | Green     | * |
-    #   | Black     |   |
-    # * saved and bookmarked as "Grass"
-    # Given a question "What is the standard colour of sky?"
-    # * with answers:
-    #   | Red       |   |
-    #   | Blue      | * |
-    #   | Green     |   |
-    #   | Black     |   |
-    # * saved and bookmarked as "Sky"
-
-  @focus
   Scenario: Quiz page is available
     Given I visit the quiz page
     Then I should see heading "Quiz"
 
+  Scenario: Quiz question is displayed
+    Given I visit the quiz page
+    Then I see the first question
