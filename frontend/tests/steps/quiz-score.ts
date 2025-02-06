@@ -15,6 +15,13 @@ Given('I visit the Fake last question', async function (this: World) {
     await this.page.goto('/quiz/fakeLast')
 })
 
+Given(
+    'I visit the Fake last question with {int} correct answers out of {int} questions',
+    async function (this: World, correct: number, count: number) {
+        await this.page.goto(`/quiz/fakeLast?correct=${correct}&count=${count}`)
+    },
+)
+
 When('I click the submit button', async function (this: World) {
     await world.QuizScorePage.submit()
 })
