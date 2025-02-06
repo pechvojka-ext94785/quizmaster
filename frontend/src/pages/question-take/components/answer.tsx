@@ -26,6 +26,8 @@ export const Answer = (props: AnswerProps) => {
                 {props.answer}
                 {props.showFeedback && <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} />}
             </label>
+            <br />
+            <br />
         </li>
     )
 }

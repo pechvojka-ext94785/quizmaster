@@ -1,3 +1,5 @@
+import './correctness.css';
+
 interface CorrectnessProps {
     readonly isCorrect: boolean
 }
@@ -11,6 +13,7 @@ export const Correctness = (props: CorrectnessProps) => {
 
 export const QuestionCorrectness = (props: CorrectnessProps) => (
     <p className="question-correctness">
+        The answer is:
         <Correctness isCorrect={props.isCorrect} />
     </p>
 )
