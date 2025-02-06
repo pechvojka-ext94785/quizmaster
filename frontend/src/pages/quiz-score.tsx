@@ -14,3 +14,16 @@ export const QuizScore = ({ correct, total }: QuizScoreProps) => {
         </div>
     )
 }
+
+export const FakeLastQuestion = () => {
+    const obj = { correct: 3, total: 10 }
+    localStorage.setItem('quizScore', JSON.stringify(obj))
+    return (
+        <div>
+            <h1>Fake last question</h1>
+            <form action="/quiz/score" method="get">
+                <input type="submit" value="Finish" />
+            </form>
+        </div>
+    )
+}
