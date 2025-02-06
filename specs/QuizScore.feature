@@ -1,7 +1,8 @@
 Feature: Displaying the quiz score
-  @ignore
+
   Scenario:
-    Given I visit the quiz score page
+    Given I visit the Fake last question
+    When I click the submit button
     Then I should see heading "Quiz Score"
     And I should see the text "Your score is <correct> correctly answered questions out of <count> which is <percentage>%"
   Examples:

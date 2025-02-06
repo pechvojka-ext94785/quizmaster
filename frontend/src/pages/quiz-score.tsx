@@ -1,22 +1,22 @@
-interface QuizScoreProps {
-    readonly correct: number
-    readonly total: number
-}
-
-export const QuizScore = ({ correct, total }: QuizScoreProps) => {
+export const QuizScore = () => {
+    let score = { correctAnswers: 0, totalQuestions: 0 }
+    const data = localStorage.getItem('quizScore')
+    if (data) {
+        score = JSON.parse(data)
+    }
     return (
         <div>
             <h1>Quiz Score</h1>
             <p>
-                Your score is {correct} correctly answered questions out of {total} which is{' '}
-                {Math.round((correct / total) * 100)}%
+                Your score is {score.correctAnswers} correctly answered questions out of {score.totalQuestions} which is{' '}
+                {Math.round((score.correctAnswers / score.totalQuestions) * 100)}%
             </p>
         </div>
     )
 }
 
 export const FakeLastQuestion = () => {
-    const obj = { correct: 3, total: 10 }
+    const obj = { correctAnswers: 3, totalQuestions: 10 }
     localStorage.setItem('quizScore', JSON.stringify(obj))
     return (
         <div>
