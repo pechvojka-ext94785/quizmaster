@@ -28,7 +28,7 @@ export function CreateQuestionForm() {
 
     useEffect(() => {
         if (questionData.question) {
-           setIsLoaded(true)
+            setIsLoaded(true)
         }
     }, [questionData])
 
