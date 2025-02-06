@@ -45,13 +45,34 @@ export const AddAnswerButton = ({ addAnswer }: AddAnswerProps) => (
 
 interface AnswersProps {
     readonly answers: readonly AnswerData[]
+    readonly isMultichoiceQuestion: boolean
     readonly setAnswers: (answers: readonly AnswerData[]) => void
 }
 
-export const AnswersEdit = ({ answers, setAnswers }: AnswersProps) => {
+const updateIsCorrect = (
+    answers: readonly AnswerData[],
+    index: number,
+    isMultichoiceQuestion: boolean,
+    isCorrect: boolean,
+) => {
+    const newAnswers = [...answers]
+    if (isMultichoiceQuestion) {
+        newAnswers[index] = { ...newAnswers[index], isCorrect: isCorrect }
+    } else {
+        newAnswers[index] = { ...newAnswers[index], isCorrect: true }
+    }
+    return newAnswers
+}
+
+export const AnswersEdit = ({ answers, isMultichoiceQuestion, setAnswers }: AnswersProps) => {
     const updateAnswerData = (index: number, newValue: Partial<AnswerData>) => {
-        const newAnswerData = [...answers]
-        newAnswerData[index] = { ...newAnswerData[index], ...newValue }
+        let newAnswerData = [...answers]
+        if ('isCorrect' in newValue) {
+            const isCorrect = newValue.isCorrect || false
+            newAnswerData = updateIsCorrect(newAnswerData, index, isMultichoiceQuestion, isCorrect)
+        } else {
+            newAnswerData[index] = { ...newAnswerData[index], ...newValue }
+        }
         setAnswers(newAnswerData)
     }
 

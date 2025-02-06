@@ -16,3 +16,15 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     | * |
     | Bratislava |   |
 
+  Scenario: Click the same option of single choice question
+    Given I start creating a question
+    * with answers:
+    | Brno       |   | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I click is-correct checkbox for "Berlin"
+    Then I see the answers
+    | Brno       |   |
+    | Berlin     | * |
+    | Bratislava |   |
+
