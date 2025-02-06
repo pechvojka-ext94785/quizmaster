@@ -36,3 +36,9 @@ Feature: Create question GUI
     When I enter question "What is XXX?"
     * I try saving the question
     Then I see 2 answers
+  @ignore
+    Scenario: Cannot save a question with 0 correct answers
+    Given I start creating a question
+    When I enter question "What is XXX?"
+    * I try saving the question
+    Then I see 2 answers
