@@ -29,3 +29,11 @@ Feature: Create question GUI
     * I add the answer "6" marked as incorrect
     * I try saving the question
     Then I see an error message
+
+  @looseri @ignore
+  Scenario: Cannot save a question with less than 2 answers
+    Given I start creating a question
+    When I enter question "What is XXX?"
+    * I add the answer "X" marked as correct
+    * I try saving the question
+    Then I see an error message "Min. answer count is 2"
