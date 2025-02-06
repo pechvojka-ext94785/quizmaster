@@ -51,6 +51,15 @@ export function CreateQuestionForm() {
             return
         }
 
+        const answersCount = apiData.answers.length
+
+        for (let i = 0; i < answersCount; i++) {
+            if (apiData.answers[i] == '') {
+                setErrorMessage('All answers must be filled in')
+                return
+            }
+        }
+
         postData(apiData)
     }
 

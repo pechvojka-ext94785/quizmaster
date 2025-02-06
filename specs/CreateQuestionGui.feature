@@ -43,8 +43,14 @@ Feature: Create question GUI
     Given I start creating a question
     Then Multiple choice is unchecked
 
-@ignore
-Scenario: Cannot save an empty question
+  Scenario: Cannot save an empty question
     Given I start creating a question
     When I try saving the question
     Then I see empty question
+
+  Scenario: Cannot save an empty answer
+    Given I start creating a question
+    When I enter question "What is XXX?"
+    * I add the answer "" marked as correct
+    * I try saving the question
+    Then I see an error message

@@ -85,7 +85,7 @@ Given('which displays all answer explanations', async () => {
 
 When('I enter question {string}', enterQuestion)
 
-When(/^I add the answer "(.+)" marked as (correct|incorrect)$/, async (answer: string, correct: string) => {
+When(/^I add the answer "(.*)" marked as (correct|incorrect)$/, async (answer: string, correct: string) => {
     await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', '')
 })
 
@@ -127,18 +127,27 @@ Then('I see empty question', async () => {
     await expect(world.createQuestionPage.questionLocator).not.toBe('')
 })
 
-When('I click is-correct checkbox for {string}', async (answer: string) => {
-    await world.createQuestionPage.isCorrectCheckboxLocator(answer).click()
-})
+/*Then('I see empty answer', async () => {
+    let index = 0
+    let existsElement = 1
+    do {
+        const textAreaLoc = world.createQuestionPage.answerTextLocator(index)
 
-Then(/^I see the answers$/, async (data: DataTable) => {
-    for (const row of data.rows()) {
-        const answer = row[0]
-        const shouldBeChecked = row[1] === '*'
+        // Check if the text area is visible
+        await expect(textAreaLoc).toBeVisible()
 
-        const checkbox = world.createQuestionPage.isCorrectCheckboxLocator(answer)
-        const isChecked = await checkbox.isChecked()
+        const isVisible = await textAreaLoc.isVisible()
 
-        expect(isChecked, `Answer: ${answer} should be ${shouldBeChecked}`).toBe(shouldBeChecked)
-    }
-})
+        if (isVisible) {
+            // Get the value of the text area
+            const textAreaContent = await textAreaLoc.inputValue()
+
+            // Check that the text area is not empty
+            await expect(textAreaContent).not.toBeNull()
+        } else {
+            existsElement = 0
+        }
+
+        index++
+    } while (existsElement > 0)
+})*/
