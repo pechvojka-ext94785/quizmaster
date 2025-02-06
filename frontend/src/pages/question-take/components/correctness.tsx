@@ -13,7 +13,7 @@ export const Correctness = (props: CorrectnessProps) => {
 
 export const QuestionCorrectness = (props: CorrectnessProps) => (
     <p className="question-correctness">
-        The answer is:
+        The answer is:&nbsp;
         <Correctness isCorrect={props.isCorrect} />
     </p>
 )

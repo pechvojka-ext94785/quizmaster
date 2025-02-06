@@ -46,7 +46,7 @@ When('I answer {string}', async (answerList: string) => {
 })
 
 Then('I see feedback {string}', async feedback => {
-    await expectTextToBe(world.quizTakingPage.feedbackLocator(), feedback)
+    await expectTextToBe(world.quizTakingPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
 })
 
 Then('I see the answer explanation {string}', async answerExplanation => {
