@@ -22,12 +22,14 @@ const NUM_ANSWERS = 2
 
 Before(() => {
     world.createQuestionPage = new CreateQuestionPage(world.page)
-    world.questionWip = { url: '', question: '', answers: [], explanation: '' }
     world.nextAnswerIdx = 0
     world.bookmarks = {}
 })
 
-const openCreatePage = async () => world.createQuestionPage.goto('/question/new')
+const openCreatePage = async () => {
+    world.createQuestionPage.goto('/question/new')
+    world.questionWip = { url: '', question: '', answers: [], explanation: '' }
+}
 
 const enterQuestion = async (question: string) => {
     await world.createQuestionPage.enterQuestion(question)
