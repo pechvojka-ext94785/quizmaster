@@ -17,11 +17,9 @@ interface QuestionEditProps {
 
 function setMultipleChoiceInQuestionData(isMultipleChoice: boolean, questionData: QuestionFormData): QuestionFormData {
     const newQuestionData = { ...questionData, isMultipleChoice }
-    if (!isMultipleChoice) {
-        const numberOfCorrectAnswers = questionData.answers.filter(answer => answer.isCorrect).length
-        if (numberOfCorrectAnswers > 1) {
-            newQuestionData.answers = questionData.answers.map(answer => ({ ...answer, isCorrect: false }))
-        }
+    const numberOfCorrectAnswers = questionData.answers.filter(answer => answer.isCorrect).length
+    if (!isMultipleChoice && numberOfCorrectAnswers > 1) {
+        newQuestionData.answers = questionData.answers.map(answer => ({ ...answer, isCorrect: false }))
     }
     return newQuestionData
 }
