@@ -141,30 +141,6 @@ Then('I see empty question', async () => {
     await expect(world.createQuestionPage.questionLocator).not.toBe('')
 })
 
-/*Then('I see empty answer', async () => {
-    let index = 0
-    let existsElement = 1
-    do {
-        const textAreaLoc = world.createQuestionPage.answerTextLocator(index)
-
-        // Check if the text area is visible
-        await expect(textAreaLoc).toBeVisible()
-
-        const isVisible = await textAreaLoc.isVisible()
-
-        if (isVisible) {
-            // Get the value of the text area
-            const textAreaContent = await textAreaLoc.inputValue()
-
-            // Check that the text area is not empty
-            await expect(textAreaContent).not.toBeNull()
-        } else {
-            existsElement = 0
-        }
-
-        index++
-    } while (existsElement > 0)
-})*/
 When('I click is-correct checkbox for {string}', async (answer: string) => {
     await world.createQuestionPage.isCorrectCheckboxLocator(answer).click()
 })
