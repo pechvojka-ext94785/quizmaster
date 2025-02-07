@@ -117,7 +117,6 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava |   |
 
-@focus
       Scenario:
     Given I start creating a question
     * with multi-choice selected

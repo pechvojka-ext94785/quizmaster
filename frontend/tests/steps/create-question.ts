@@ -185,7 +185,8 @@ Then('Is correct checkboxes look like radio buttons', async () => {
     const checkboxes = world.createQuestionPage.isCorrectCheckboxesLocator()
     const elements = await checkboxes.all()
     for (const element of elements) {
-        await expect(element).toHaveClass('answer-isCorrect-checkbox')
+        const className = await element.getAttribute('class')
+        expect(className).toBe('answer-isCorrect-checkbox')
     }
 })
 
