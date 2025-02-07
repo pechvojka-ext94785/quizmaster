@@ -25,7 +25,6 @@ When('I take question {string}', async (bookmark: string) => {
 
 Then('I see the question and the answers', async () => {
     await expectTextToBe(world.quizTakingPage.questionLocator(), activeQuestion().question)
-
     const answers = activeQuestion().answers
     const answerLocators = world.quizTakingPage.answersLocator()
 
