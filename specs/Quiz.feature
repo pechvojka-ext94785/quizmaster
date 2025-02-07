@@ -24,3 +24,8 @@ Feature: Take a quiz
   Scenario: Quiz question is displayed
     Given I visit the quiz page
     Then I see the first question
+
+  Scenario: Quiz question is answered
+    Given I visit the quiz page
+    When I answer "Green"
+    Then I should see the next button

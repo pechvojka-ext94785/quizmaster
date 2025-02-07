@@ -11,6 +11,14 @@ interface QuestionFormProps {
     readonly question: QuizQuestion
 }
 
+export const NextQuestionButton = () => (
+    <div>
+        <button type="button" id="next-question">
+            Next Question
+        </button>
+    </div>
+)
+
 export const QuestionForm = (props: QuestionFormProps) => {
     const state = useQuestionTakeState(props.question)
     const feedback = useQuestionFeedbackState(state, props.question)
@@ -39,6 +47,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
             {!state.submitted && <input type="submit" value="Submit" />}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
+            {state.submitted && <NextQuestionButton />}
         </form>
     )
 }
