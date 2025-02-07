@@ -3,10 +3,11 @@ import { type AnswerData, emptyAnswerData } from './question-form-data.ts'
 interface AnswerRowProps {
     readonly answer: AnswerData
     readonly index: number
+    readonly isMultichoiceQuestion: boolean
     readonly updateAnswerData: (index: number, newValue: Partial<AnswerData>) => void
 }
 
-export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) => (
+export const AnswerRow = ({ answer, index, isMultichoiceQuestion, updateAnswerData }: AnswerRowProps) => (
     <div key={`answer-${index}`} className="answer-row">
         <input
             id={`answer-text-${index}`}
@@ -17,6 +18,7 @@ export const AnswerRow = ({ answer, index, updateAnswerData }: AnswerRowProps) =
         />
         <input
             id={`answer-checkbox-${index}`}
+            className={!isMultichoiceQuestion ? 'answer-isCorrect-checkbox' : 'answer-isCorrect-checkbox-multi'}
             type="checkbox"
             checked={answer.isCorrect}
             onChange={e => updateAnswerData(index, { isCorrect: e.target.checked })}
@@ -83,7 +85,12 @@ export const AnswersEdit = ({ answers, isMultichoiceQuestion, setAnswers }: Answ
     return (
         <>
             {answers.map((answer, index) => (
-                <AnswerRow answer={answer} index={index} updateAnswerData={updateAnswerData} />
+                <AnswerRow
+                    answer={answer}
+                    index={index}
+                    isMultichoiceQuestion={isMultichoiceQuestion}
+                    updateAnswerData={updateAnswerData}
+                />
             ))}
             <AddAnswerButton addAnswer={addAnswer} />
         </>

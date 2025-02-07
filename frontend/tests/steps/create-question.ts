@@ -181,6 +181,14 @@ Then(/^I see the answers$/, async (data: DataTable) => {
     }
 })
 
+Then('Is correct checkboxes look like radio buttons', async () => {
+    const checkboxes = world.createQuestionPage.isCorrectCheckboxesLocator()
+    const elements = await checkboxes.all()
+    for (const element of elements) {
+        await expect(element).toHaveClass('answer-isCorrect-checkbox')
+    }
+})
+
 When(/^I make the question (single|multi)-choice$/, async (type: string) => {
     if (type === 'single') {
         await world.createQuestionPage.setSingleChoice()

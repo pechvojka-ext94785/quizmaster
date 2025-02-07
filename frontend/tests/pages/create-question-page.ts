@@ -14,6 +14,8 @@ export class CreateQuestionPage {
     isCorrectCheckboxLocator = (answerText: string) =>
         this.page.locator(`[id^=answer-text-][value="${answerText}"]+[id^=answer-checkbox-]`)
 
+    isCorrectCheckboxesLocator = () => this.page.locator('[id^=answer-checkbox-]')
+
     setMultipleChoice = () => this.multipleChoiceLocator().check()
 
     setSingleChoice = () => this.multipleChoiceLocator().uncheck()
