@@ -74,6 +74,11 @@ export function CreateQuestionForm() {
             return
         }
 
+        if (apiData.question === '') {
+            setErrorMessage('Question must not be empty.')
+            return
+        }
+
         postData(apiData)
     }
 
