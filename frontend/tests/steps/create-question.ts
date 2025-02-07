@@ -96,6 +96,13 @@ When(/^I add the answer "(.*)" marked as (correct|incorrect)$/, async (answer: s
     await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', '')
 })
 
+When(
+    /^I add the answer "(.*)" marked as (correct|incorrect) with an explanantion "(.*)"$/,
+    async (answer: string, correct: string, explanation: string) => {
+        await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', explanation)
+    },
+)
+
 When('I add an additional answer field', async () => await addAnswer(world.nextAnswerIdx))
 
 When('I save the question', async () => await saveQuestion('manual'))

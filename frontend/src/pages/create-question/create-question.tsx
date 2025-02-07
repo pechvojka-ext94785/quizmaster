@@ -60,6 +60,20 @@ export function CreateQuestionForm() {
             }
         }
 
+        let explanationNotEmptyCounter = 0
+
+        const explanationCount = apiData.explanations.length
+
+        for (let i = 0; i < explanationCount; i++) {
+            if (apiData.explanations[i] !== '') {
+                explanationNotEmptyCounter++
+            }
+        }
+        if (explanationNotEmptyCounter !== 0 && explanationNotEmptyCounter !== explanationCount) {
+            setErrorMessage('All or none explanation must be filled in.')
+            return
+        }
+
         postData(apiData)
     }
 
