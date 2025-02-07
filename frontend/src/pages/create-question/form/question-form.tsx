@@ -15,9 +15,21 @@ interface QuestionEditProps {
     readonly onSubmit: () => void
 }
 
+function setMultipleChoiceInQuestionData(isMultipleChoice: boolean, questionData: QuestionFormData): QuestionFormData {
+    const newQuestionData = { ...questionData, isMultipleChoice }
+    if (!isMultipleChoice) {
+        const numberOfCorrectAnswers = questionData.answers.filter(answer => answer.isCorrect).length
+        if (numberOfCorrectAnswers > 1) {
+            newQuestionData.answers = questionData.answers.map(answer => ({ ...answer, isCorrect: false }))
+        }
+    }
+    return newQuestionData
+}
+
 export const QuestionEditForm = ({ questionData, setQuestionData, onSubmit }: QuestionEditProps) => {
     const setQuestion = (question: string) => setQuestionData({ ...questionData, question })
-    const setIsMultipleChoice = (isMultipleChoice: boolean) => setQuestionData({ ...questionData, isMultipleChoice })
+    const setIsMultipleChoice = (isMultipleChoice: boolean) =>
+        setQuestionData(setMultipleChoiceInQuestionData(isMultipleChoice, questionData))
     const setAnswers = (answers: readonly AnswerData[]) => setQuestionData({ ...questionData, answers })
     const setQuestionExplanation = (questionExplanation: string) =>
         setQuestionData({ ...questionData, questionExplanation })

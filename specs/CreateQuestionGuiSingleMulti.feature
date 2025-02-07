@@ -64,3 +64,16 @@ Feature: Create question GUI - Single/multi choice
     | Brno       |   |
     | Berlin     | * |
     | Bratislava |   |
+
+  Scenario: Switching from multiple to single-choice question clears all is-correct checkboxes if multiple answers are selected
+    Given I start creating a question
+    * with multi-choice selected
+    * with answers:
+    | Brno       | * | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I make the question single-choice
+    Then I see the answers
+    | Brno       |   |
+    | Berlin     |   |
+    | Bratislava |   |
