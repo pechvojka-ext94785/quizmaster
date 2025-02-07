@@ -5,8 +5,6 @@ Given('I visit the quiz page', async function (this: World) {
     await this.page.goto('/quiz')
 })
 
-Given('a quiz containing questions {string1} and {string2}', () => {})
-
 Then('I should see heading "Quiz"', async function (this: World) {
     await expectTextToBe(this.page.locator('h2'), 'Quiz')
 })
