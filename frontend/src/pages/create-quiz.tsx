@@ -20,7 +20,7 @@ export const FakeCreateQuiz = () => {
     useEffect(() => {
         const count = searchParams.get('count')
         if (count) {
-            setCountPages(parseInt(count, 10))
+            setCountPages(Number.parseInt(count, 10))
         }
     }, [searchParams])
 
@@ -39,7 +39,11 @@ export const FakeCreateQuiz = () => {
                 <li>ne</li>
             </ul>
             Page {currentPage + 1} of {countPages}
-            {currentPage < countPages - 1 && <button onClick={handleNext}>Next</button>}
+            {currentPage < countPages - 1 && (
+                <button type="button" onClick={handleNext}>
+                    Next
+                </button>
+            )}
         </div>
     )
 }
