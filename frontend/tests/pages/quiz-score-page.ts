@@ -8,4 +8,6 @@ export class QuizScorePage {
     submit = () => this.page.locator('input[type="submit"]').click()
 
     paragraphLocator = () => this.page.locator('p')
+
+    listLocator = () => this.page.locator('li')
 }

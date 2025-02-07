@@ -13,6 +13,10 @@ export const FakeCreateQuiz = () => {
         <div>
             <h1>Quiz start</h1>
             <p>Q: {generateRandomString(10)}</p>
+            <ul>
+                <li>ano</li>
+                <li>ne</li>
+            </ul>
         </div>
     )
 }

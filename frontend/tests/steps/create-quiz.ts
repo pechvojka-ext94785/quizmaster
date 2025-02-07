@@ -26,4 +26,6 @@ Then('I should see heading "Quiz start"', async function (this: World) {
 Then('I see the question and the answers tmp', async () => {
     const questionText = await world.QuizScorePage.paragraphLocator().textContent()
     expect(questionText).toMatch(/^Q: .{10}$/)
+    const listItems = await world.QuizScorePage.listLocator().allTextContents()
+    expect(listItems).toEqual(['ano', 'ne'])
 })
