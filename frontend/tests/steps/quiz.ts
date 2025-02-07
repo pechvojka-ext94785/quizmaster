@@ -1,4 +1,4 @@
-import { Before, Given, Then, world } from '@cucumber/cucumber'
+import { Before, Given, When, Then, world } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { type World, expectTextToBe } from './common.ts'
 import { QuizPage } from '../pages/quiz-page'
@@ -27,4 +27,12 @@ Then('I should see the next button', async () => {
 Then('I should not see the next button', async () => {
     // Write code here that turns the phrase above into concrete actions
     await expect(world.quizPage.next_question_btn()).not.toBeVisible()
+})
+
+When('I click the next button', async () => {
+    await world.quizPage.submit()
+})
+Then('I should see the next question', async () => {
+    const secondQuestion = world.bookmarks.France
+    await expectTextToBe(world.quizTakingPage.questionLocator(), secondQuestion.question)
 })

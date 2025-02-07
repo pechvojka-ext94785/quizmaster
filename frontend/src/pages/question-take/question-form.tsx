@@ -12,14 +12,6 @@ interface QuestionFormProps {
     readonly onSubmitted?: () => void
 }
 
-export const NextQuestionButton = () => (
-    <div>
-        <button type="button" id="next-question">
-            Next Question
-        </button>
-    </div>
-)
-
 export const QuestionForm = (props: QuestionFormProps) => {
     const state = useQuestionTakeState(props.question)
     const feedback = useQuestionFeedbackState(state, props.question)

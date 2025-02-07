@@ -1,9 +1,27 @@
 import type { QuizQuestion } from 'model/quiz-question'
-import { NextQuestionButton, QuestionForm } from './question-take'
+import { QuestionForm } from './question-take'
 import { useState } from 'react'
 
+interface NextQuestionButtonProps {
+    onClick: () => void
+}
+
+export const NextQuestionButton = (props: NextQuestionButtonProps) => {
+    return (
+        <div>
+            <button type="button" onClick={props.onClick} id="next-question">
+                Next Question
+            </button>
+        </div>
+    )
+}
+
 export const Quiz = () => {
-    const quizQuestion: QuizQuestion = {
+    const nextQusetionHandler = () => {
+        console.log('Next question')
+        setQuiz(quiz[1])
+    }
+    const quizQuestion1: QuizQuestion = {
         id: 1,
         question: 'What is the standard colour of sky?',
         answers: ['Red', 'Blue', 'Green', 'Black'],
@@ -11,6 +29,17 @@ export const Quiz = () => {
         questionExplanation: '',
         correctAnswers: [1],
     }
+    const quizQuestion2: QuizQuestion = {
+        id: 2,
+        question: 'What is capital of France?',
+        answers: ['Marseille', 'Lyon', 'Paris', 'Toulouse'],
+        explanations: [],
+        questionExplanation: '',
+        correctAnswers: [2],
+    }
+    const quiz = [quizQuestion1, quizQuestion2]
+
+    const [quizQuestion, setQuiz] = useState(quiz[0])
 
     const [submitted, setSubmitted] = useState(false)
 
@@ -22,7 +51,7 @@ export const Quiz = () => {
         <div>
             <h2>Quiz</h2>
             <QuestionForm question={quizQuestion} onSubmitted={onSubmitted} />
-            {submitted && <NextQuestionButton />}
+            {submitted && <NextQuestionButton onClick={nextQusetionHandler} />}
         </div>
     )
 }
