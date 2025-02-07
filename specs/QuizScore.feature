@@ -1,5 +1,4 @@
 Feature: Displaying the quiz score
-  @focus
   Scenario Outline:
     Given I visit the Fake last question with <correct> correct answers out of <count> questions
     When I click the submit button
