@@ -14,7 +14,7 @@ export const Quiz = () => {
     return (
         <div>
             <h2>Quiz</h2>
-            <QuestionForm question={quizQuestion} />
+            <QuestionForm question={quizQuestion} quiz={true} />
         </div>
     )
 }

@@ -23,3 +23,8 @@ Then('I see the first question', async () => {
 Then('I should see the next button', async () => {
     await expect(world.quizPage.next_question_btn()).toBeVisible()
 })
+
+Then('I should not see the next button', async () => {
+    // Write code here that turns the phrase above into concrete actions
+    await expect(world.quizPage.next_question_btn()).not.toBeVisible()
+})
