@@ -40,13 +40,27 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava |   |
 
-  Scenario: Click another option of single choice question
+  Scenario: Switching from single to multi-choice question keeps correct answer selected
     Given I start creating a question
     * with answers:
     | Brno       |   | |
     | Berlin     | * | |
     | Bratislava |   | |
     When I make the question multi-choice
+    Then I see the answers
+    | Brno       |   |
+    | Berlin     | * |
+    | Bratislava |   |
+
+  @focus
+  Scenario: Switching from multiple to single-choice question keeps correct answer selected if it is the only one
+    Given I start creating a question
+    * with multi-choice selected
+    * with answers:
+    | Brno       |   | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I make the question single-choice
     Then I see the answers
     | Brno       |   |
     | Berlin     | * |

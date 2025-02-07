@@ -56,6 +56,10 @@ Given('a question {string}', async (question: string) => {
     await enterQuestion(question)
 })
 
+Given('with multi-choice selected', async () => {
+    await world.createQuestionPage.setMultipleChoice()
+})
+
 Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
     const raw = answerRawTable.raw()
 
