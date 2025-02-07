@@ -77,3 +77,42 @@ Feature: Create question GUI - Single/multi choice
     | Brno       |   |
     | Berlin     |   |
     | Bratislava |   |
+
+  Scenario:
+    Given I start creating a question
+    * with multi-choice selected
+    * with answers:
+    | Brno       |   | |
+    | Berlin     |   | |
+    | Bratislava |   | |
+    When I click is-correct checkbox for "Bratislava"
+    Then I see the answers
+    | Brno       |   |
+    | Berlin     |   |
+    | Bratislava | * |
+
+  Scenario:
+    Given I start creating a question
+    * with multi-choice selected
+    * with answers:
+    | Brno       | * | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I click is-correct checkbox for "Bratislava"
+    Then I see the answers
+    | Brno       | * |
+    | Berlin     | * |
+    | Bratislava | * |
+
+  Scenario:
+    Given I start creating a question
+    * with multi-choice selected
+    * with answers:
+    | Brno       | * | |
+    | Berlin     |   | |
+    | Bratislava | * | |
+    When I click is-correct checkbox for "Bratislava"
+    Then I see the answers
+    | Brno       | * |
+    | Berlin     |   |
+    | Bratislava |   |
