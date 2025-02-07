@@ -52,7 +52,6 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     | * |
     | Bratislava |   |
 
-  @focus
   Scenario: Switching from multiple to single-choice question keeps correct answer selected if it is the only one
     Given I start creating a question
     * with multi-choice selected
