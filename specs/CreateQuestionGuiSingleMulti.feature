@@ -40,4 +40,14 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava |   |
 
-  # Scenario:
+  Scenario: Click another option of single choice question
+    Given I start creating a question
+    * with answers:
+    | Brno       |   | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I make the question multi-choice
+    Then I see the answers
+    | Brno       |   |
+    | Berlin     | * |
+    | Bratislava |   |

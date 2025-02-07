@@ -169,3 +169,11 @@ Then(/^I see the answers$/, async (data: DataTable) => {
         expect(isChecked, `Answer: ${answer} should be ${shouldBeChecked}`).toBe(shouldBeChecked)
     }
 })
+
+When(/^I make the question (single|multi)-choice$/, async (type: string) => {
+    if (type === 'single') {
+        await world.createQuestionPage.setSingleChoice()
+    } else {
+        await world.createQuestionPage.setMultipleChoice()
+    }
+})

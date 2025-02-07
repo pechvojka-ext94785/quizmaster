@@ -16,6 +16,8 @@ export class CreateQuestionPage {
 
     setMultipleChoice = () => this.multipleChoiceLocator().check()
 
+    setSingleChoice = () => this.multipleChoiceLocator().uncheck()
+
     async setExplanationsAlways(always: boolean) {
         const checkbox = await this.page.$('#show-explanations-always')
         if (checkbox) {
