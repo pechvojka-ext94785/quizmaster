@@ -1,5 +1,6 @@
 import type { QuizQuestion } from 'model/quiz-question'
-import { QuestionForm } from './question-take'
+import { NextQuestionButton, QuestionForm } from './question-take'
+import { useState } from 'react'
 
 export const Quiz = () => {
     const quizQuestion: QuizQuestion = {
@@ -11,10 +12,17 @@ export const Quiz = () => {
         correctAnswers: [1],
     }
 
+    const [submitted, setSubmitted] = useState(false)
+
+    const onSubmitted = () => {
+        setSubmitted(true)
+    }
+
     return (
         <div>
             <h2>Quiz</h2>
-            <QuestionForm question={quizQuestion} quiz={true} />
+            <QuestionForm question={quizQuestion} onSubmitted={onSubmitted} />
+            {submitted && <NextQuestionButton />}
         </div>
     )
 }

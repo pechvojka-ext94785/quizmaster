@@ -40,7 +40,7 @@ Feature: Create a quiz question
       | answer | feedback   | explanation                              |
       | Rome   | Correct!   | Rome is the capital of Italy             |
       | Naples | Incorrect! | Naples is the capital of Campania region |
-
+  @focus
   Scenario: Question is answered and the next button is not displayed
     Given a question "What is capital of Italy?"
     * with answers:

@@ -9,7 +9,7 @@ import {
 
 interface QuestionFormProps {
     readonly question: QuizQuestion
-    quiz?: boolean
+    readonly onSubmitted?: () => void
 }
 
 export const NextQuestionButton = () => (
@@ -22,12 +22,14 @@ export const NextQuestionButton = () => (
 
 export const QuestionForm = (props: QuestionFormProps) => {
     const state = useQuestionTakeState(props.question)
-    const quiz = props.quiz
     const feedback = useQuestionFeedbackState(state, props.question)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (state.selectedAnswerIdxs.length > 0) state.submit()
+        if (state.selectedAnswerIdxs.length > 0) {
+            state.submit()
+            props.onSubmitted?.()
+        }
     }
     return (
         <form onSubmit={handleSubmit} id="question-form">
@@ -48,7 +50,6 @@ export const QuestionForm = (props: QuestionFormProps) => {
             {!state.submitted && <input type="submit" value="Submit" />}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
-            {quiz && state.submitted && <NextQuestionButton />}
         </form>
     )
 }

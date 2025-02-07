@@ -24,7 +24,7 @@ Feature: Take a quiz
   Scenario: Quiz question is displayed
     Given I visit the quiz page
     Then I see the first question
-
+  @focus
   Scenario: Quiz question is answered
     Given I visit the quiz page
     When I answer "Green"
