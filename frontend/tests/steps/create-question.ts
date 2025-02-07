@@ -59,6 +59,9 @@ Given('a question {string}', async (question: string) => {
 Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
     const raw = answerRawTable.raw()
 
+    const isMultipleChoice = raw.filter(([_, correct]) => correct === '*').length > 1
+    if (isMultipleChoice) await world.createQuestionPage.setMultipleChoice()
+
     for (let i = 0; i < raw.length; i++) {
         if (i >= NUM_ANSWERS) await addAnswer(i)
         const [answer, correct, explanation] = raw[i]

@@ -59,7 +59,9 @@ const updateIsCorrect = (
     if (isMultichoiceQuestion) {
         newAnswers[index] = { ...newAnswers[index], isCorrect: isCorrect }
     } else {
-        newAnswers[index] = { ...newAnswers[index], isCorrect: true }
+        newAnswers.forEach((answer, i) => {
+            newAnswers[i] = { ...answer, isCorrect: index === i }
+        })
     }
     return newAnswers
 }

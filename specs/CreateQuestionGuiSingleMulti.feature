@@ -28,3 +28,16 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     | * |
     | Bratislava |   |
 
+  Scenario: Click another option of single choice question
+    Given I start creating a question
+    * with answers:
+    | Brno       |   | |
+    | Berlin     | * | |
+    | Bratislava |   | |
+    When I click is-correct checkbox for "Brno"
+    Then I see the answers
+    | Brno       | * |
+    | Berlin     |   |
+    | Bratislava |   |
+
+  # Scenario:
