@@ -1,15 +1,9 @@
 import { After, Before } from '@cucumber/cucumber'
-import { type Browser, type BrowserContext, chromium, expect, type Locator, type Page } from '@playwright/test'
+import { chromium, expect, type Locator } from '@playwright/test'
 import type { QuizmasterWorld } from './world/world'
 
 const port = process.env.FE_PORT || '8080'
 export const baseUrl = `http://localhost:${port}`
-
-export interface World {
-    browser: Browser
-    context: BrowserContext
-    page: Page
-}
 
 export type TableOf<T> = { raw: () => T[] }
 
