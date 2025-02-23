@@ -4,7 +4,7 @@ Feature: Create question GUI - Single/multi choice
     Given I start creating a question
     Then Multiple choice is unchecked
 
-  Scenario:
+  Scenario: Mark correct answer for single choice question
     Given I start creating a question
     * with answers:
     | Brno       |   | |
@@ -78,7 +78,7 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava |   |
 
-  Scenario:
+  Scenario: Switching from multiple to single-choice question marks the last selected answer as correct
     Given I start creating a question
     * with multi-choice selected
     * with answers:
@@ -91,7 +91,7 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava | * |
 
-  Scenario:
+  Scenario: Mark all answers as correct for multi-choice question
     Given I start creating a question
     * with multi-choice selected
     * with answers:
@@ -104,7 +104,7 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     | * |
     | Bratislava | * |
 
-  Scenario:
+  Scenario: Switching from multiple to single-choice question keeps the first selected answer as correct
     Given I start creating a question
     * with multi-choice selected
     * with answers:
@@ -117,7 +117,7 @@ Feature: Create question GUI - Single/multi choice
     | Berlin     |   |
     | Bratislava |   |
 
-      Scenario:
+  Scenario: Single choice question markers are round
     Given I start creating a question
     * with multi-choice selected
     * with answers:
