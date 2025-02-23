@@ -1,7 +1,7 @@
 import { Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { worldAs } from './common'
-import type { QuizmasterWorld } from './world/world'
+import { activeQuestion, type QuizmasterWorld } from './world/world'
 
 const world = worldAs<QuizmasterWorld>()
 const openEditPage = async (bookmark: string) => world.createQuestionPage.goto(`${world.bookmarks[bookmark].url}/edit`)
@@ -15,7 +15,7 @@ Then('I see the question, answers and explanations', async () => {
     await world.page.waitForSelector('#is-loaded[value="loaded"]', { state: 'hidden' })
 
     const question = await world.createQuestionPage.questionLocator().inputValue()
-    expect(question).toBe(world.bookmarks[world.activeBookmark].question)
+    expect(question).toBe(activeQuestion(world).question)
 })
 
 When('I change question to {string}', async (newQuestion: string) => {
@@ -28,5 +28,5 @@ When('I save it', async () => {
 
 Then('I see unchanged url', async () => {
     const link = await world.createQuestionPage.questionUrlLocator().textContent()
-    expect(link).toBe(world.bookmarks[world.activeBookmark].url)
+    expect(link).toBe(activeQuestion(world).url)
 })

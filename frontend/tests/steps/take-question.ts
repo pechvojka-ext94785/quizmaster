@@ -3,10 +3,9 @@ import { expect } from '@playwright/test'
 
 import { expectTextToBe, expectTextToContain, worldAs } from './common.ts'
 import { TakeQuestionPage } from '../pages'
-import type { QuizmasterWorld } from './world/world.ts'
+import { activeQuestion, type QuizmasterWorld } from './world/world.ts'
 
 const world = worldAs<QuizmasterWorld>()
-const activeQuestion = () => world.bookmarks[world.activeBookmark]
 
 Before(() => {
     world.takeQuestionPage = new TakeQuestionPage(world.page)
@@ -18,8 +17,8 @@ When('I take question {string}', async (bookmark: string) => {
 })
 
 Then('I see the question and the answers', async () => {
-    await expectTextToBe(world.takeQuestionPage.questionLocator(), activeQuestion().question)
-    const answers = activeQuestion().answers
+    await expectTextToBe(world.takeQuestionPage.questionLocator(), activeQuestion(world).question)
+    const answers = activeQuestion(world).answers
     const answerLocators = world.takeQuestionPage.answersLocator()
 
     expect(await answerLocators.count()).toBe(answers.length)
@@ -47,7 +46,7 @@ Then('I see the answer explanation {string}', async answerExplanation => {
 })
 
 Then('I see the question explanation', async () => {
-    await expectTextToBe(world.takeQuestionPage.questionExplanationLocator(), activeQuestion().explanation)
+    await expectTextToBe(world.takeQuestionPage.questionExplanationLocator(), activeQuestion(world).explanation)
 })
 
 Then(/^I see the answer explanations for answers$/, async (data: DataTable) => {

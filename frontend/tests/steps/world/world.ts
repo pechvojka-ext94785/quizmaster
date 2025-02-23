@@ -16,3 +16,5 @@ export interface QuizmasterWorld {
     bookmarks: Record<string, Question>
     activeBookmark: string
 }
+
+export const activeQuestion = (world: QuizmasterWorld) => world.bookmarks[world.activeBookmark]
