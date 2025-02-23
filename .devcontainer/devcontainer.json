@@ -29,6 +29,7 @@
                 "GitHub.copilot-chat",
 
                 "vscode.vscode-java-pack",
+                "ms-playwright.playwright",
                 "alexkrechik.cucumberautocomplete"
             ]
         }

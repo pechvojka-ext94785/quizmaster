@@ -8,11 +8,11 @@ Otherwise, install recommended extensions:
 - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 - [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
 - [Cucumber (Gherking) Full Support](https://marketplace.visualstudio.com/items?itemName=alexkrechik.cucumberautocomplete)
+- [Playwright Test for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
 
 ## Limitations
-Couldn't make the following extensions working:
+Couldn't make the following extension working:
 
 - [Biome](https://marketplace.visualstudio.com/items?itemName=biomejs.biome), for linting and formatting.
-- Any Cucumber runner.
 
-Thus, linting and formatting, and E2E tests must be run from command line.
+Thus, linting and formatting must be run from command line.
