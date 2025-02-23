@@ -1,20 +1,14 @@
-import { Before, type DataTable, Given, Then, When } from '@cucumber/cucumber'
+import { type DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import type { TableOf } from './common.ts'
-import { CreateQuestionPage } from '../pages'
+import { Given, Then, When } from './fixture.ts'
 import type { QuizmasterWorld } from './world/world.ts'
 
 type AnswerRaw = [string, '*' | '', string]
 
 // if change this value, also change in frontend/src/pages/create-question/create-question.tsx
 const NUM_ANSWERS = 2
-
-Before(function (this: QuizmasterWorld) {
-    this.createQuestionPage = new CreateQuestionPage(this.page)
-    this.nextAnswerIdx = 0
-    this.bookmarks = {}
-})
 
 const openCreatePage = async (world: QuizmasterWorld) => {
     world.createQuestionPage.goto('/question/new')

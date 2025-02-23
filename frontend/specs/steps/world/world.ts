@@ -1,21 +1,26 @@
-import type { Browser, BrowserContext, Page } from '@playwright/test'
+import type { Page, TestInfo } from '@playwright/test'
 
-import type { CreateQuestionPage, QuizPage, TakeQuestionPage } from '../../pages'
+import { CreateQuestionPage, QuizPage, TakeQuestionPage } from '../../pages'
 import type { Question } from './question'
 
-export interface QuizmasterWorld {
-    browser: Browser
-    context: BrowserContext
-    page: Page
+export class QuizmasterWorld {
+    constructor(
+        public page: Page,
+        public testInfo: TestInfo,
+    ) {
+        this.createQuestionPage = new CreateQuestionPage(this.page)
+        this.takeQuestionPage = new TakeQuestionPage(this.page)
+        this.quizPage = new QuizPage(this.page)
+    }
 
-    createQuestionPage: CreateQuestionPage
-    takeQuestionPage: TakeQuestionPage
-    quizPage: QuizPage
+    readonly createQuestionPage: CreateQuestionPage
+    readonly takeQuestionPage: TakeQuestionPage
+    readonly quizPage: QuizPage
 
-    questionWip: Question
-    nextAnswerIdx: number
-    bookmarks: Record<string, Question>
-    activeBookmark: string
+    questionWip: Question = { url: '', question: '', answers: [], explanation: '' }
+    nextAnswerIdx: number = 0
+    bookmarks: Record<string, Question> = {}
+    activeBookmark: string = ''
+
+    get activeQuestion() { return this.bookmarks[this.activeBookmark] }
 }
-
-export const activeQuestion = (world: QuizmasterWorld) => world.bookmarks[world.activeBookmark]

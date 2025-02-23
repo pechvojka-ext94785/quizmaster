@@ -1,13 +1,9 @@
-import { Before, type DataTable, Then, When } from '@cucumber/cucumber'
+import { type DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { expectTextToBe, expectTextToContain } from './common.ts'
-import { TakeQuestionPage } from '../pages'
-import { activeQuestion, type QuizmasterWorld } from './world/world.ts'
-
-Before(function (this: QuizmasterWorld) {
-    this.takeQuestionPage = new TakeQuestionPage(this.page)
-})
+import { Then, When } from './fixture.ts'
+import type { QuizmasterWorld } from './world/world.ts'
 
 When('I take question {string}', async function (this: QuizmasterWorld, bookmark: string) {
     await this.page.goto(this.bookmarks[bookmark].url)
@@ -15,8 +11,8 @@ When('I take question {string}', async function (this: QuizmasterWorld, bookmark
 })
 
 Then('I see the question and the answers', async function (this: QuizmasterWorld) {
-    await expectTextToBe(this.takeQuestionPage.questionLocator(), activeQuestion(this).question)
-    const answers = activeQuestion(this).answers
+    await expectTextToBe(this.takeQuestionPage.questionLocator(), this.activeQuestion.question)
+    const answers = this.activeQuestion.answers
     const answerLocators = this.takeQuestionPage.answersLocator()
 
     expect(await answerLocators.count()).toBe(answers.length)
@@ -44,7 +40,7 @@ Then('I see the answer explanation {string}', async function (this: QuizmasterWo
 })
 
 Then('I see the question explanation', async function (this: QuizmasterWorld) {
-    await expectTextToBe(this.takeQuestionPage.questionExplanationLocator(), activeQuestion(this).explanation)
+    await expectTextToBe(this.takeQuestionPage.questionExplanationLocator(), this.activeQuestion.explanation)
 })
 
 Then(/^I see the answer explanations for answers$/, async function (this: QuizmasterWorld, data: DataTable) {

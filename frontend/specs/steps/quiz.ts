@@ -1,12 +1,7 @@
-import { Before, Given, When, Then } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { expectTextToBe } from './common.ts'
-import { QuizPage } from '../pages/quiz-page'
+import { Given, When, Then } from './fixture.ts'
 import type { QuizmasterWorld } from './world/world.ts'
-
-Before(function (this: QuizmasterWorld) {
-    this.quizPage = new QuizPage(this.page)
-})
 
 Given('I visit the quiz page', async function (this: QuizmasterWorld) {
     await this.page.goto('/quiz')

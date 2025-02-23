@@ -1,23 +1,6 @@
-import { After, Before } from '@cucumber/cucumber'
-import { chromium, expect, type Locator } from '@playwright/test'
-import type { QuizmasterWorld } from './world/world'
-
-const port = process.env.FE_PORT || '8080'
-export const baseUrl = `http://localhost:${port}`
+import { expect, type Locator } from '@playwright/test'
 
 export type TableOf<T> = { raw: () => T[] }
-
-Before(async function (this: QuizmasterWorld) {
-    this.browser = await chromium.launch()
-    this.context = await this.browser.newContext({ baseURL: baseUrl })
-    this.page = await this.context.newPage()
-})
-
-After(async function (this: QuizmasterWorld) {
-    await this.page.close()
-    await this.context.close()
-    await this.browser.close()
-})
 
 export const expectTextToBe = async (locator: Locator, text: string) => expect(await locator.textContent()).toBe(text)
 
