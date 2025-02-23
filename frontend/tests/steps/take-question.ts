@@ -2,16 +2,10 @@ import { Before, type DataTable, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { expectTextToBe, expectTextToContain, expectThatIsNotVisible, worldAs } from './common.ts'
-import type { Question } from './question.ts'
 import { TakeQuestionPage } from '../pages'
+import type { QuizmasterWorld } from './world/world.ts'
 
-interface TakeQuestionWorld {
-    quizTakingPage: TakeQuestionPage
-    bookmarks: Record<string, Question>
-    activeBookmark: string
-}
-
-const world = worldAs<TakeQuestionWorld>()
+const world = worldAs<QuizmasterWorld>()
 const activeQuestion = () => world.bookmarks[world.activeBookmark]
 
 Before(() => {

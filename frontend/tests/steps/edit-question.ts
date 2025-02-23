@@ -2,15 +2,9 @@ import { Before, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { CreateQuestionPage } from '../pages'
 import { worldAs } from './common'
-import type { Question } from './question'
+import type { QuizmasterWorld } from './world/world'
 
-interface EditQuestionWorld {
-    editQuestionPage: CreateQuestionPage
-    bookmarks: Record<string, Question>
-    activeBookmark: string
-}
-
-const world = worldAs<EditQuestionWorld>()
+const world = worldAs<QuizmasterWorld>()
 const openEditPage = async (bookmark: string) => world.editQuestionPage.goto(`${world.bookmarks[bookmark].url}/edit`)
 Before(() => {
     world.editQuestionPage = new CreateQuestionPage(world.page)

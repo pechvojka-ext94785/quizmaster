@@ -2,20 +2,12 @@ import { Before, type DataTable, Given, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { type TableOf, worldAs } from './common.ts'
-import type { Question } from './question.ts'
 import { CreateQuestionPage } from '../pages'
+import type { QuizmasterWorld } from './world/world.ts'
 
 type AnswerRaw = [string, '*' | '', string]
 
-interface CreateQuestionWorld {
-    createQuestionPage: CreateQuestionPage
-    questionWip: Question
-    nextAnswerIdx: number
-    bookmarks: Record<string, Question>
-    activeBookmark: string
-}
-
-const world = worldAs<CreateQuestionWorld>()
+const world = worldAs<QuizmasterWorld>()
 
 // if change this value, also change in frontend/src/pages/create-question/create-question.tsx
 const NUM_ANSWERS = 2
