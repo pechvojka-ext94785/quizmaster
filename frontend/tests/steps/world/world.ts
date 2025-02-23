@@ -1,10 +1,9 @@
-import type { IWorld } from '@cucumber/cucumber'
 import type { Browser, BrowserContext, Page } from '@playwright/test'
 
 import type { CreateQuestionPage, TakeQuestionPage } from '../../pages'
 import type { Question } from './question'
 
-export interface QuizmasterWorld extends IWorld {
+export interface QuizmasterWorld {
     browser: Browser
     context: BrowserContext
     page: Page
