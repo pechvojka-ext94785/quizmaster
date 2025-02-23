@@ -1,3 +1,3 @@
 {
-    "cucumberautocomplete.steps": ["frontend/tests/steps/**/*.ts"]
+    "cucumberautocomplete.steps": ["frontend/specs/steps/**/*.ts"]
 }
