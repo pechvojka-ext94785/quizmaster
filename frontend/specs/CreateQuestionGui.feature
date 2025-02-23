@@ -30,12 +30,10 @@ Feature: Create question GUI
     * I try saving the question
     Then I see an error message
 
-  @loosers
   Scenario: Cannot save a question with less than 2 answers
     When I start creating a question
     Then I see 2 answers
 
-  @loosers
   Scenario: Cannot save a question with 0 correct answers
     When I start creating a question
     * I try saving the question
@@ -45,13 +43,11 @@ Feature: Create question GUI
     Given I start creating a question
     Then Multiple choice is unchecked
 
-  @loosers
   Scenario: Cannot save an empty question
     Given I start creating a question
     When I try saving the question
     Then I see empty question
 
-  @loosers
   Scenario: Cannot save an empty answer
     Given I start creating a question
     When I enter question "What is XXX?"
@@ -59,7 +55,6 @@ Feature: Create question GUI
     * I try saving the question
     Then I see an error message
 
-  @loosers
   Scenario: All or none explanation
       Given I start creating a question
       When I enter question "What is XXX?"
