@@ -1,4 +1,4 @@
-import { After, Before, world } from '@cucumber/cucumber'
+import { After, Before } from '@cucumber/cucumber'
 import { type Browser, type BrowserContext, chromium, expect, type Locator, type Page } from '@playwright/test'
 import type { QuizmasterWorld } from './world/world'
 
@@ -10,8 +10,6 @@ export interface World {
     context: BrowserContext
     page: Page
 }
-
-export const worldAs = <T>(): T & World => world as unknown as T & World
 
 export type TableOf<T> = { raw: () => T[] }
 

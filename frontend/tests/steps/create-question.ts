@@ -1,156 +1,173 @@
 import { Before, type DataTable, Given, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
-import { type TableOf, worldAs } from './common.ts'
+import type { TableOf } from './common.ts'
 import { CreateQuestionPage } from '../pages'
 import type { QuizmasterWorld } from './world/world.ts'
 
 type AnswerRaw = [string, '*' | '', string]
 
-const world = worldAs<QuizmasterWorld>()
-
 // if change this value, also change in frontend/src/pages/create-question/create-question.tsx
 const NUM_ANSWERS = 2
 
-Before(() => {
-    world.createQuestionPage = new CreateQuestionPage(world.page)
-    world.nextAnswerIdx = 0
-    world.bookmarks = {}
+Before(function (this: QuizmasterWorld) {
+    this.createQuestionPage = new CreateQuestionPage(this.page)
+    this.nextAnswerIdx = 0
+    this.bookmarks = {}
 })
 
-const openCreatePage = async () => {
+const openCreatePage = async (world: QuizmasterWorld) => {
     world.createQuestionPage.goto('/question/new')
     world.questionWip = { url: '', question: '', answers: [], explanation: '' }
 }
 
-const enterQuestion = async (question: string) => {
+const enterQuestion = async (world: QuizmasterWorld, question: string) => {
     await world.createQuestionPage.enterQuestion(question)
     world.questionWip.question = question
 }
 
-const enterAnswer = async (index: number, answer: string, isCorrect: boolean, explanation: string) => {
+const enterAnswer = async (
+    world: QuizmasterWorld,
+    index: number,
+    answer: string,
+    isCorrect: boolean,
+    explanation: string,
+) => {
     await world.createQuestionPage.enterAnswer(index, answer, isCorrect, explanation)
     world.questionWip.answers[index] = { answer, isCorrect, explanation }
 }
 
-const saveQuestion = async (bookmark: string) => {
+const saveQuestion = async (world: QuizmasterWorld, bookmark: string) => {
     await world.createQuestionPage.submit()
     world.questionWip.url = (await world.createQuestionPage.questionUrl()) || ''
     world.bookmarks[bookmark] = world.questionWip
 }
 
-const addAnswer = async (i: number) => {
+const addAnswer = async (world: QuizmasterWorld, i: number) => {
     await world.createQuestionPage.clickAddAnswerButton(i)
 }
 
-Given('a question {string}', async (question: string) => {
-    await openCreatePage()
-    await enterQuestion(question)
+Given('a question {string}', async function (this: QuizmasterWorld, question: string) {
+    await openCreatePage(this)
+    await enterQuestion(this, question)
 })
 
-Given('with multi-choice selected', async () => {
-    await world.createQuestionPage.setMultipleChoice()
+Given('with multi-choice selected', async function (this: QuizmasterWorld) {
+    await this.createQuestionPage.setMultipleChoice()
 })
 
-Given('with answers:', async (answerRawTable: TableOf<AnswerRaw>) => {
+Given('with answers:', async function (this: QuizmasterWorld, answerRawTable: TableOf<AnswerRaw>) {
     const raw = answerRawTable.raw()
 
     const isMultipleChoice = raw.filter(([_, correct]) => correct === '*').length > 1
-    if (isMultipleChoice) await world.createQuestionPage.setMultipleChoice()
+    if (isMultipleChoice) await this.createQuestionPage.setMultipleChoice()
 
     for (let i = 0; i < raw.length; i++) {
-        if (i >= NUM_ANSWERS) await addAnswer(i)
+        if (i >= NUM_ANSWERS) await addAnswer(this, i)
         const [answer, correct, explanation] = raw[i]
         const isCorrect = correct === '*'
-        await enterAnswer(i, answer, isCorrect, explanation || '')
+        await enterAnswer(this, i, answer, isCorrect, explanation || '')
     }
 })
 
-Given('with explanation {string}', async (explanation: string) => {
-    await world.createQuestionPage.enterQuestionExplanation(explanation)
-    world.questionWip.explanation = explanation
+Given('with explanation {string}', async function (this: QuizmasterWorld, explanation: string) {
+    await this.createQuestionPage.enterQuestionExplanation(explanation)
+    this.questionWip.explanation = explanation
 })
 
-Given('saved and bookmarked as {string}', saveQuestion)
-
-Given('I start creating a question', openCreatePage)
-
-Given('which displays only incorrect answer explanations', async () => {
-    await world.createQuestionPage.setExplanationsAlways(false)
-})
-Given('which displays all answer explanations', async () => {
-    await world.createQuestionPage.setExplanationsAlways(true)
+Given('saved and bookmarked as {string}', async function (this: QuizmasterWorld, bookmark) {
+    await saveQuestion(this, bookmark)
 })
 
-When('I enter question {string}', enterQuestion)
+Given('I start creating a question', async function (this: QuizmasterWorld) {
+    await openCreatePage(this)
+})
 
-When(/^I add the answer "(.*)" marked as (correct|incorrect)$/, async (answer: string, correct: string) => {
-    await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', '')
+Given('which displays only incorrect answer explanations', async function (this: QuizmasterWorld) {
+    await this.createQuestionPage.setExplanationsAlways(false)
+})
+Given('which displays all answer explanations', async function (this: QuizmasterWorld) {
+    await this.createQuestionPage.setExplanationsAlways(true)
+})
+
+When('I enter question {string}', async function (this: QuizmasterWorld, question: string) {
+    await enterQuestion(this, question)
 })
 
 When(
-    /^I add the answer "(.*)" marked as (correct|incorrect) with an explanantion "(.*)"$/,
-    async (answer: string, correct: string, explanation: string) => {
-        await enterAnswer(world.nextAnswerIdx++, answer, correct === 'correct', explanation)
+    /^I add the answer "(.*)" marked as (correct|incorrect)$/,
+    async function (this: QuizmasterWorld, answer: string, correct: string) {
+        await enterAnswer(this, this.nextAnswerIdx++, answer, correct === 'correct', '')
     },
 )
 
-When('I add an additional answer field', async () => await addAnswer(world.nextAnswerIdx))
+When(
+    /^I add the answer "(.*)" marked as (correct|incorrect) with an explanantion "(.*)"$/,
+    async function (this: QuizmasterWorld, answer: string, correct: string, explanation: string) {
+        await enterAnswer(this, this.nextAnswerIdx++, answer, correct === 'correct', explanation)
+    },
+)
 
-When('I save the question', async () => await saveQuestion('manual'))
-
-When('I take the question', async () => {
-    await world.page.goto(world.questionWip.url)
-    world.activeBookmark = 'manual'
+When('I add an additional answer field', async function (this: QuizmasterWorld) {
+    await addAnswer(this, this.nextAnswerIdx)
 })
 
-When('I try saving the question', async () => {
-    await world.createQuestionPage.submit()
+When('I save the question', async function (this: QuizmasterWorld) {
+    await saveQuestion(this, 'manual')
 })
 
-Then('I see a link to take the question', async () => {
-    const url = await world.createQuestionPage.questionUrl()
+When('I take the question', async function (this: QuizmasterWorld) {
+    await this.page.goto(this.questionWip.url)
+    this.activeBookmark = 'manual'
+})
+
+When('I try saving the question', async function (this: QuizmasterWorld) {
+    await this.createQuestionPage.submit()
+})
+
+Then('I see a link to take the question', async function (this: QuizmasterWorld) {
+    const url = await this.createQuestionPage.questionUrl()
     expect(url).not.toBe('')
 })
 
-Then('I see an error message', async () => {
-    const errorMessage = await world.createQuestionPage.getErrorMessage()
+Then('I see an error message', async function (this: QuizmasterWorld) {
+    const errorMessage = await this.createQuestionPage.getErrorMessage()
     expect(errorMessage).not.toBe('')
 })
 
-Then('I see 2 answers', async () => {
-    await expect(world.createQuestionPage.answerTextLocator(0)).toBeVisible()
-    await expect(world.createQuestionPage.answerTextLocator(1)).toBeVisible()
+Then('I see 2 answers', async function (this: QuizmasterWorld) {
+    await expect(this.createQuestionPage.answerTextLocator(0)).toBeVisible()
+    await expect(this.createQuestionPage.answerTextLocator(1)).toBeVisible()
 })
 
-Then(/^Multiple choice is (checked|unchecked)$/, async (state: string) => {
+Then(/^Multiple choice is (checked|unchecked)$/, async function (this: QuizmasterWorld, state: string) {
     const expected = state === 'checked'
-    const isChecked = await world.createQuestionPage.multipleChoiceLocator().isChecked()
+    const isChecked = await this.createQuestionPage.multipleChoiceLocator().isChecked()
     expect(isChecked).toBe(expected)
 })
 
-Then('I see empty question', async () => {
-    await expect(world.createQuestionPage.questionLocator).not.toBe('')
+Then('I see empty question', async function (this: QuizmasterWorld) {
+    await expect(this.createQuestionPage.questionLocator).not.toBe('')
 })
 
-When('I click is-correct checkbox for {string}', async (answer: string) => {
-    await world.createQuestionPage.isCorrectCheckboxLocator(answer).click()
+When('I click is-correct checkbox for {string}', async function (this: QuizmasterWorld, answer: string) {
+    await this.createQuestionPage.isCorrectCheckboxLocator(answer).click()
 })
 
-Then(/^I see the answers$/, async (data: DataTable) => {
+Then(/^I see the answers$/, async function (this: QuizmasterWorld, data: DataTable) {
     for (const row of data.rows()) {
         const answer = row[0]
         const shouldBeChecked = row[1] === '*'
 
-        const checkbox = world.createQuestionPage.isCorrectCheckboxLocator(answer)
+        const checkbox = this.createQuestionPage.isCorrectCheckboxLocator(answer)
         const isChecked = await checkbox.isChecked()
 
         expect(isChecked, `Answer: ${answer} should be ${shouldBeChecked}`).toBe(shouldBeChecked)
     }
 })
 
-Then('Is correct checkboxes look like radio buttons', async () => {
-    const checkboxes = world.createQuestionPage.isCorrectCheckboxesLocator()
+Then('Is correct checkboxes look like radio buttons', async function (this: QuizmasterWorld) {
+    const checkboxes = this.createQuestionPage.isCorrectCheckboxesLocator()
     const elements = await checkboxes.all()
     for (const element of elements) {
         const className = await element.getAttribute('class')
@@ -158,10 +175,10 @@ Then('Is correct checkboxes look like radio buttons', async () => {
     }
 })
 
-When(/^I make the question (single|multi)-choice$/, async (type: string) => {
+When(/^I make the question (single|multi)-choice$/, async function (this: QuizmasterWorld, type: string) {
     if (type === 'single') {
-        await world.createQuestionPage.setSingleChoice()
+        await this.createQuestionPage.setSingleChoice()
     } else {
-        await world.createQuestionPage.setMultipleChoice()
+        await this.createQuestionPage.setMultipleChoice()
     }
 })

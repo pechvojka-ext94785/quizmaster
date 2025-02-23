@@ -1,25 +1,23 @@
 import { Before, type DataTable, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
-import { expectTextToBe, expectTextToContain, worldAs } from './common.ts'
+import { expectTextToBe, expectTextToContain } from './common.ts'
 import { TakeQuestionPage } from '../pages'
 import { activeQuestion, type QuizmasterWorld } from './world/world.ts'
 
-const world = worldAs<QuizmasterWorld>()
-
-Before(() => {
-    world.takeQuestionPage = new TakeQuestionPage(world.page)
+Before(function (this: QuizmasterWorld) {
+    this.takeQuestionPage = new TakeQuestionPage(this.page)
 })
 
-When('I take question {string}', async (bookmark: string) => {
-    await world.page.goto(world.bookmarks[bookmark].url)
-    world.activeBookmark = bookmark
+When('I take question {string}', async function (this: QuizmasterWorld, bookmark: string) {
+    await this.page.goto(this.bookmarks[bookmark].url)
+    this.activeBookmark = bookmark
 })
 
-Then('I see the question and the answers', async () => {
-    await expectTextToBe(world.takeQuestionPage.questionLocator(), activeQuestion(world).question)
-    const answers = activeQuestion(world).answers
-    const answerLocators = world.takeQuestionPage.answersLocator()
+Then('I see the question and the answers', async function (this: QuizmasterWorld) {
+    await expectTextToBe(this.takeQuestionPage.questionLocator(), activeQuestion(this).question)
+    const answers = activeQuestion(this).answers
+    const answerLocators = this.takeQuestionPage.answersLocator()
 
     expect(await answerLocators.count()).toBe(answers.length)
 
@@ -29,35 +27,35 @@ Then('I see the question and the answers', async () => {
     }
 })
 
-When('I answer {string}', async (answerList: string) => {
+When('I answer {string}', async function (this: QuizmasterWorld, answerList: string) {
     const answers = answerList.split(',').map(answer => answer.trim())
     for (const answer of answers) {
-        await world.takeQuestionPage.selectAnswer(answer)
+        await this.takeQuestionPage.selectAnswer(answer)
     }
-    await world.takeQuestionPage.submit()
+    await this.takeQuestionPage.submit()
 })
 
-Then('I see feedback {string}', async feedback => {
-    await expectTextToBe(world.takeQuestionPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
+Then('I see feedback {string}', async function (this: QuizmasterWorld, feedback) {
+    await expectTextToBe(this.takeQuestionPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
 })
 
-Then('I see the answer explanation {string}', async answerExplanation => {
-    await expectTextToBe(world.takeQuestionPage.answerExplanationLocator(), answerExplanation)
+Then('I see the answer explanation {string}', async function (this: QuizmasterWorld, answerExplanation) {
+    await expectTextToBe(this.takeQuestionPage.answerExplanationLocator(), answerExplanation)
 })
 
-Then('I see the question explanation', async () => {
-    await expectTextToBe(world.takeQuestionPage.questionExplanationLocator(), activeQuestion(world).explanation)
+Then('I see the question explanation', async function (this: QuizmasterWorld) {
+    await expectTextToBe(this.takeQuestionPage.questionExplanationLocator(), activeQuestion(this).explanation)
 })
 
-Then(/^I see the answer explanations for answers$/, async (data: DataTable) => {
+Then(/^I see the answer explanations for answers$/, async function (this: QuizmasterWorld, data: DataTable) {
     for (const row of data.rows()) {
         const [answer, expectedExplanation] = row
-        const answerExplanationLocator = world.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
+        const answerExplanationLocator = this.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
 
         await expectTextToBe(answerExplanationLocator, expectedExplanation)
     }
 })
 
-Then('I see the {string} question for the quiz', async (questionName: string) => {
-    await expectTextToContain(world.takeQuestionPage.questionLocator(), questionName)
+Then('I see the {string} question for the quiz', async function (this: QuizmasterWorld, questionName: string) {
+    await expectTextToContain(this.takeQuestionPage.questionLocator(), questionName)
 })
