@@ -10,7 +10,7 @@ export interface QuizmasterWorld extends IWorld {
     page: Page
 
     createQuestionPage: CreateQuestionPage
-    quizTakingPage: TakeQuestionPage
+    takeQuestionPage: TakeQuestionPage
 
     questionWip: Question
     nextAnswerIdx: number

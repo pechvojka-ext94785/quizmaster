@@ -17,7 +17,7 @@ Then('I should see heading "Quiz"', async function (this: World) {
 
 Then('I see the first question', async () => {
     const firstQuestion = world.bookmarks.Sky
-    await expectTextToBe(world.quizTakingPage.questionLocator(), firstQuestion.question)
+    await expectTextToBe(world.takeQuestionPage.questionLocator(), firstQuestion.question)
 })
 
 Then('I should see the next button', async () => {
@@ -34,5 +34,5 @@ When('I click the next button', async () => {
 })
 Then('I should see the next question', async () => {
     const secondQuestion = world.bookmarks.France
-    await expectTextToBe(world.quizTakingPage.questionLocator(), secondQuestion.question)
+    await expectTextToBe(world.takeQuestionPage.questionLocator(), secondQuestion.question)
 })

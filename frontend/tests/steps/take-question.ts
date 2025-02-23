@@ -9,7 +9,7 @@ const world = worldAs<QuizmasterWorld>()
 const activeQuestion = () => world.bookmarks[world.activeBookmark]
 
 Before(() => {
-    world.quizTakingPage = new TakeQuestionPage(world.page)
+    world.takeQuestionPage = new TakeQuestionPage(world.page)
 })
 
 When('I take question {string}', async (bookmark: string) => {
@@ -18,9 +18,9 @@ When('I take question {string}', async (bookmark: string) => {
 })
 
 Then('I see the question and the answers', async () => {
-    await expectTextToBe(world.quizTakingPage.questionLocator(), activeQuestion().question)
+    await expectTextToBe(world.takeQuestionPage.questionLocator(), activeQuestion().question)
     const answers = activeQuestion().answers
-    const answerLocators = world.quizTakingPage.answersLocator()
+    const answerLocators = world.takeQuestionPage.answersLocator()
 
     expect(await answerLocators.count()).toBe(answers.length)
 
@@ -33,33 +33,33 @@ Then('I see the question and the answers', async () => {
 When('I answer {string}', async (answerList: string) => {
     const answers = answerList.split(',').map(answer => answer.trim())
     for (const answer of answers) {
-        await world.quizTakingPage.selectAnswer(answer)
+        await world.takeQuestionPage.selectAnswer(answer)
     }
-    await world.quizTakingPage.submit()
+    await world.takeQuestionPage.submit()
 })
 
 Then('I see feedback {string}', async feedback => {
-    await expectTextToBe(world.quizTakingPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
+    await expectTextToBe(world.takeQuestionPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
 })
 
 Then('I see the answer explanation {string}', async answerExplanation => {
-    await expectTextToBe(world.quizTakingPage.answerExplanationLocator(), answerExplanation)
+    await expectTextToBe(world.takeQuestionPage.answerExplanationLocator(), answerExplanation)
 })
 
 Then('I see the question explanation', async () => {
-    await expectTextToBe(world.quizTakingPage.questionExplanationLocator(), activeQuestion().explanation)
+    await expectTextToBe(world.takeQuestionPage.questionExplanationLocator(), activeQuestion().explanation)
 })
 
 Then(/^I see the answer explanations for answers$/, async (data: DataTable) => {
     for (const row of data.rows()) {
-        if (row[1]) await expectTextToBe(world.quizTakingPage.answerExplanationLocatorForAnswer(row[0]), row[1])
+        if (row[1]) await expectTextToBe(world.takeQuestionPage.answerExplanationLocatorForAnswer(row[0]), row[1])
         else {
             // console.log(`${row[0]} should not be there`)
-            await expectThatIsNotVisible(world.quizTakingPage.answerExplanationLocatorForAnswer(row[0]))
+            await expectThatIsNotVisible(world.takeQuestionPage.answerExplanationLocatorForAnswer(row[0]))
         }
     }
 })
 
 Then('I see the {string} question for the quiz', async (questionName: string) => {
-    await expectTextToContain(world.quizTakingPage.questionLocator(), questionName)
+    await expectTextToContain(world.takeQuestionPage.questionLocator(), questionName)
 })
