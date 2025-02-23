@@ -12,6 +12,7 @@
         "format": "biome format --write",
         "lint": "biome lint",
         "lint:fix": "biome lint --fix",
+        "style": "pnpm run lint:fix && pnpm run format",
         "preview": "vite preview",
         "test:e2e": "wait-on tcp:8080 && cucumber-js --tags \"not @ignore\"",
         "test:e2e:focus": "wait-on tcp:5173 && cross-env FE_PORT=5173 cucumber-js --tags \"@focus\"",
