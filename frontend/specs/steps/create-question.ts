@@ -1,4 +1,4 @@
-import { type DataTable } from '@cucumber/cucumber'
+import type { DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import type { TableOf } from './common.ts'
@@ -88,12 +88,9 @@ When('I enter question {string}', async function (question: string) {
     await enterQuestion(this, question)
 })
 
-When(
-    /^I add the answer "(.*)" marked as (correct|incorrect)$/,
-    async function (answer: string, correct: string) {
-        await enterAnswer(this, this.nextAnswerIdx++, answer, correct === 'correct', '')
-    },
-)
+When(/^I add the answer "(.*)" marked as (correct|incorrect)$/, async function (answer: string, correct: string) {
+    await enterAnswer(this, this.nextAnswerIdx++, answer, correct === 'correct', '')
+})
 
 When(
     /^I add the answer "(.*)" marked as (correct|incorrect) with an explanantion "(.*)"$/,

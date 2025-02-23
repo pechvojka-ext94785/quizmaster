@@ -18,9 +18,11 @@ export class QuizmasterWorld {
     readonly quizPage: QuizPage
 
     questionWip: Question = { url: '', question: '', answers: [], explanation: '' }
-    nextAnswerIdx: number = 0
+    nextAnswerIdx = 0
     bookmarks: Record<string, Question> = {}
-    activeBookmark: string = ''
+    activeBookmark = ''
 
-    get activeQuestion() { return this.bookmarks[this.activeBookmark] }
+    get activeQuestion() {
+        return this.bookmarks[this.activeBookmark]
+    }
 }

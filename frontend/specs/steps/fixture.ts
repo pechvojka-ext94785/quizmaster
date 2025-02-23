@@ -3,9 +3,9 @@ import { QuizmasterWorld } from './world/world.ts'
 
 export const test = base.extend<{ world: QuizmasterWorld }>({
     world: async ({ page }, use, testInfo) => {
-        const world = new QuizmasterWorld(page, testInfo);
-        await use(world);
-    }
+        const world = new QuizmasterWorld(page, testInfo)
+        await use(world)
+    },
 })
 
 export const { Given, When, Then } = createBdd(test, { worldFixture: 'world' })

@@ -1,4 +1,4 @@
-import { type DataTable } from '@cucumber/cucumber'
+import type { DataTable } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 import { expectTextToBe, expectTextToContain } from './common.ts'
