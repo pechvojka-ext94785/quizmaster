@@ -1,4 +1,4 @@
 default:
     requireModule: ['esbuild-register']
     require: ['playwright.config.ts', 'specs/steps/**/*.ts']
-    paths: ['../specs/**/*.feature']
+    paths: ['specs/**/*.feature']
