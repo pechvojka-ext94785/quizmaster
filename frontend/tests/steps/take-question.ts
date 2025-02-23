@@ -1,7 +1,7 @@
 import { Before, type DataTable, Then, When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
-import { expectTextToBe, expectTextToContain, expectThatIsNotVisible, worldAs } from './common.ts'
+import { expectTextToBe, expectTextToContain, worldAs } from './common.ts'
 import { TakeQuestionPage } from '../pages'
 import type { QuizmasterWorld } from './world/world.ts'
 
@@ -52,11 +52,10 @@ Then('I see the question explanation', async () => {
 
 Then(/^I see the answer explanations for answers$/, async (data: DataTable) => {
     for (const row of data.rows()) {
-        if (row[1]) await expectTextToBe(world.takeQuestionPage.answerExplanationLocatorForAnswer(row[0]), row[1])
-        else {
-            // console.log(`${row[0]} should not be there`)
-            await expectThatIsNotVisible(world.takeQuestionPage.answerExplanationLocatorForAnswer(row[0]))
-        }
+        const [answer, expectedExplanation] = row
+        const answerExplanationLocator = world.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
+
+        await expectTextToBe(answerExplanationLocator, expectedExplanation)
     }
 })
 
