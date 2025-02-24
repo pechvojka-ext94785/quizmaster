@@ -7,14 +7,14 @@ When('I start editing question {string}', async function (bookmark: string) {
 })
 
 Then('I see the question, answers and explanations', async function () {
-    await this.page.waitForSelector('#is-loaded[value="loaded"]', { state: 'hidden' })
+    await this.createQuestionPage.waitForLoaded()
 
-    const question = await this.createQuestionPage.questionLocator().inputValue()
+    const question = await this.createQuestionPage.questionValue()
     expect(question).toBe(this.activeQuestion.question)
 })
 
 When('I change question to {string}', async function (newQuestion: string) {
-    await this.createQuestionPage.questionLocator().fill(newQuestion)
+    await this.createQuestionPage.enterQuestion(newQuestion)
 })
 
 When('I save it', async function () {
@@ -22,6 +22,6 @@ When('I save it', async function () {
 })
 
 Then('I see unchanged url', async function () {
-    const link = await this.createQuestionPage.questionUrlLocator().textContent()
+    const link = await this.createQuestionPage.questionUrl()
     expect(link).toBe(this.activeQuestion.url)
 })

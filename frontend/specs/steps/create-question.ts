@@ -38,7 +38,7 @@ const saveQuestion = async (world: QuizmasterWorld, bookmark: string) => {
 }
 
 const addAnswer = async (world: QuizmasterWorld, i: number) => {
-    await world.createQuestionPage.clickAddAnswerButton(i)
+    await world.createQuestionPage.addAnswer(i)
 }
 
 Given('a question {string}', async function (question: string) {
@@ -126,12 +126,12 @@ Then('I see 2 answers', async function () {
 
 Then(/^Multiple choice is (checked|unchecked)$/, async function (state: string) {
     const expected = state === 'checked'
-    const isChecked = await this.createQuestionPage.multipleChoiceLocator().isChecked()
+    const isChecked = await this.createQuestionPage.isMultipleChoice()
     expect(isChecked).toBe(expected)
 })
 
 Then('I see empty question', async function () {
-    await expect(this.createQuestionPage.questionLocator).not.toBe('')
+    expect(await this.createQuestionPage.questionValue()).toBe('')
 })
 
 When('I click is-correct checkbox for {string}', async function (answer: string) {

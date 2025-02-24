@@ -6,20 +6,21 @@ export class CreateQuestionPage {
     gotoNew = () => this.page.goto('/question/new')
     gotoEdit = (url: string) => this.page.goto(`${url}/edit`)
 
-    questionLocator = () => this.page.locator('#question-text')
+    waitForLoaded = () => this.page.waitForSelector('#is-loaded[value="loaded"]', { state: 'hidden' })
 
+    private questionLocator = () => this.page.locator('#question-text')
     enterQuestion = (question: string) => this.questionLocator().fill(question)
+    questionValue = () => this.questionLocator().inputValue()
 
-    multipleChoiceLocator = () => this.page.locator('#is-multiple-choice')
+    private multipleChoiceLocator = () => this.page.locator('#is-multiple-choice')
+    isMultipleChoice = () => this.multipleChoiceLocator().isChecked()
+    setMultipleChoice = () => this.multipleChoiceLocator().check()
+    setSingleChoice = () => this.multipleChoiceLocator().uncheck()
 
     isCorrectCheckboxLocator = (answerText: string) =>
         this.page.locator(`[id^=answer-text-][value="${answerText}"]+[id^=answer-checkbox-]`)
 
     isCorrectCheckboxesLocator = () => this.page.locator('[id^=answer-checkbox-]')
-
-    setMultipleChoice = () => this.multipleChoiceLocator().check()
-
-    setSingleChoice = () => this.multipleChoiceLocator().uncheck()
 
     answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
 
@@ -31,19 +32,17 @@ export class CreateQuestionPage {
         if (correct) await this.page.check(`#answer-checkbox-${index}`)
     }
 
-    questionExplanationLocator = () => this.page.locator('#question-explanation')
-
+    private questionExplanationLocator = () => this.page.locator('#question-explanation')
     enterQuestionExplanation = (question: string) => this.questionExplanationLocator().fill(question)
 
-    clickAddAnswerButton = async (idx: number) => {
+    addAnswer = async (idx: number) => {
         await this.page.locator('button#add-answer').click()
         await this.page.waitForSelector(`#answer-text-${idx}`)
     }
 
     submit = () => this.page.locator('button[type="submit"]').click()
 
-    questionUrlLocator = () => this.page.locator('#question-link')
-
+    private questionUrlLocator = () => this.page.locator('#question-link')
     questionUrl = () => this.questionUrlLocator().textContent()
 
     errorMessage = () => this.page.textContent('#error-message')
