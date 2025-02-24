@@ -1,12 +1,8 @@
 import { expect } from '@playwright/test'
 import { Then, When } from './fixture.ts'
-import type { QuizmasterWorld } from './world/world'
-
-const openEditPage = async (world: QuizmasterWorld, bookmark: string) =>
-    world.createQuestionPage.goto(`${world.bookmarks[bookmark].url}/edit`)
 
 When('I start editing question {string}', async function (bookmark: string) {
-    await openEditPage(this, bookmark)
+    this.createQuestionPage.gotoEdit(this.bookmarks[bookmark].url)
     this.activeBookmark = bookmark
 })
 

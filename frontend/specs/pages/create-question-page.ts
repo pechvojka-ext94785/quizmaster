@@ -3,7 +3,8 @@ import type { Page } from '@playwright/test'
 export class CreateQuestionPage {
     constructor(private page: Page) {}
 
-    goto = (url: string) => this.page.goto(url)
+    gotoNew = () => this.page.goto('/question/new')
+    gotoEdit = (url: string) => this.page.goto(`${url}/edit`)
 
     questionLocator = () => this.page.locator('#question-text')
 

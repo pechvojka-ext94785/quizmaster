@@ -11,7 +11,7 @@ type AnswerRaw = [string, '*' | '', string]
 const NUM_ANSWERS = 2
 
 const openCreatePage = async (world: QuizmasterWorld) => {
-    world.createQuestionPage.goto('/question/new')
+    world.createQuestionPage.gotoNew()
     world.questionWip = { url: '', question: '', answers: [], explanation: '' }
 }
 
