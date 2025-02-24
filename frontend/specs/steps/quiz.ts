@@ -16,15 +16,15 @@ Then('I see the first question', async function () {
 })
 
 Then('I should see the next button', async function () {
-    await expect(this.quizPage.next_question_btn()).toBeVisible()
+    await expect(this.quizPage.nextQuestionButtonLocator()).toBeVisible()
 })
 
 Then('I should not see the next button', async function () {
-    await expect(this.quizPage.next_question_btn()).not.toBeVisible()
+    await expect(this.quizPage.nextQuestionButtonLocator()).not.toBeVisible()
 })
 
 When('I click the next button', async function () {
-    await this.quizPage.submit()
+    await this.quizPage.next()
 })
 Then('I should see the next question', async function () {
     const secondQuestion = this.bookmarks.France
