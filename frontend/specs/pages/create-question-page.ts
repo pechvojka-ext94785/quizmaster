@@ -20,16 +20,6 @@ export class CreateQuestionPage {
 
     setSingleChoice = () => this.multipleChoiceLocator().uncheck()
 
-    async setExplanationsAlways(always: boolean) {
-        const checkbox = await this.page.$('#show-explanations-always')
-        if (checkbox) {
-            const isChecked = await checkbox.isChecked()
-            if (isChecked !== always) {
-                await checkbox.click()
-            }
-        }
-    }
-
     answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
 
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
@@ -55,18 +45,5 @@ export class CreateQuestionPage {
 
     questionUrl = () => this.questionUrlLocator().textContent()
 
-    async getErrorMessage(): Promise<string> {
-        const errorMessage = await this.page.textContent('#error-message')
-        return errorMessage ?? ''
-    }
-
-    async getOKStr(): Promise<string> {
-        const errorMessage = await this.page.textContent('#ok-str')
-        return errorMessage ?? ''
-    }
-
-    async getEmptyQuestionErrorMessage(): Promise<string> {
-        const errorMessage = await this.page.textContent('#nok-emptyquestion')
-        return errorMessage ?? ''
-    }
+    errorMessage = () => this.page.textContent('#error-message')
 }

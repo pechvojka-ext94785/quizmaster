@@ -77,13 +77,6 @@ Given('I start creating a question', async function () {
     await openCreatePage(this)
 })
 
-Given('which displays only incorrect answer explanations', async function () {
-    await this.createQuestionPage.setExplanationsAlways(false)
-})
-Given('which displays all answer explanations', async function () {
-    await this.createQuestionPage.setExplanationsAlways(true)
-})
-
 When('I enter question {string}', async function (question: string) {
     await enterQuestion(this, question)
 })
@@ -122,7 +115,7 @@ Then('I see a link to take the question', async function () {
 })
 
 Then('I see an error message', async function () {
-    const errorMessage = await this.createQuestionPage.getErrorMessage()
+    const errorMessage = await this.createQuestionPage.errorMessage()
     expect(errorMessage).not.toBe('')
 })
 

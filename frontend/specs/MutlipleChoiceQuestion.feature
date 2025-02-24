@@ -7,8 +7,6 @@ Feature: Answering a quiz question with multiple choice
       | France  | * | You wish!        |
       | Morocco |   | Almost :D        |
       | Spain   | * | Manana!          |
-    * which displays only incorrect answer explanations
-    * which displays all answer explanations
     * with explanation "Italy, France, and Spain are in Europe. Morocco is in Africa."
     * saved and bookmarked as "Europe"
 
