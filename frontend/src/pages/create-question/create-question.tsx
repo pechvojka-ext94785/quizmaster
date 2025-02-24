@@ -28,7 +28,7 @@ export function CreateQuestionForm() {
 
     useEffect(() => {
         if (questionData.question) {
-            setIsLoaded(true)
+            setInterval(() => setIsLoaded(true), 100)
         }
     }, [questionData])
 
