@@ -17,6 +17,6 @@ export const AnswerFeedback = (props: AnswerFeedbackProps) => (
             <Correctness isCorrect={props.correct} />
         )}
         &nbsp;
-        {!props.correct && <Explanation text={props.explanation} />}
+        {<Explanation text={props.explanation} />}
     </span>
 )

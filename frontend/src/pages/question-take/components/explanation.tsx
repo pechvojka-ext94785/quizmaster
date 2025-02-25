@@ -5,8 +5,8 @@ interface ExplanationProps {
 export const Explanation = (props: ExplanationProps) => (
     <>
         <br />
-        Explanation: <span>{props.text}</span>
+        Explanation: <span className="explanation">{props.text}</span>
     </>
 )
 
-export const QuestionExplanation = (props: ExplanationProps) => <p>{props.text}</p>
+export const QuestionExplanation = (props: ExplanationProps) => <p className="question-explanation">{props.text}</p>

@@ -3,6 +3,7 @@ import { expect } from '@playwright/test'
 
 import { expectTextToBe, expectTextToContain } from './common.ts'
 import { Then, When } from './fixture.ts'
+import { skip } from 'node:test'
 
 When('I take question {string}', async function (bookmark: string) {
     await this.page.goto(this.bookmarks[bookmark].url)
