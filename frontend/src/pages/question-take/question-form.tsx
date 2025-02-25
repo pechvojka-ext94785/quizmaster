@@ -29,7 +29,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
             <ul>
                 {props.question.answers.map((answer, idx) => (
                     <Answer
-                        key={idx}
+                        key={answer}
                         isMultipleChoice={state.isMultipleChoice}
                         idx={idx}
                         answer={answer}

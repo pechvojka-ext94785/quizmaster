@@ -41,6 +41,6 @@ Then('I should not see the evaluate button', async function () {
 
 Then('I click the evaluate button', async function () {
     await this.quizPage.evaluationButtonLocator().click()
-    const redirectedURL =  this.page.url();
+    const redirectedURL = this.page.url()
     expect(redirectedURL).toContain('/evaluation')
 })
