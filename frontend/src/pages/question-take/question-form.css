@@ -9,8 +9,13 @@ ul {
 }
 
 .feedback {
-    &.correct { color: green }
-    &.incorrect { color: red }
+    &.correct {
+        color: green
+    }
+
+    &.incorrect {
+        color: red
+    }
 }
 
 .btn-row {

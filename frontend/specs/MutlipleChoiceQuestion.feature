@@ -18,20 +18,20 @@ Feature: Answering a quiz question with multiple choice
     When I take question "Europe"
     And I answer "<answer>"
     Then I see individual feedback:
-      | answer   | evaluation | feedback                             |
-      | Italy    | <italy>    | <italy_feedback>                    |
-      | France   | <france>   | <france_feedback>                   |
-      | Morocco  | <morocco>  | <morocco_feedback>                  |
-      | Spain    | <spain>    | <spain_feedback>                    |
+      | answer  | evaluation | feedback           |
+      | Italy   | <italy>    | <italy_feedback>   |
+      | France  | <france>   | <france_feedback>  |
+      | Morocco | <morocco>  | <morocco_feedback> |
+      | Spain   | <spain>    | <spain_feedback>   |
     And I see the question explanation
 
-  Examples:
-    | answer                        | italy  | italy_feedback       | france | france_feedback | morocco | morocco_feedback | spain | spain_feedback |
-    | Italy                         | ✅     | Correct!             | ❌      | You missed it!  | ✅        | Correct!   | ❌     | You missed it!  |
-    | Italy, France                 | ✅     | Correct!             | ✅      | Correct!        | ✅       | Correct!   | ❌     | You missed it!  |
-    | Italy, France, Morocco        | ✅     | Correct!             | ✅      | Correct!        | ❌      | Incorrect!       | ❌     | You missed it!  |
-    | Italy, France, Spain          | ✅     | Correct!             | ✅      | Correct!        | ✅       | Correct!         | ✅     | Correct!        |
-    | Italy, France, Morocco, Spain | ✅     | Correct!             | ✅      | Correct!        | ❌      | Incorrect!       | ✅     | Correct!        |
+    Examples:
+      | answer                        | italy | italy_feedback | france | france_feedback | morocco | morocco_feedback | spain | spain_feedback |
+      | Italy                         | ✅     | Correct!       | ❌      | You missed it!  | ✅       | Correct!         | ❌     | You missed it! |
+      | Italy, France                 | ✅     | Correct!       | ✅      | Correct!        | ✅       | Correct!         | ❌     | You missed it! |
+      | Italy, France, Morocco        | ✅     | Correct!       | ✅      | Correct!        | ❌       | Incorrect!       | ❌     | You missed it! |
+      | Italy, France, Spain          | ✅     | Correct!       | ✅      | Correct!        | ✅       | Correct!         | ✅     | Correct!       |
+      | Italy, France, Morocco, Spain | ✅     | Correct!       | ✅      | Correct!        | ❌       | Incorrect!       | ✅     | Correct!       |
 
   Scenario: Explanations for all answers are displayed after answering the question
     When I take question "Europe"
