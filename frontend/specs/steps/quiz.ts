@@ -33,8 +33,8 @@ Then('I should see the next question', async function () {
 
 Then('I should see the evaluate button', async function () {
     await expect(this.takeQuestionPage.evaluateButtonLocator()).toBeVisible()
-});
+})
 
 Then('I should not see the evaluate button', async function () {
     await expect(this.takeQuestionPage.evaluateButtonLocator()).not.toBeVisible()
-});
+})
