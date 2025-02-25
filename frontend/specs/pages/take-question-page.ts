@@ -26,5 +26,5 @@ export class TakeQuestionPage {
 
     questionExplanationLocator = () => this.page.locator('p.question-explanation')
 
-    evaluateButtonLocator = () => this.page.locator("#evaluate-button")
+    evaluateButtonLocator = () => this.page.locator('#evaluate-button')
 }
