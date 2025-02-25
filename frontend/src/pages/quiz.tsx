@@ -45,6 +45,7 @@ export const Quiz = () => {
     const nextQuestionHandler = () => {
         console.log('Next question')
         setCurrentQuestionIndex(currentQuestionIndex+1)
+        setSubmitted(false)
     }
 
     const onSubmitted = () => {
@@ -55,8 +56,8 @@ export const Quiz = () => {
         <div>
             <h2>Quiz</h2>
             <QuestionForm question={quiz[currentQuestionIndex]} onSubmitted={onSubmitted} />
-            {submitted && <NextQuestionButton onClick={nextQuestionHandler} />}
-            {isLastQuestion && <button type="button" id="evaluate-button">Evaluate</button>}
+            {submitted && !isLastQuestion && <NextQuestionButton onClick={nextQuestionHandler} />}
+            {isLastQuestion && submitted && <button type="button" id="evaluate-button">Evaluate</button>}
         </div>
     )
 }
