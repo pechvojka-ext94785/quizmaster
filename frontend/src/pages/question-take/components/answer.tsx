@@ -29,7 +29,14 @@ export const Answer = (props: AnswerProps) => {
             <input type={checkType} name={checkName} id={answerId} value={props.answer} onChange={onChange} />
             <label htmlFor={answerId}>
                 {props.answer}
-                {props.showFeedback && <AnswerFeedback correct={props.isCorrect} explanation={props.explanation} isChecked={isChecked} isMultipleChoice={props.isMultipleChoice} />}
+                {props.showFeedback && (
+                    <AnswerFeedback
+                        correct={props.isCorrect}
+                        explanation={props.explanation}
+                        isChecked={isChecked}
+                        isMultipleChoice={props.isMultipleChoice}
+                    />
+                )}
             </label>
             <br />
             <br />

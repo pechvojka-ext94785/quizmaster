@@ -11,7 +11,11 @@ interface AnswerFeedbackProps {
 export const AnswerFeedback = (props: AnswerFeedbackProps) => (
     <span>
         &nbsp;
-        {props.isMultipleChoice ? <AnswerCorrectness isCorrect={props.correct} isChecked={props.isChecked} /> : <Correctness isCorrect={props.correct} />}
+        {props.isMultipleChoice ? (
+            <AnswerCorrectness isCorrect={props.correct} isChecked={props.isChecked} />
+        ) : (
+            <Correctness isCorrect={props.correct} />
+        )}
         &nbsp;
         {!props.correct && <Explanation text={props.explanation} />}
     </span>
