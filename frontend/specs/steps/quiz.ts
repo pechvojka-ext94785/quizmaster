@@ -30,3 +30,7 @@ Then('I should see the next question', async function () {
     const secondQuestion = this.bookmarks.France
     await expectTextToBe(this.takeQuestionPage.questionLocator(), secondQuestion.question)
 })
+
+Then('I should see evaluate button', async function () {
+    await expect(this.takeQuestionPage.evaluateButtonLocator()).toBeVisible()
+});

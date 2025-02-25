@@ -16,32 +16,36 @@ export const NextQuestionButton = (props: NextQuestionButtonProps) => {
     )
 }
 
+const quizQuestion1: QuizQuestion = {
+    id: 1,
+    question: 'What is the standard colour of sky?',
+    answers: ['Red', 'Blue', 'Green', 'Black'],
+    explanations: [],
+    questionExplanation: '',
+    correctAnswers: [1],
+}
+const quizQuestion2: QuizQuestion = {
+    id: 2,
+    question: 'What is capital of France?',
+    answers: ['Marseille', 'Lyon', 'Paris', 'Toulouse'],
+    explanations: [],
+    questionExplanation: '',
+    correctAnswers: [2],
+}
+
+const quiz = [quizQuestion1, quizQuestion2]
+
+
 export const Quiz = () => {
-    const nextQusetionHandler = () => {
-        console.log('Next question')
-        setQuiz(quiz[1])
-    }
-    const quizQuestion1: QuizQuestion = {
-        id: 1,
-        question: 'What is the standard colour of sky?',
-        answers: ['Red', 'Blue', 'Green', 'Black'],
-        explanations: [],
-        questionExplanation: '',
-        correctAnswers: [1],
-    }
-    const quizQuestion2: QuizQuestion = {
-        id: 2,
-        question: 'What is capital of France?',
-        answers: ['Marseille', 'Lyon', 'Paris', 'Toulouse'],
-        explanations: [],
-        questionExplanation: '',
-        correctAnswers: [2],
-    }
-    const quiz = [quizQuestion1, quizQuestion2]
 
-    const [quizQuestion, setQuiz] = useState(quiz[0])
-
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
     const [submitted, setSubmitted] = useState(false)
+    const isLastQuestion = currentQuestionIndex === quiz.length -1
+
+    const nextQuestionHandler = () => {
+        console.log('Next question')
+        setCurrentQuestionIndex(currentQuestionIndex+1)
+    }
 
     const onSubmitted = () => {
         setSubmitted(true)
@@ -50,8 +54,9 @@ export const Quiz = () => {
     return (
         <div>
             <h2>Quiz</h2>
-            <QuestionForm question={quizQuestion} onSubmitted={onSubmitted} />
-            {submitted && <NextQuestionButton onClick={nextQusetionHandler} />}
+            <QuestionForm question={quiz[currentQuestionIndex]} onSubmitted={onSubmitted} />
+            {submitted && <NextQuestionButton onClick={nextQuestionHandler} />}
+            {isLastQuestion && <button type="button" id="evaluate-button">Evaluate</button>}
         </div>
     )
 }

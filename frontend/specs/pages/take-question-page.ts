@@ -25,4 +25,6 @@ export class TakeQuestionPage {
     answerExplanationLocator = () => this.page.locator('span.explanation')
 
     questionExplanationLocator = () => this.page.locator('p.question-explanation')
+
+    evaluateButtonLocator = () => this.page.locator("#evaluate-button")
 }

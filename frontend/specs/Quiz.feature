@@ -36,11 +36,10 @@ Feature: Take a quiz
     And I click the next button
     Then I should see the next question
 
-@skip
-  Scenario: User can go back to previous question
+  Scenario: User proceed to last question
     Given I visit the quiz page
     When I answer "Green"
     And I click the next button
     Then I should see the next question
-    When I answer "Paris"
+    When I answer "Lyon"
     Then I should see evaluate button
