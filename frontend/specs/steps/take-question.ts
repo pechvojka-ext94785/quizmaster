@@ -43,7 +43,6 @@ Then('I see the question explanation', async function () {
 })
 
 Then(/^I see the answer explanations for answers$/, async function (data: DataTable) {
-  // Očekáváme tabulku se dvěma sloupci: answer a explanation.
   for (const row of data.rows()) {
     const [answer, expectedExplanation] = row
     const answerExplanationLocator = this.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
@@ -56,12 +55,10 @@ Then('I see the {string} question for the quiz', async function (questionName: s
 })
 
 Then('I see individual feedback:', async function (dataTable: DataTable) {
-  // Očekáváme tabulku se třemi sloupci: answer, evaluation a feedback.
   const rows = dataTable.hashes()
 
   for (const row of rows) {
     const { answer, evaluation, feedback } = row
-    // Předpokládáme, že každý řádek má data-test-id ve formátu: `answer-row-${answer}`
     const answerRow = this.page.locator(`[data-test-id="answer-row-${answer}"]`)
     await expect(answerRow).toContainText(evaluation)
     await expect(answerRow).toContainText(feedback)
