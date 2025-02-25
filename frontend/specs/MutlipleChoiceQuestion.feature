@@ -10,21 +10,28 @@ Feature: Answering a quiz question with multiple choice
     * with explanation "Italy, France, and Spain are in Europe. Morocco is in Africa."
     * saved and bookmarked as "Europe"
 
-  Scenario Outline: Feedback is displayed after answering the question
-    Answer is considered correct if and only if
-    - all correct answers are selected, and,
-    - no incorrect answer is selected.
+  Scenario Outline: Detailed feedback is displayed for each selected answer
+    Answer is considered correct if and only if:
+    - All correct answers are selected.
+    - No incorrect answer is selected.
+
     When I take question "Europe"
     And I answer "<answer>"
-    Then I see feedback "<feedback>"
+    Then I see individual feedback:
+      | answer   | evaluation | feedback                             |
+      | Italy    | <italy>    | <italy_feedback>                    |
+      | France   | <france>   | <france_feedback>                   |
+      | Morocco  | <morocco>  | <morocco_feedback>                  |
+      | Spain    | <spain>    | <spain_feedback>                    |
     And I see the question explanation
-    Examples:
-      | answer                        | feedback   |
-      | Italy                         | Incorrect! |
-      | Italy, France                 | Incorrect! |
-      | Italy, France, Morocco        | Incorrect! |
-      | Italy, France, Spain          | Correct!   |
-      | Italy, France, Morocco, Spain | Incorrect! |
+
+  Examples:
+    | answer                        | italy  | italy_feedback       | france | france_feedback | morocco | morocco_feedback | spain | spain_feedback |
+    | Italy                         | ✅     | Correct!             | ❌      | You missed it!  | ✅        | Correct!   | ❌     | You missed it!  |
+    | Italy, France                 | ✅     | Correct!             | ✅      | Correct!        | ✅       | Correct!   | ❌     | You missed it!  |
+    | Italy, France, Morocco        | ✅     | Correct!             | ✅      | Correct!        | ❌      | Incorrect!       | ❌     | You missed it!  |
+    | Italy, France, Spain          | ✅     | Correct!             | ✅      | Correct!        | ✅       | Correct!         | ✅     | Correct!        |
+    | Italy, France, Morocco, Spain | ✅     | Correct!             | ✅      | Correct!        | ❌      | Incorrect!       | ✅     | Correct!        |
 
   Scenario: Explanations for all answers are displayed after answering the question
     When I take question "Europe"

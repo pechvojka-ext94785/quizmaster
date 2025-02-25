@@ -8,10 +8,6 @@ ul {
     }
 }
 
-.explanation {
-    color: dodgerblue;
-}
-
 .feedback {
     &.correct { color: green }
     &.incorrect { color: red }
