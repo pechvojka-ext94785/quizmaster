@@ -21,16 +21,11 @@ export function CreateQuestionForm() {
             if (questionId) {
                 const quizQuestion = await getQuestion(questionId)
                 setQuestionData(toQuestionFormData(quizQuestion))
+                setIsLoaded(true)
             }
         }
         fetchQuestion()
     }, [questionId])
-
-    useEffect(() => {
-        if (questionData.question) {
-            setInterval(() => setIsLoaded(true), 100)
-        }
-    }, [questionData])
 
     const postData = async (formData: QuestionApiData) =>
         questionId

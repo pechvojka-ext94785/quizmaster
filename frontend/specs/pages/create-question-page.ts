@@ -4,9 +4,9 @@ export class CreateQuestionPage {
     constructor(private page: Page) {}
 
     gotoNew = () => this.page.goto('/question/new')
-    gotoEdit = (url: string) => this.page.goto(`${url}/edit`)
+    gotoEdit = (url: string) => this.page.goto(`${url}/edit`, { waitUntil: 'networkidle' })
 
-    waitForLoaded = () => this.page.waitForSelector('#is-loaded[value="loaded"]', { state: 'hidden' })
+    waitForLoaded = () => this.page.isHidden('#is-loaded[value="loaded"]')
 
     private questionLocator = () => this.page.locator('#question-text')
     enterQuestion = (question: string) => this.questionLocator().fill(question)
