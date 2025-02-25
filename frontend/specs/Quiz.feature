@@ -46,12 +46,11 @@ Feature: Take a quiz
     Then I should see the evaluate button
     Then I should not see the next button
 
-  Scenario: User proceed to evaluate page
+  Scenario: User navigate to evaluation page
     Given I visit the quiz page
     When I answer "Green"
     And I click the next button
     Then I should see the next question
     Then I should not see the evaluate button
     When I answer "Lyon"
-    Then I should see the evaluate button
-    Then I should not see the next button
+    Then I click the evaluate button

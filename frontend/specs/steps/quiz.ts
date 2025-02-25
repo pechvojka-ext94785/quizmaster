@@ -32,9 +32,15 @@ Then('I should see the next question', async function () {
 })
 
 Then('I should see the evaluate button', async function () {
-    await expect(this.takeQuestionPage.evaluateButtonLocator()).toBeVisible()
+    await expect(this.quizPage.evaluationButtonLocator()).toBeVisible()
 })
 
 Then('I should not see the evaluate button', async function () {
-    await expect(this.takeQuestionPage.evaluateButtonLocator()).not.toBeVisible()
+    await expect(this.quizPage.evaluationButtonLocator()).not.toBeVisible()
+})
+
+Then('I click the evaluate button', async function () {
+    await this.quizPage.evaluationButtonLocator().click()
+    const redirectedURL =  this.page.url();
+    expect(redirectedURL).toContain('/evaluation')
 })

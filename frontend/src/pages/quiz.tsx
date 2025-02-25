@@ -1,6 +1,7 @@
 import type { QuizQuestion } from 'model/quiz-question'
 import { QuestionForm } from './question-take'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 interface NextQuestionButtonProps {
     onClick: () => void
@@ -56,9 +57,9 @@ export const Quiz = () => {
             <QuestionForm question={quiz[currentQuestionIndex]} onSubmitted={onSubmitted} />
             {submitted && !isLastQuestion && <NextQuestionButton onClick={nextQuestionHandler} />}
             {isLastQuestion && submitted && (
-                <button type="button" id="evaluate-button">
+                <Link className="evaluation-button" to="/evaluation" id="evaluate-button">
                     Evaluate
-                </button>
+                </Link>
             )}
         </div>
     )
