@@ -12,7 +12,7 @@ export class CreateQuestionPage {
     enterQuestion = (question: string) => this.questionLocator().fill(question)
     questionValue = () => this.questionLocator().inputValue()
 
-    private multipleChoiceLocator = () => this.page.locator('#is-multiple-choice')
+    multipleChoiceLocator = () => this.page.locator('#is-multiple-choice')
     isMultipleChoice = () => this.multipleChoiceLocator().isChecked()
     setMultipleChoice = () => this.multipleChoiceLocator().check()
     setSingleChoice = () => this.multipleChoiceLocator().uncheck()
@@ -39,7 +39,7 @@ export class CreateQuestionPage {
         if (correct) await this.page.check(`#answer-checkbox-${index}`)
     }
 
-    private questionExplanationLocator = () => this.page.locator('#question-explanation')
+    questionExplanationLocator = () => this.page.locator('#question-explanation')
     enterQuestionExplanation = (question: string) => this.questionExplanationLocator().fill(question)
 
     addAnswer = async (idx: number) => {
@@ -55,4 +55,6 @@ export class CreateQuestionPage {
     errorMessage = () => this.page.textContent('#error-message')
 
     reloadPage = () => this.page.reload({ waitUntil: 'networkidle' })
+
+    getExplanationLocator = (id: number) => this.page.locator(`#answer-explanation-${id}`)
 }

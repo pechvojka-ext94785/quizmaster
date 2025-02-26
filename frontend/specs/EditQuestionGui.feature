@@ -32,41 +32,37 @@ Feature: Edit question GUI
     And I save it
     Then I see a link to take the question
 
-@skip
   Scenario: Change of general explanation
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
-    When I change a general explanation
+    When I change a general explanation to "Abcd"
     And I save it
     And I reload the page
-    Then I see a general explanation the same as I wrote
+    Then I see a general explanation the same as "Abcd"
 
-@skip
-  Scenario: Change of single question explanation
+  Scenario: Change of single answer explanation
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
-    When I change a single answer explanation
+    When I change a single answer explanation 1 to "Abcd"
     And I save it
     And I reload the page
-    Then I see changed explanation
+    Then I see changed explanation 1 to "Abcd"
 
-@skip
   Scenario: Change of an answer label
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
-    When I change of an answer label
+    When I change of an answer label 1 to "Abcd"
     And I save it
     And I reload the page
-    Then I see a changed label
+    Then I see a changed label 1 to "Abcd"
 
-@skip
   Scenario: Multiple choice of correct answers
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
     When I mark a multiple choice
     Then I see checkboxes for every answer
-    When I mark "Brno" checkbox
+    When I mark 1 checkbox
     And I save it
     And I reload the page
-    Then I see answer "Brno" with marked checkbox
-    Then I see answer "Prague" with marked checkbox
+    Then I see answer 1 with marked checkbox
+    Then I see answer 3 with marked checkbox

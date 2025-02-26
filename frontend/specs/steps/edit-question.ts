@@ -42,3 +42,52 @@ Then('I see the correct answer is {int}', async function (value: number) {
 When('I delete all explanations and delete general explanation', async function () {
     await this.createQuestionPage.clearExplanation()
 })
+
+When('I change a general explanation to {string}', async function (explanationLabel: string) {
+    await this.createQuestionPage.enterQuestionExplanation(explanationLabel)
+})
+
+Then('I see a general explanation the same as {string}', async function (explanationLabel: string) {
+    const resultText = await this.createQuestionPage.questionExplanationLocator().textContent()
+    expect(resultText).toBe(explanationLabel)
+})
+
+When(
+    'I change a single answer explanation {int} to {string}',
+    async function (answerIndex: number, answerLabel: string) {
+        const answer = await this.createQuestionPage.getExplanationLocator(answerIndex)
+        await answer.fill(answerLabel)
+    },
+)
+
+Then('I see changed explanation {int} to {string}', async function (answerIndex: number, answerLabel: string) {
+    const answer = await this.createQuestionPage.getExplanationLocator(answerIndex).inputValue()
+    expect(answer).toBe(answerLabel)
+})
+
+When('I change of an answer label {int} to {string}', async function (answerIndex: number, answerLabel: string) {
+    const answer = await this.createQuestionPage.answerTextLocator(answerIndex)
+    await answer.fill(answerLabel)
+})
+
+Then('I see a changed label {int} to {string}', async function (answerIndex: number, answerLabel: string) {
+    const answer = await this.createQuestionPage.answerTextLocator(answerIndex).inputValue()
+    expect(answer).toBe(answerLabel)
+})
+
+When('I mark a multiple choice', async function () {
+    await this.createQuestionPage.multipleChoiceLocator().click()
+})
+
+Then('I see checkboxes for every answer', async function () {
+    const getCheckbox = await this.createQuestionPage.isCorrectCheckboxesLocator().all()
+    for (const li of getCheckbox) expect(await li.getAttribute('class')).toBe('answer-isCorrect-checkbox-multi')
+})
+
+When('I mark {int} checkbox', async function (index: number) {
+    await this.createQuestionPage.markButton(index).click()
+})
+
+Then('I see answer {int} with marked checkbox', async function (index: number) {
+    await expect(await this.createQuestionPage.markButton(index)).toBeChecked()
+})
