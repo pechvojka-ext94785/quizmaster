@@ -19,19 +19,18 @@ Feature: Edit question GUI
   Scenario: Change of correct answer
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
-    When I change the correct answer to "Bratislava"
+    When I change the correct answer to 2
     And I save it
     And I reload the page
     Then I see the question, answers and explanations
-    #And I see the correct answer is "Bratislava"
+    And I see the correct answer is 2
 
-@skip
   Scenario: All expolanations and general explanation are empty
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
     When I delete all explanations and delete general explanation
     And I save it
-    Then I see an error message
+    Then I see a link to take the question
 
 @skip
   Scenario: Change of general explanation

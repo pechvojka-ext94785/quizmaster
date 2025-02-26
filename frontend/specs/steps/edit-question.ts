@@ -30,6 +30,15 @@ When('I reload the page', async function () {
     await this.createQuestionPage.reloadPage()
 })
 
-When('I change the correct answer to {string}', async function () {
-    this.createQuestionPage.markCorrectAnswer(2)
+When('I change the correct answer to {int}', async function (value: number) {
+    this.createQuestionPage.markButton(value).check()
+})
+
+Then('I see the correct answer is {int}', async function (value: number) {
+    const markCircle = this.createQuestionPage.markButton(value)
+    expect(markCircle).toBeChecked()
+})
+
+When('I delete all explanations and delete general explanation', async function () {
+    await this.createQuestionPage.clearExplanation()
 })

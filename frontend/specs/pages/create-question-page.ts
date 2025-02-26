@@ -24,7 +24,13 @@ export class CreateQuestionPage {
 
     answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
 
-    markCorrectAnswer = (index: number) => this.page.locator(`#answer-checkbox-${index}`).click()
+    markButton = (value: number) => this.page.locator(`#answer-checkbox-${value}`)
+
+    clearExplanation = async () => {
+        const getExplanation = await this.page.locator('[id^=answer-explanation-]').all()
+        for (const li of getExplanation)
+            await li.clear()
+    }
 
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
         await this.answerTextLocator(index).fill(value)
