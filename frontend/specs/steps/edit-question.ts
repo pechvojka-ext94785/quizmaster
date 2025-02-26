@@ -36,7 +36,7 @@ When('I change the correct answer to {int}', async function (value: number) {
 
 Then('I see the correct answer is {int}', async function (value: number) {
     const markCircle = this.createQuestionPage.markButton(value)
-    expect(markCircle).toBeChecked()
+    await expect(markCircle).toBeChecked()
 })
 
 When('I delete all explanations and delete general explanation', async function () {
