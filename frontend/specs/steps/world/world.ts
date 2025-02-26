@@ -25,4 +25,8 @@ export class QuizmasterWorld {
     get activeQuestion() {
         return this.bookmarks[this.activeBookmark]
     }
+
+    parseAnswers(answersString: string) {
+        return answersString.split(',').map(answer => answer.trim())
+    }
 }

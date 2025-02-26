@@ -2,8 +2,6 @@ import { expect } from '@playwright/test'
 import { expectTextToBe } from './common.ts'
 import { Given, When, Then } from './fixture.ts'
 
-const parseAnswers = (answersString: string) => answersString.split(',').map(answer => answer.trim())
-
 Given('I visit the quiz page', async function () {
     await this.page.goto('/quiz')
 })
@@ -52,14 +50,14 @@ Given('I refresh page', async function () {
 })
 
 Then('I should see answer {string} is checked', async function (answerList: string) {
-    const answers = parseAnswers(answerList)
+    const answers = this.parseAnswers(answerList)
     for (const element of answers) {
         await expect(this.takeQuestionPage.answerLocator(element)).toBeChecked()
     }
 })
 
 Then('I should see answer {string} is unchecked', async function (answerList: string) {
-    const answers = parseAnswers(answerList)
+    const answers = this.parseAnswers(answerList)
     for (const element of answers) {
         await expect(this.takeQuestionPage.answerLocator(element)).not.toBeChecked()
     }

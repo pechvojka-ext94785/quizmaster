@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { QuizQuestion } from 'model/quiz-question'
+import type { QuestionFormProps } from './question-form'
 
 export interface QuestionTakeState {
     readonly isMultipleChoice: boolean
@@ -9,7 +9,9 @@ export interface QuestionTakeState {
     readonly onSelectedAnswerChange: (idx: number, selected: boolean) => void
 }
 
-export const useQuestionTakeState = (question: QuizQuestion, checkedAnswers?: number[]): QuestionTakeState => {
+export const useQuestionTakeState = (props: QuestionFormProps): QuestionTakeState => {
+    const question = props.question
+    const checkedAnswers = props.quizState?.[props.question.id]
     const isMultipleChoice = question.correctAnswers.length > 1
 
     const [selectedAnswerIdxs, setSelectedAnswerIdxs] = useState<number[]>(checkedAnswers ?? [])
@@ -18,7 +20,7 @@ export const useQuestionTakeState = (question: QuizQuestion, checkedAnswers?: nu
     const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => [...prev, idx])
     const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => prev.filter(i => i !== idx))
 
-    const [submitted, setSubmitted] = useState(false)
+    const [submitted, setSubmitted] = useState(props.isSubmitted ?? false)
 
     const submit = () => setSubmitted(true)
 

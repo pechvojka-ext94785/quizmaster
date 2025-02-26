@@ -23,7 +23,7 @@ Then('I see the question and the answers', async function () {
 })
 
 When('I answer {string}', async function (answerList: string) {
-    const answers = answerList.split(',').map(answer => answer.trim())
+    const answers = this.parseAnswers(answerList)
     for (const answer of answers) {
         await this.takeQuestionPage.selectAnswer(answer)
     }
@@ -31,11 +31,17 @@ When('I answer {string}', async function (answerList: string) {
 })
 
 When('I uncheck answer {string}', async function (answerList: string) {
-    const answers = answerList.split(',').map(answer => answer.trim())
+    const answers = this.parseAnswers(answerList)
     for (const answer of answers) {
         await this.takeQuestionPage.unselectAnswer(answer)
     }
-    await this.takeQuestionPage.submit()
+})
+
+When('I check answer {string}', async function (answerList: string) {
+    const answers = this.parseAnswers(answerList)
+    for (const answer of answers) {
+        await this.takeQuestionPage.selectAnswer(answer)
+    }
 })
 
 When('I submit question', async function () {

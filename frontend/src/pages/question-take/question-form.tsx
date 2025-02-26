@@ -7,15 +7,16 @@ import {
     QuestionExplanation,
 } from 'pages/question-take'
 
-interface QuestionFormProps {
+export interface QuestionFormProps {
     readonly question: QuizQuestion
+    readonly isSubmitted?: boolean
     readonly onSubmitted?: () => void
     readonly quizState?: Record<number, number[]>
     readonly onAnswerChange?: (answerIndex: number, selected: boolean) => void
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
-    const state = useQuestionTakeState(props.question, props.quizState?.[props.question.id])
+    const state = useQuestionTakeState(props)
     const feedback = useQuestionFeedbackState(state, props.question)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

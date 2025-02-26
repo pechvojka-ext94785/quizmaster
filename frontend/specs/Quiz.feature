@@ -59,11 +59,11 @@ Feature: Take a quiz
     Given I visit the quiz page
     When I answer "Green"
     * I click the next button
-    * I answer "Lyon,Paris"
+    * I check answer "Lyon,Paris"
     * I uncheck answer "Lyon"
     * I reload the page
-    * I submit question
     * I click the next button
     Then I should see answer "Paris" is checked
     *  I should see answer "Lyon" is unchecked
+    * I click the evaluate button
 
