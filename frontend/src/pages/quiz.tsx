@@ -57,7 +57,7 @@ export const Quiz = () => {
     const [quizState, setQuizState] = useQuizState()
 
     const isAlreadyAnswered = (questionId: number) => {
-        return quizState[questionId]?.length > 0 ?? false
+        return Boolean(quizState[questionId]?.length)
     }
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
