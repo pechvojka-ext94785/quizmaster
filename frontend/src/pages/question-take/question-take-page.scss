@@ -11,11 +11,9 @@ ul li {
     margin-bottom: 0.5em;
 }
 
-/* Obecný styl pro checkboxy a radio buttony */
 ul li input[type="checkbox"],
 ul li input[type="radio"] {
     appearance: none;
-    /* Odstranění výchozího stylu */
     width: 20px;
     height: 20px;
     border: 2px solid black;
@@ -23,20 +21,23 @@ ul li input[type="radio"] {
     cursor: pointer;
     display: inline-block;
     position: relative;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
-/* Styl pro vybraný checkbox a radio button */
+ul li input[type="checkbox"]:hover,
+ul li input[type="radio"]:hover {
+    background-color: #bbb;
+}
+
 ul li input[type="checkbox"]:checked,
 ul li input[type="radio"]:checked {
     background-color: black;
     border-color: black;
 }
 
-/* Přidání checkmarku (✔) do vybraného checkboxu a radio buttonu */
 ul li input[type="checkbox"]:checked::after,
 ul li input[type="radio"]:checked::after {
     content: "✔";
-    /* Unicode checkmark */
     font-size: 14px;
     color: white;
     position: absolute;
@@ -45,7 +46,6 @@ ul li input[type="radio"]:checked::after {
     transform: translate(-50%, -50%);
 }
 
-/* Centrum celého seznamu */
 .container {
     display: flex;
     flex-direction: column;
@@ -63,4 +63,26 @@ ul li input[type="radio"]:checked::after {
 
 .debug-border {
     border: 1px solid red;
+}
+
+.submit-btn {
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.submit-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.submit-btn:active {
+    background-color: #333;
+    color: white;
+    transform: scale(0.98);
 }

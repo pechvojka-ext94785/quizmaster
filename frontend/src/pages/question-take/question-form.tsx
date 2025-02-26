@@ -45,7 +45,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                     />
                 ))}
             </ul>
-            {!state.submitted && <input type="submit" value="Submit" />}
+            {!state.submitted && <input type="submit" value="Submit" className='submit-btn'/>}
             {state.submitted && <QuestionCorrectness isCorrect={feedback.isQuestionCorrect} />}
             {state.submitted && <QuestionExplanation text={props.question.questionExplanation} />}
         </form>
