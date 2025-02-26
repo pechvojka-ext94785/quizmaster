@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { QuizQuestion } from 'model/quiz-question'
 
 export interface QuestionTakeState {
