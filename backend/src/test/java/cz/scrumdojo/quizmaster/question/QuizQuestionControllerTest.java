@@ -23,6 +23,15 @@ public class QuizQuestionControllerTest {
             .build();
     }
 
+    private static QuizQuestion createMultipleChoiceQuestion() {
+        return QuizQuestion.builder()
+            .question("What is the cities of Italy?")
+            .answers(new String[] { "Naples", "Rome", "Astana", "Paris" })
+            .explanations(new String[] { "Si!", "Of course!", "Salem, but no.", "Bonjour! But no." })
+            .correctAnswers(new int[] { 1, 2 })
+            .build();
+    }
+
     @Test
     public void getQuestion() {
         var question = createSingleChoiceQuestion();

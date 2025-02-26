@@ -28,6 +28,12 @@ public class QuizQuestionController {
     }
 
     @Transactional
+    @GetMapping("/quiz-question/{id}/questions-count")
+    public ResponseEntity<Long> getQuestionsCount() {
+        return responseCount(Optional.of(findQuestionsCount()));
+    }
+
+    @Transactional
     @PostMapping("/quiz-question")
     public Integer saveQuestion(@RequestBody QuizQuestion question) {
         return quizQuestionRepository.save(question).getId();
@@ -48,19 +54,23 @@ public class QuizQuestionController {
         return response(findQuestion(id).map(Answers::from));
     }
 
-    @Transactional
-    @GetMapping("/quiz-question/{id}/answers-count")
-    public ResponseEntity<Answers> getAnswersCount() {
-        return response(findQuestion(id).map(Answers::from));
-    }
-
     private Optional<QuizQuestion> findQuestion(Integer id) {
         return quizQuestionRepository.findById(id);
+    }
+
+    private Long findQuestionsCount() {
+        return quizQuestionRepository.count();
     }
 
     private <T> ResponseEntity<T> response(Optional<T> entity) {
         return entity
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
+    }
+
+    private ResponseEntity<Long> responseCount(Optional<Long> count) {
+        return count
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
