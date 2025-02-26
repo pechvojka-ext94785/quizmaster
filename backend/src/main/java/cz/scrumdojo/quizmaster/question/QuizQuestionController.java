@@ -22,14 +22,13 @@ public class QuizQuestionController {
     @Transactional
     @GetMapping("/quiz-question/{id}")
     public ResponseEntity<QuizQuestion> getQuestion(@PathVariable Integer id) {
-
         return response(findQuestion(id));
     }
 
     @Transactional
-    @GetMapping("/quiz-question/{id}/questions-count")
-    public ResponseEntity<QuestionsCount> getQuestionsCount() {
-        return response(Optional.of(new QuestionsCount(findQuestionsCount())));
+    @GetMapping("/quiz-question/{id}/progress-state")
+    public ResponseEntity<ProgressState> getProgressState(@PathVariable Integer id) {
+        return response(Optional.of(new ProgressState(findAllQuestionsCount(), getQuestionIndex(id))));
     }
 
     @Transactional
@@ -57,8 +56,12 @@ public class QuizQuestionController {
         return quizQuestionRepository.findById(id);
     }
 
-    private Long findQuestionsCount() {
+    private Long findAllQuestionsCount() {
         return quizQuestionRepository.count();
+    }
+
+    private Long getQuestionIndex(Integer id) {
+        return quizQuestionRepository.getQuestionIndex(id);
     }
 
     private <T> ResponseEntity<T> response(Optional<T> entity) {

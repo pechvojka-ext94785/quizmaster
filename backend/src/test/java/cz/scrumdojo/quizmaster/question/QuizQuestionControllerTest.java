@@ -48,14 +48,13 @@ public class QuizQuestionControllerTest {
     }
 
     @Test
-    public void getQuestionsCount() {
-        quizQuestionController.saveQuestion(createSingleChoiceQuestion());
-        quizQuestionController.saveQuestion(createMultipleChoiceQuestion());
-
-        var result = quizQuestionController.getQuestionsCount().getBody().getCount();
+    public void getProgressState() {
+        var questionId = quizQuestionController.saveQuestion(createSingleChoiceQuestion());
+        var result = (ProgressState) quizQuestionController.getProgressState(questionId).getBody();
 
         assertNotNull(result);
-        assertEquals(quizQuestionRepository.count(), result);
+        assertEquals(quizQuestionRepository.count(), result.getTotal());
+        assertEquals(quizQuestionRepository.getQuestionIndex(questionId), result.getCurrent());
     }
 
     @Test
