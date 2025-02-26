@@ -54,10 +54,16 @@ Feature: Take a quiz
     Then I should not see the evaluate button
     When I answer "Lyon"
     Then I click the evaluate button
-  @skip
+
   Scenario: User reloads page on answered question
     Given I visit the quiz page
     When I answer "Green"
-    * I refresh page
-    Then I should see answer "Green" is checked
+    * I click the next button
+    * I answer "Lyon,Paris"
+    * I uncheck answer "Lyon"
+    * I reload the page
+    * I submit question
+    * I click the next button
+    Then I should see answer "Paris" is checked
+    *  I should see answer "Lyon" is unchecked
 

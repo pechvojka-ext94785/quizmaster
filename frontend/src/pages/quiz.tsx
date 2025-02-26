@@ -16,7 +16,7 @@ export const NextQuestionButton = (props: NextQuestionButtonProps) => {
         </div>
     )
 }
-
+const sessionKey = 'quizState'
 const quizQuestion1: QuizQuestion = {
     id: 1,
     question: 'What is the standard colour of sky?',
@@ -31,7 +31,7 @@ const quizQuestion2: QuizQuestion = {
     answers: ['Marseille', 'Lyon', 'Paris', 'Toulouse'],
     explanations: [],
     questionExplanation: '',
-    correctAnswers: [2],
+    correctAnswers: [2, 0],
 }
 
 const quiz = [quizQuestion1, quizQuestion2]
@@ -50,14 +50,42 @@ export const Quiz = () => {
     const onSubmitted = () => {
         setSubmitted(true)
     }
+    const resolveAnswers = (question: QuizQuestion, lastAnswers: number[], answerIndex: number, selected: boolean) => {
+        const isMultiple = question.correctAnswers.length > 1
+        if (!isMultiple) {
+            return [answerIndex]
+        }
+        const answers = Array.from(new Set([...lastAnswers, answerIndex]))
+        const removingAnswers = !selected ? [answerIndex] : []
+        return answers.filter(i => !removingAnswers.includes(i))
+    }
+    const handleStateChanged = (answerIndex: number, selected: boolean) => {
+        console.log(quiz[currentQuestionIndex], answerIndex, selected)
+        const question = quiz[currentQuestionIndex]
+        const questionId = question.id
+        const quizState = getQuizState()
+        const lastAnswers = quizState[questionId] ?? []
+        const currentAnswers = resolveAnswers(question, lastAnswers, answerIndex, selected)
+        sessionStorage.setItem(sessionKey, JSON.stringify({ ...quizState, [questionId]: currentAnswers }))
+    }
+    const getQuizState = () => {
+        const sessionStorageValue = sessionStorage.getItem(sessionKey)
+        const quizState = sessionStorageValue ? JSON.parse(sessionStorageValue) : {}
+        return quizState
+    }
 
     return (
         <div>
             <h2>Quiz</h2>
-            <QuestionForm question={quiz[currentQuestionIndex]} onSubmitted={onSubmitted} />
+            <QuestionForm
+                question={quiz[currentQuestionIndex]}
+                onSubmitted={onSubmitted}
+                onAnswerChange={handleStateChanged}
+                quizState={getQuizState()}
+            />
             {submitted && !isLastQuestion && <NextQuestionButton onClick={nextQuestionHandler} />}
             {isLastQuestion && submitted && (
-                <Link className="evaluation-button" to="/evaluation" id="evaluate-button">
+                <Link to="/evaluation" id="evaluate-button">
                     Evaluate
                 </Link>
             )}

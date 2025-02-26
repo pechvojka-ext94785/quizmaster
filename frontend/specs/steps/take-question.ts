@@ -30,6 +30,18 @@ When('I answer {string}', async function (answerList: string) {
     await this.takeQuestionPage.submit()
 })
 
+When('I uncheck answer {string}', async function (answerList: string) {
+    const answers = answerList.split(',').map(answer => answer.trim())
+    for (const answer of answers) {
+        await this.takeQuestionPage.unselectAnswer(answer)
+    }
+    await this.takeQuestionPage.submit()
+})
+
+When('I submit question', async function () {
+    await this.takeQuestionPage.submit()
+})
+
 Then('I see feedback {string}', async function (feedback: string) {
     await expectTextToBe(this.takeQuestionPage.feedbackLocator(), `The answer is:\u00A0${feedback}`)
 })

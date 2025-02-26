@@ -25,6 +25,7 @@ export class TakeQuestionPage {
             .locator('span.explanation')
 
     selectAnswer = (answer: string) => this.answerLocator(answer).check()
+    unselectAnswer = (answer: string) => this.answerLocator(answer).uncheck()
 
     submit = () => this.page.locator('input[type="submit"]').click()
 

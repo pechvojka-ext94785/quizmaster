@@ -9,22 +9,18 @@ export interface QuestionTakeState {
     readonly onSelectedAnswerChange: (idx: number, selected: boolean) => void
 }
 
-export const useQuestionTakeState = (question: QuizQuestion): QuestionTakeState => {
+export const useQuestionTakeState = (question: QuizQuestion, checkedAnswers?: number[]): QuestionTakeState => {
     const isMultipleChoice = question.correctAnswers.length > 1
 
-    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = useState<number[]>([])
-    const [submitted, setSubmitted] = useState(false)
+    const [selectedAnswerIdxs, setSelectedAnswerIdxs] = useState<number[]>(checkedAnswers ?? [])
 
     const setSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs([idx])
     const addSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => [...prev, idx])
     const removeSelectedAnswerIdx = (idx: number) => setSelectedAnswerIdxs(prev => prev.filter(i => i !== idx))
 
-    const submit = () => setSubmitted(true)
+    const [submitted, setSubmitted] = useState(false)
 
-    useEffect(() => {
-        setSelectedAnswerIdxs([])
-        setSubmitted(false)
-    }, [])
+    const submit = () => setSubmitted(true)
 
     const onSelectedAnswerChange = (idx: number, selected: boolean) => {
         setSubmitted(false)

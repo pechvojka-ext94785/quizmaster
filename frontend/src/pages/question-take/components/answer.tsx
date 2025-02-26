@@ -11,13 +11,14 @@ export type AnswerProps = {
     readonly isCorrect: boolean
     readonly showFeedback: boolean
     readonly onAnswerChange: (idx: number, selected: boolean) => void
+    readonly isChecked?: boolean
 }
 
 export const Answer = (props: AnswerProps) => {
     const answerId = `answer-row-${props.idx}`
     const checkType = props.isMultipleChoice ? 'checkbox' : 'radio'
     const checkName = props.isMultipleChoice ? answerId : 'answer'
-    const [isChecked, setIsChecked] = useState(false)
+    const [isChecked, setIsChecked] = useState(() => props.isChecked ?? false)
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setIsChecked(event.target.checked)
@@ -26,7 +27,14 @@ export const Answer = (props: AnswerProps) => {
 
     return (
         <li data-test-id={`answer-row-${props.answer}`} key={props.idx}>
-            <input type={checkType} name={checkName} id={answerId} value={props.answer} onChange={onChange} />
+            <input
+                type={checkType}
+                name={checkName}
+                id={answerId}
+                value={props.answer}
+                onChange={onChange}
+                defaultChecked={isChecked}
+            />
             <label htmlFor={answerId}>
                 {props.answer}
                 {props.showFeedback && (

@@ -15,7 +15,7 @@ interface QuestionFormProps {
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
-    const state = useQuestionTakeState(props.question)
+    const state = useQuestionTakeState(props.question, props.quizState?.[props.question.id])
     const feedback = useQuestionFeedbackState(state, props.question)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +33,7 @@ export const QuestionForm = (props: QuestionFormProps) => {
                     <Answer
                         key={answer}
                         isMultipleChoice={state.isMultipleChoice}
+                        isChecked={props.quizState?.[props.question.id]?.includes(idx)}
                         idx={idx}
                         answer={answer}
                         isCorrect={feedback.isAnswerCorrect(idx)}
