@@ -30,6 +30,6 @@ When('I reload the page', async function () {
     await this.createQuestionPage.reloadPage()
 })
 
-When('I change the correct answer to {string}', async function (option: string) {
+When('I change the correct answer to {string}', async function () {
     this.createQuestionPage.markCorrectAnswer(2)
 })
