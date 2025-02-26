@@ -28,8 +28,7 @@ export class CreateQuestionPage {
 
     clearExplanation = async () => {
         const getExplanation = await this.page.locator('[id^=answer-explanation-]').all()
-        for (const li of getExplanation)
-            await li.clear()
+        for (const li of getExplanation) await li.clear()
     }
 
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
