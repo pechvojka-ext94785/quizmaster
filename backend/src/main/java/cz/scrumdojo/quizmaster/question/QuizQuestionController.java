@@ -48,6 +48,12 @@ public class QuizQuestionController {
         return response(findQuestion(id).map(Answers::from));
     }
 
+    @Transactional
+    @GetMapping("/quiz-question/{id}/answers-count")
+    public ResponseEntity<Answers> getAnswersCount() {
+        return response(findQuestion(id).map(Answers::from));
+    }
+
     private Optional<QuizQuestion> findQuestion(Integer id) {
         return quizQuestionRepository.findById(id);
     }
