@@ -39,7 +39,7 @@ Feature: Answering a quiz question with multiple choice
     Then I see the answer explanations for answers
       | answer  | explanation      |
       | Italy   | And where is it? |
-      | France  | You wish!        |
+      | France  |                  |
       | Morocco | Almost :D        |
-      | Spain   | Manana!          |
+      | Spain   |                  |
     And I see the question explanation

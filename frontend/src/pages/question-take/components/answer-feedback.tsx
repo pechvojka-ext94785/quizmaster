@@ -17,6 +17,10 @@ export const AnswerFeedback = (props: AnswerFeedbackProps) => (
             <Correctness isCorrect={props.correct} />
         )}
         &nbsp;
-        {<Explanation text={props.explanation} />}
+        <span className="explanation">
+            {(!props.isMultipleChoice || (props.isMultipleChoice && !props.correct)) && (
+                <Explanation text={props.explanation} />
+            )}
+        </span>
     </span>
 )

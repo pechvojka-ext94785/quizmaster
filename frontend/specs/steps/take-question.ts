@@ -45,7 +45,10 @@ Then('I see the question explanation', async function () {
 Then(/^I see the answer explanations for answers$/, async function (data: DataTable) {
     for (const row of data.rows()) {
         const [answer, expectedExplanation] = row
-        const answerExplanationLocator = this.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
+        const answerExplanationLocator =
+            expectedExplanation !== ''
+                ? this.takeQuestionPage.answerExplanationLocatorForAnswer(answer)
+                : this.takeQuestionPage.emptyAnswerExplanationLocatorForAnswer(answer)
         await expectTextToBe(answerExplanationLocator, expectedExplanation)
     }
 })
