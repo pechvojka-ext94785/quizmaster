@@ -14,6 +14,9 @@ public class QuizQuestionControllerTest {
     @Autowired
     private QuizQuestionController quizQuestionController;
 
+    @Autowired
+    private QuizQuestionRepository quizQuestionRepository;
+
     private static QuizQuestion createSingleChoiceQuestion() {
         return QuizQuestion.builder()
             .question("What is the capital of Italy?")
@@ -42,6 +45,17 @@ public class QuizQuestionControllerTest {
         assertNotNull(result);
         assertEquals(question.getQuestion(), result.getQuestion());
         assertArrayEquals(question.getAnswers(), result.getAnswers());
+    }
+
+    @Test
+    public void getQuestionsCount() {
+        quizQuestionController.saveQuestion(createSingleChoiceQuestion());
+        quizQuestionController.saveQuestion(createMultipleChoiceQuestion());
+
+        var result = quizQuestionController.getQuestionsCount().getBody().getCount();
+
+        assertNotNull(result);
+        assertEquals(quizQuestionRepository.count(), result);
     }
 
     @Test

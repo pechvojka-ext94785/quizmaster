@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
 
 @RestController
@@ -29,8 +28,8 @@ public class QuizQuestionController {
 
     @Transactional
     @GetMapping("/quiz-question/{id}/questions-count")
-    public ResponseEntity<Long> getQuestionsCount() {
-        return responseCount(Optional.of(findQuestionsCount()));
+    public ResponseEntity<QuestionsCount> getQuestionsCount() {
+        return response(Optional.of(new QuestionsCount(findQuestionsCount())));
     }
 
     @Transactional
@@ -66,11 +65,5 @@ public class QuizQuestionController {
         return entity
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
-    }
-
-    private ResponseEntity<Long> responseCount(Optional<Long> count) {
-        return count
-            .map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
