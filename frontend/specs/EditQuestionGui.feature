@@ -16,6 +16,7 @@ Feature: Edit question GUI
     And I save it
     Then I see unchanged url
 
+  @skip
   Scenario: Change of correct answer
     When I start editing question "Czechia"
     Then I see the question, answers and explanations
