@@ -49,5 +49,5 @@ export class CreateQuestionPage {
 
     errorMessage = () => this.page.textContent('#error-message')
 
-    reloadPage = () => this.page.reload({waitUntil: 'networkidle'})
+    reloadPage = () => this.page.reload({ waitUntil: 'networkidle' })
 }

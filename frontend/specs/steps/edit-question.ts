@@ -33,5 +33,3 @@ When('I reload the page', async function () {
 When('I change the correct answer to {string}', async function (option: string) {
     this.createQuestionPage.markCorrectAnswer(2)
 })
-
-
