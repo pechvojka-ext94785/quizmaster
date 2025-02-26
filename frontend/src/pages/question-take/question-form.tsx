@@ -10,6 +10,8 @@ import {
 interface QuestionFormProps {
     readonly question: QuizQuestion
     readonly onSubmitted?: () => void
+    readonly quizState?: Record<number, number[]>
+    readonly onAnswerChange?: (answerIndex: number, selected: boolean) => void
 }
 
 export const QuestionForm = (props: QuestionFormProps) => {
@@ -36,7 +38,10 @@ export const QuestionForm = (props: QuestionFormProps) => {
                         isCorrect={feedback.isAnswerCorrect(idx)}
                         explanation={props.question.explanations ? props.question.explanations[idx] : 'not defined'}
                         showFeedback={state.submitted && feedback.showFeedback(idx)}
-                        onAnswerChange={state.onSelectedAnswerChange}
+                        onAnswerChange={(answerIndex, selected) => {
+                            state.onSelectedAnswerChange(answerIndex, selected)
+                            props.onAnswerChange?.(answerIndex, selected)
+                        }}
                     />
                 ))}
             </ul>

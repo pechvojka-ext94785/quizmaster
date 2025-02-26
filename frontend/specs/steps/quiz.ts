@@ -44,3 +44,14 @@ Then('I click the evaluate button', async function () {
     const redirectedURL = this.page.url()
     expect(redirectedURL).toContain('/evaluation')
 })
+
+Given('I refresh page', async function () {
+    await this.page.reload()
+})
+
+Then('I should see answer {string} is checked', async function (answerList: string) {
+    const answers = answerList.split(',').map(answer => answer.trim())
+    for await (const element of answers) {
+        expect(this.takeQuestionPage.answerLocator(element)).toBeChecked()
+    }
+})
