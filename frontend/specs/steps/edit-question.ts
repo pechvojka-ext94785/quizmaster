@@ -25,3 +25,13 @@ Then('I see unchanged url', async function () {
     const link = await this.createQuestionPage.questionUrl()
     expect(link).toBe(this.activeQuestion.url)
 })
+
+When('I reload the page', async function () {
+    await this.createQuestionPage.reloadPage()
+})
+
+When('I change the correct answer to {string}', async function (option: string) {
+    this.createQuestionPage.markCorrectAnswer(2)
+})
+
+

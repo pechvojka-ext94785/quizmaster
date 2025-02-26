@@ -24,6 +24,8 @@ export class CreateQuestionPage {
 
     answerTextLocator = (index: number) => this.page.locator(`#answer-text-${index}`)
 
+    markCorrectAnswer = (index: number) => this.page.locator(`#answer-checkbox-${index}`).click()
+
     enterAnswer = async (index: number, value: string, correct: boolean, explanation: string) => {
         await this.answerTextLocator(index).fill(value)
 
@@ -46,4 +48,6 @@ export class CreateQuestionPage {
     questionUrl = () => this.questionUrlLocator().textContent()
 
     errorMessage = () => this.page.textContent('#error-message')
+
+    reloadPage = () => this.page.reload({waitUntil: 'networkidle'})
 }
