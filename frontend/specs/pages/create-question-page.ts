@@ -52,6 +52,9 @@ export class CreateQuestionPage {
     private questionUrlLocator = () => this.page.locator('#question-link')
     questionUrl = () => this.questionUrlLocator().textContent()
 
+    private questionEditUrlLocator = () => this.page.locator('#question-edit-link')
+    questionEditUrl = () => this.questionEditUrlLocator().textContent()
+
     errorMessage = () => this.page.textContent('#error-message')
 
     reloadPage = () => this.page.reload({ waitUntil: 'networkidle' })

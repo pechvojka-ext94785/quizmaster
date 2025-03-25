@@ -6,6 +6,7 @@ export interface Answer {
 
 export interface Question {
     url: string
+    editUrl: string
     question: string
     answers: Answer[]
     explanation: string

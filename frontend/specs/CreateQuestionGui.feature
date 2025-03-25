@@ -10,6 +10,18 @@ Feature: Create question GUI
     When I take the question
     Then I see the question and the answers
 
+  @skip
+  Scenario: Add a single-choice question for edit
+    Given I start creating a question
+    When I enter question "What is 2 + 2?"
+    * I add the answer "4" marked as correct
+    * I add the answer "5" marked as incorrect
+    * I save the question
+    Then I see a link to take the question
+    * I see a link to edit the question
+    # When I edit the question
+    # Then I can edit the question and the answers
+
   Scenario: Add a single-choice question with 3 answers
     Given I start creating a question
     When I enter question "What is 2 + 2?"

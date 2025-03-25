@@ -17,7 +17,7 @@ export class QuizmasterWorld {
     readonly takeQuestionPage: TakeQuestionPage
     readonly quizPage: QuizPage
 
-    questionWip: Question = { url: '', question: '', answers: [], explanation: '' }
+    questionWip: Question = { url: '', editUrl: '', question: '', answers: [], explanation: '' }
     nextAnswerIdx = 0
     bookmarks: Record<string, Question> = {}
     activeBookmark = ''

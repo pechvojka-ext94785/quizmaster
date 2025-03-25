@@ -12,7 +12,7 @@ const NUM_ANSWERS = 2
 
 const openCreatePage = async (world: QuizmasterWorld) => {
     world.createQuestionPage.gotoNew()
-    world.questionWip = { url: '', question: '', answers: [], explanation: '' }
+    world.questionWip = { url: '', editUrl: '', question: '', answers: [], explanation: '' }
 }
 
 const enterQuestion = async (world: QuizmasterWorld, question: string) => {
@@ -105,12 +105,22 @@ When('I take the question', async function () {
     this.activeBookmark = 'manual'
 })
 
+When('I edit the question', async function () {
+    await this.page.goto(this.questionWip.editUrl)
+    // this.activeBookmark = 'manual'
+})
+
 When('I try saving the question', async function () {
     await this.createQuestionPage.submit()
 })
 
 Then('I see a link to take the question', async function () {
     const url = await this.createQuestionPage.questionUrl()
+    expect(url).not.toBe('')
+})
+
+Then('I see a link to edit the question', async function () {
+    const url = await this.createQuestionPage.questionEditUrl()
     expect(url).not.toBe('')
 })
 
